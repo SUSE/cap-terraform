@@ -1,0 +1,6 @@
+creds/*
+.terraform/*
+*.backup
+*.tfstate
+scf*/
+*.info
