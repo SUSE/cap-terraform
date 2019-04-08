@@ -1,4 +1,5 @@
 provider "kubernetes" {
+  version = "~> 1.5"
   load_config_file = false
   host = "https://${google_container_cluster.gke-cluster.endpoint}"
   cluster_ca_certificate = "${base64decode(google_container_cluster.gke-cluster.master_auth.0.cluster_ca_certificate)}"
@@ -13,7 +14,7 @@ resource "kubernetes_service_account" "tiller" {
 
   automount_service_account_token = true
 
-  depends_on = ["google_container_node_pool.primary_preemptible_nodes"]
+  depends_on = ["null_resource.post_processor"]
 }
 
 resource "kubernetes_cluster_role_binding" "tiller" {

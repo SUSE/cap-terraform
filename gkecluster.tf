@@ -51,8 +51,13 @@ resource "google_container_cluster" "gke-cluster" {
         "https://www.googleapis.com/auth/monitoring",
       ]
     }
+  }
 
-    provisioner "local-exec" {
+  resource "null_resource" "post_processor" { 
+  
+    depends_on = ["google_container_node_pool.primary_preemptible_nodes"]
+
+  provisioner "local-exec" {
     command = "/bin/sh gke-post-processing.sh"
 
     environment = {
@@ -61,7 +66,9 @@ resource "google_container_cluster" "gke-cluster" {
       NODE_COUNT = "${var.node_count}"
     }
   }
+
   }
+  
 
 data "google_client_config" "current" {}
 
