@@ -4,3 +4,4 @@ creds/*
 *.tfstate
 scf*/
 *.info
+*plan
