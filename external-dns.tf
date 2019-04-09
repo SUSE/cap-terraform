@@ -4,11 +4,15 @@ resource "helm_release" "external-dns" {
 
     set {
         name = "google.project"
-        value = "suse-css-platform"
+        value = "${var.project}"
     }
     set {
         name = "google.serviceAccountKey"
         value = "${var.gke_sa_key}"
+    }
+    set {
+        name = "provider"
+        value = "google"
     }
 
     depends_on = ["kubernetes_cluster_role_binding.tiller"]

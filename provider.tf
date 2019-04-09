@@ -4,6 +4,5 @@ provider "google" {
 	version 	= "~> 2.3"
 	credentials = "${var.gke_sa_key}"
 	project     = "${var.project}"
-#	region 		= "us-central1"
 }
 

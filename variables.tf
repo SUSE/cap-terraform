@@ -7,7 +7,7 @@ variable "project" {
 }
 
 variable "node_pool_name" {
-    default  = "sr-tf"
+    type = "string"
 }
 
 variable "node_count" {
