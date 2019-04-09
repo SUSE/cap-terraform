@@ -5,3 +5,4 @@ creds/*
 scf*/
 *.info
 *plan
+*.tfvars

@@ -8,7 +8,7 @@ secrets:
 
 env:
   # Use the public IP address
-  DOMAIN:ext-dns.squarks.info
+  DOMAIN: ext-dns.squarks.info
             
   # uaa prefix is required
   UAA_HOST: uaa.ext-dns.squarks.info
