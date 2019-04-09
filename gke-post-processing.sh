@@ -35,6 +35,9 @@ echo "$instance_names" | xargs -${args}{} gcloud compute ssh {} -- "sudo sed -i 
 echo "$instance_names" | xargs -${args}{} gcloud compute ssh {} -- "sudo update-grub"
 
 # Restart VMs
-echo "$instance_names" | xargs gcloud compute instances reset
+echo "$instance_names" | xargs gcloud compute instances stop
+sleep 120
+echo "$instance_names" | xargs gcloud compute instances start
+sleep 120
 echo "restarted the VMs"
 checkready
