@@ -4,5 +4,5 @@ creds/*
 *.tfstate
 scf*/
 *.info
-*plan
+gke-cluster-plan
 *.tfvars

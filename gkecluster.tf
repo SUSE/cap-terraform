@@ -1,6 +1,7 @@
 resource "google_container_cluster" "gke-cluster" {
   name     = "gke-cluster-with-tf"
   location = "${var.location}"
+
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
   # node pool and immediately delete it.
@@ -13,6 +14,7 @@ resource "google_container_cluster" "gke-cluster" {
     username = ""
     password = ""
   }
+
   addons_config {
     http_load_balancing {
       disabled = true
@@ -28,34 +30,32 @@ resource "google_container_cluster" "gke-cluster" {
   }
 }
 
-  resource "google_container_node_pool" "primary_preemptible_nodes" {
-    name       = "${var.node_pool_name}"
-    location   = "${var.location}"
-    cluster    = "${google_container_cluster.gke-cluster.name}"
-    node_count = "${var.node_count}"
+resource "google_container_node_pool" "primary_preemptible_nodes" {
+  name       = "${var.node_pool_name}"
+  location   = "${var.location}"
+  cluster    = "${google_container_cluster.gke-cluster.name}"
+  node_count = "${var.node_count}"
 
-    node_config {
-      preemptible  = true
-      machine_type = "${var.machine_type}"
-      disk_size_gb = "${var.disk_size_gb}"
-      image_type = "UBUNTU" 
+  node_config {
+    preemptible  = true
+    machine_type = "${var.machine_type}"
+    disk_size_gb = "${var.disk_size_gb}"
+    image_type   = "UBUNTU"
 
-      metadata {
-        disable-legacy-endpoints = "true"
-      }
-
-
-      oauth_scopes = [
-        "https://www.googleapis.com/auth/devstorage.read_only",
-        "https://www.googleapis.com/auth/logging.write",
-        "https://www.googleapis.com/auth/monitoring",
-      ]
+    metadata {
+      disable-legacy-endpoints = "true"
     }
-  }
 
-  resource "null_resource" "post_processor" { 
-  
-    depends_on = ["google_container_node_pool.primary_preemptible_nodes"]
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+    ]
+  }
+}
+
+resource "null_resource" "post_processor" {
+  depends_on = ["google_container_node_pool.primary_preemptible_nodes"]
 
   provisioner "local-exec" {
     command = "/bin/sh gke-post-processing.sh"
@@ -63,14 +63,9 @@ resource "google_container_cluster" "gke-cluster" {
     environment = {
       CLUSTER_NAME = "${google_container_cluster.gke-cluster.name}"
       CLUSTER_ZONE = "${var.location}"
-      NODE_COUNT = "${var.node_count}"
+      NODE_COUNT   = "${var.node_count}"
     }
   }
-
-  }
-  
+}
 
 data "google_client_config" "current" {}
-
-
-  
