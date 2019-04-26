@@ -1,5 +1,12 @@
+resource "random_string" "cluster_name" {
+  length  = 18
+  special = false
+  upper   = false
+  number  = false
+}
+
 resource "google_container_cluster" "gke-cluster" {
-  name     = "gke-cluster-with-tf"
+  name     = "${random_string.cluster_name.result}"
   location = "${var.location}"
 
   # We can't create a cluster with no node pool defined, but we want to only use
@@ -8,6 +15,8 @@ resource "google_container_cluster" "gke-cluster" {
   remove_default_node_pool = true
 
   initial_node_count = 1
+
+  resource_labels = "${var.cluster_labels}"
 
   # Setting an empty username and password explicitly disables basic auth
   master_auth {
@@ -30,14 +39,14 @@ resource "google_container_cluster" "gke-cluster" {
   }
 }
 
-resource "google_container_node_pool" "primary_preemptible_nodes" {
+resource "google_container_node_pool" "np" {
   name       = "${var.node_pool_name}"
   location   = "${var.location}"
   cluster    = "${google_container_cluster.gke-cluster.name}"
   node_count = "${var.node_count}"
 
   node_config {
-    preemptible  = true
+    preemptible  = false
     machine_type = "${var.machine_type}"
     disk_size_gb = "${var.disk_size_gb}"
     image_type   = "UBUNTU"
@@ -52,10 +61,15 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
       "https://www.googleapis.com/auth/monitoring",
     ]
   }
+
+  management {
+    auto_repair  = false
+    auto_upgrade = false
+  }
 }
 
 resource "null_resource" "post_processor" {
-  depends_on = ["google_container_node_pool.primary_preemptible_nodes"]
+  depends_on = ["google_container_node_pool.np"]
 
   provisioner "local-exec" {
     command = "/bin/sh gke-post-processing.sh"

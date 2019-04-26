@@ -3,7 +3,7 @@ variable "location" {
 }
 
 variable "project" {
-    default = "suse-css-platform"
+    type = "string"
 }
 
 variable "node_pool_name" {
@@ -15,6 +15,10 @@ variable "node_count" {
 }
 variable "machine_type" {
     default = "n1-standard-4"
+}
+
+variable "cluster_labels" {
+    type = "map"
 }
 
 variable "disk_size_gb" {
