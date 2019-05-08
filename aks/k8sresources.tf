@@ -1,9 +1,10 @@
 provider "kubernetes" {
   version = "~> 1.5"
   load_config_file = false
-  host = "https://${google_container_cluster.gke-cluster.endpoint}"
-  cluster_ca_certificate = "${base64decode(google_container_cluster.gke-cluster.master_auth.0.cluster_ca_certificate)}"
-  token = "${data.google_client_config.current.access_token}"
+  host                   = "${azurerm_kubernetes_cluster.k8s.kube_config.0.host}"
+  client_certificate     = "${base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate)}"
+  client_key             = "${base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_key)}"
+  cluster_ca_certificate = "${base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)}"
 }
 
 resource "kubernetes_service_account" "tiller" {
@@ -32,14 +33,4 @@ resource "kubernetes_cluster_role_binding" "tiller" {
         namespace = "kube-system"
     }
     depends_on = ["kubernetes_service_account.tiller"]
-}
-
-resource "kubernetes_storage_class" "gkesc" {
-  metadata {
-    name = "persistent"
-  }
-  storage_provisioner = "kubernetes.io/gce-pd"
-  parameters {
-    type = "pd-ssd"
-  }
 }

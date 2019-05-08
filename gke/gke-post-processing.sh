@@ -28,15 +28,8 @@ instance_names=$(gcloud compute instances list --filter=name~${CLUSTER_NAME:?req
 # Set correct zone
 gcloud config set compute/zone ${CLUSTER_ZONE:?required}
 
-# Update kernel command line
-echo "$instance_names" | xargs -${args}{} gcloud compute ssh {} -- "sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=\"console=ttyS0 net.ifnames=0\"/GRUB_CMDLINE_LINUX_DEFAULT=\"console=ttyS0 net.ifnames=0 cgroup_enable=memory swapaccount=1\"/g' /etc/default/grub.d/50-cloudimg-settings.cfg"
+# Update kernel command line, update GRUB and reboot
+echo "$instance_names" | xargs -${args}{} gcloud compute ssh {} -- "sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=\"console=ttyS0 net.ifnames=0\"/GRUB_CMDLINE_LINUX_DEFAULT=\"console=ttyS0 net.ifnames=0 cgroup_enable=memory swapaccount=1\"/g' /etc/default/grub.d/50-cloudimg-settings.cfg && sudo update-grub && sudo systemctl reboot -i"
 
-# Update grub
-echo "$instance_names" | xargs -${args}{} gcloud compute ssh {} -- "sudo update-grub"
-
-# Restart VMs
-echo "$instance_names" | xargs gcloud compute instances stop
-echo "$instance_names" | xargs gcloud compute instances start
-sleep 120
 echo "restarted the VMs"
 checkready
