@@ -42,13 +42,23 @@ resource "null_resource" "post_processor" {
     command = "/bin/sh aks-post-processing.sh"
 
     environment = {
+      AKSNAME = "${azurerm_kubernetes_cluster.k8s.name}"
       RGNAME = "${var.az_resource_group}"
       CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
-      NODEPOOLNAME = "${azurerm_kubernetes_cluster.k8s.agent_pool_profile.name}"
+      NODEPOOLNAME = "agentpool"
     }
   }
 }
 
+locals {
+  k8scfg = "${azurerm_kubernetes_cluster.k8s.kube_config_raw}"
+}
+
 output "kube_config" {
-  value = "${azurerm_kubernetes_cluster.k8s.kube_config_raw}"
+  value = "${local.k8scfg}"
+}
+
+resource "local_file" "k8scfg" {
+  content = "${local.k8scfg}"
+  filename = "aksk8scfg"
 }
