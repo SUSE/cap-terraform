@@ -16,4 +16,14 @@
 4. `terraform plan -out <PLAN-path>`
 
 5. `terraform apply plan <PLAN-path>`
+
+6. A kubeconfig named aksk8scfg is generated in the same directory TF is run from. Set your KUBECONFIG env var to point to this file.
+
+7. Check the default namespace to make sure `external-dns` and Ingress Controller are deployed.
+
+8. Deploy UAA as usual via the helm chart.
+
+8. If you are using loadbalanced services, once the services are up, run `ext-dns-uaa-svc-annotate.sh` to let `external-dns` generate the DNS entries for the `uaa-uaa-public` service. If you are using Ingress, you don't need to do anything.
+
+9. Grab the CA_CERT from the secret and deploy SCF. 
   
