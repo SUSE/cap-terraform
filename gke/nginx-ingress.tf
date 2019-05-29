@@ -9,6 +9,7 @@ resource "helm_release" "nginx_ingress" {
   name       = "nginx-ingress"
   repository = "${data.helm_repository.stable.metadata.0.name}"
   chart      = "nginx-ingress"
+  wait       = "false"
 
   set {
     name  = "rbac.create"
