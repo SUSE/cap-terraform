@@ -39,7 +39,7 @@ resource "kubernetes_storage_class" "gkesc" {
     name = "persistent"
   }
   storage_provisioner = "kubernetes.io/gce-pd"
-  parameters {
+  parameters = {
     type = "pd-ssd"
   }
 }

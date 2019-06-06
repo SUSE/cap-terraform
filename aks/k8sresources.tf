@@ -36,13 +36,12 @@ resource "kubernetes_cluster_role_binding" "tiller" {
 }
 
 resource "kubernetes_storage_class" "akssc" {
-  metadata {
+  metadata  {
     name = "persistent"
   }
   storage_provisioner = "kubernetes.io/azure-disk"
-  parameters {
+  parameters = {
     storageaccounttype = "Premium_LRS"
-    kind = "managed"
-    
+    kind = "managed" 
   }
 }

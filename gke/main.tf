@@ -51,7 +51,7 @@ resource "google_container_node_pool" "np" {
     disk_size_gb = "${var.disk_size_gb}"
     image_type   = "UBUNTU"
 
-    metadata {
+    metadata = {
       disable-legacy-endpoints = "true"
     }
 

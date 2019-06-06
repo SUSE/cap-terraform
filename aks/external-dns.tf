@@ -4,7 +4,7 @@ resource "kubernetes_secret" "google_dns_sa_creds" {
     name = "dns-sa-creds"
   }
 
-  data {
+  data = {
     "credentials.json" = "${file("${var.gcp_dns_sa_key}")}"
   }
 }
