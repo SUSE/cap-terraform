@@ -49,7 +49,7 @@ resource "google_container_node_pool" "np" {
     preemptible  = false
     machine_type = "${var.machine_type}"
     disk_size_gb = "${var.disk_size_gb}"
-    image_type   = "UBUNTU"
+    image_type   = "${var.vm_type}"
 
     metadata = {
       disable-legacy-endpoints = "true"

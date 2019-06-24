@@ -17,6 +17,10 @@ variable "machine_type" {
     default = "n1-standard-4"
 }
 
+variable "vm_type" {
+    type = "string"
+}
+
 variable "cluster_labels" {
     type = "map"
 }
