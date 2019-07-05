@@ -37,6 +37,10 @@ variable "gcp_dns_sa_key" {
     type = "string"
 }
 
+variable "chart_values_file" {
+    type = "string"
+}
+
 
 
 
