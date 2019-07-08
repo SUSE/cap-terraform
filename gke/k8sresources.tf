@@ -35,6 +35,9 @@ resource "kubernetes_cluster_role_binding" "tiller" {
 }
 
 resource "kubernetes_storage_class" "gkesc" {
+
+  depends_on = ["null_resource.post_processor"]
+  
   metadata {
     name = "persistent"
   }

@@ -1,5 +1,7 @@
 
 resource "kubernetes_secret" "google_dns_sa_creds" {
+  depends_on = ["null_resource.post_processor"]
+  
   metadata {
     name = "dns-sa-creds"
   }
