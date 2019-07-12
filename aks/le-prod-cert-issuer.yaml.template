@@ -12,17 +12,19 @@ spec:
       # The secret that holds the generated private key used to communicate with Let's Encrypt
       name: letsencrypt-prod-account-key
     dns01:
-       azuredns:
-        # Service principal clientId (also called appId)
-        clientID: #AZ_CLIENT_ID
-        # A secretKeyRef to a service principal ClientSecret (password)
-        # ref: https://docs.microsoft.com/en-us/azure/container-service/kubernetes/container-service-kubernetes-service-principal 
-        clientSecretSecretRef:
-          name: AZUREDNS_SECRET_KEY_NAME
-          key: CLIENT_SECRET
-        # Azure subscription Id
-        subscriptionID: #AZ_SUB_ID
-        tenantID: #AZ_TENANT_ID
-        resourceGroupName: #AZ_RESOURCE_GROUP(where DNS zone is)
-        hostedZoneName: #DNS_ZONE_NAME
+    providers:
+      - name: azuredns
+        azuredns:
+          # Service principal clientId (also called appId)
+          clientID: #AZ_CLIENT_ID
+          # A secretKeyRef to a service principal ClientSecret (password)
+          # ref: https://docs.microsoft.com/en-us/azure/container-service/kubernetes/container-service-kubernetes-service-principal 
+          clientSecretSecretRef:
+            name: AZUREDNS_SECRET_KEY_NAME
+            key: CLIENT_SECRET
+          # Azure subscription Id
+          subscriptionID: #AZ_SUB_ID
+          tenantID: #AZ_TENANT_ID
+          resourceGroupName: #AZ_RESOURCE_GROUP(where DNS zone is)
+          hostedZoneName: #DNS_ZONE_NAME
 

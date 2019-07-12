@@ -24,14 +24,3 @@ Note that the adClientId/Secret above are the same as the client_id/client_secre
 4. `terraform apply plan <PLAN-path>`
 
 5. A kubeconfig named aksk8scfg is generated in the same directory TF is run from. Set your KUBECONFIG env var to point to this file.
-
-6. Check the default namespace to make sure `external-dns` and Ingress Controller are deployed.
-
-7. Deploy UAA as usual via the helm chart.
-
-8. If you are using loadbalanced services, set the value of env vars NS and DOMAIN to uaa namespace and the domain you are using. Once the services are up, run `../ext-dns-uaa-svc-annotate.sh` to let `external-dns` generate the DNS entries for the `uaa-uaa-public` service in the Azure DNS zone. If you are using Ingress, you don't need to do anything. 
-
-9. Grab the CA_CERT from the secret and deploy SCF. 
-
-10. Set the value of the env VAR NS to the SCF namespace. Run `../ext-dns-cf-svc-annotate.sh`. This will create the DNS entries for the SCF load balanced services in the Azure DNS zone.
-  
