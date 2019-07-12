@@ -3,6 +3,10 @@ resource "null_resource" "cert_manager_setup" {
 
   provisioner "local-exec" {
     command = "/bin/sh setup_cert_manager.sh"
+    environment = {
+        RESOURCE_GROUP = "${var.az_resource_group}"
+        CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
+    }
 
   }
 }
@@ -33,7 +37,9 @@ resource "null_resource" "cluster_issuer_setup" {
     provisioner "local-exec" {
     command = "/bin/sh setup_cert_issuer.sh "
     environment = {
-        AZ_CERT_MANAGER_SP_PWD = "${var.client_secret}"
+        RESOURCE_GROUP = "${var.az_resource_group}"
+        CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
+        AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
     }
 
   }
