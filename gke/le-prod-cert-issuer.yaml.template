@@ -6,7 +6,7 @@ spec:
   acme:
     # Replace with your email address so you can be notified of expiring certificates
     email: #Email
-    # Use Let's Encrypt staging for testing as production enforces stricter usage limits
+    # This is using LE for production so beware of rate-limiting!
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       # The secret that holds the generated private key used to communicate with Let's Encrypt
