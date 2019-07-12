@@ -1,11 +1,11 @@
 
-resource "kubernetes_secret" "google_dns_sa_creds" {
+resource "kubernetes_secret" "azure_dns_sp_creds" {
   metadata {
-    name = "dns-sa-creds"
+    name = "azure-dns-sp-creds"
   }
 
   data = {
-    "credentials.json" = "${file("${var.gcp_dns_sa_key}")}"
+    "azure.json" = "${file("${var.azure_dns_json}")}"
   }
 }
 resource "helm_release" "external-dns" {
@@ -14,16 +14,12 @@ resource "helm_release" "external-dns" {
     wait = "false"
 
     set {
-        name = "google.project"
-        value = "${var.project}"
-    }
-    set {
-        name = "google.serviceAccountSecret"
-        value = "${kubernetes_secret.google_dns_sa_creds.metadata.0.name}"
+        name = "azure.secretName"
+        value = "${kubernetes_secret.azure_dns_sp_creds.metadata.0.name}"
     }
     set {
         name = "provider"
-        value = "google"
+        value = "azure"
     }
 
     set {

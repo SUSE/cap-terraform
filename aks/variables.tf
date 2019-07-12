@@ -44,11 +44,15 @@ variable "ssh_public_key" {
     type = "string"
 }
 
-variable "gcp_dns_sa_key" {
+variable "azure_dns_json" {
     type = "string"
 }
 
-variable "project" {
+variable "scf_domain" {
+    type = "string"
+}
+
+variable "chart_values_file" {
     type = "string"
 }
 
