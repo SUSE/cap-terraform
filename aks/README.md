@@ -1,4 +1,4 @@
-1. The Azure provider in this example uses the Azure storage account remote backend to store terraform state - you can use s3 buckets to do the same. This helps in a distributed team setup and also avoids storing sensitive data on the local filesystem in plaintext (cloud provider backends support encryption of data at rest). To use the Azure storage account backend create a blob container in an Azure storage account and create a backend config file with that information. The templates use partial configuration and expect a backend config file via the `-backend-config=PATH` option when running `terraform init`. To avoid putting the storage account key/shared access secret set the `ARM_ACCESS_KEY` or `ARM_SAS_TOKEN` env variable before running `terraform init`.
+1. The Azure provider in this example can use the Azure storage account remote backend to store terraform state (it's currently commented out) - you can use s3 buckets to do the same. This helps in a distributed team setup and also avoids storing sensitive data on the local filesystem in plaintext (cloud provider backends support encryption of data at rest). To use the Azure storage account backend create a blob container in an Azure storage account and create a backend config file with that information. The templates use partial configuration and expect a backend config file via the `-backend-config=PATH` option when running `terraform init`. To avoid putting the storage account key/shared access secret set the `ARM_ACCESS_KEY` or `ARM_SAS_TOKEN` env variable before running `terraform init`.
 
 2. Create a terraform.tfvars (should be in your .gitignore as contains sensitive information) file with the following information
 -  location
@@ -8,10 +8,17 @@
 -  client_id (Azure Service Principal client id - must be created with `az ad sp create-for-rbac`, cannot be created via portal)  
 -  client_secret ( Azure SP client secret)
 - cluster_labels (any cluster labels, an optional map of key value pairs)
-- project (for external-dns with GCP cloud DNS, GCP peoject id) 
-- gcp_dns_sa_key (for external-dns with GCP, GCP service account key location) 
+- azure_dns_json - file where the azure SP credentials are stored for creating Azure DNS entries. Must be of the form below:
 
-3. `terraform init -backend-config=<BE-config-file-location>`
+{
+    "tenantId": "REDACTED",
+    "subscriptionId": "REDACTED",
+    "resourceGroup": "resource group where azure DNS zone is",
+    "aadClientId": "REDACTED",
+    "aadClientSecret": "REDACTED"
+}
+
+3. `terraform init -backend-config=<BE-config-file-location>` (if you're using a backend, otherwise just `terraform init`)
 
 4. `terraform plan -out <PLAN-path>`
 
