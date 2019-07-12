@@ -15,8 +15,8 @@ Remember you'll need an Azure service principal that has adequate permissions to
 -  az_resource_group 
 -  ssh_public_key (SSH key file to SSH into worker nodes)
 -  agent_admin(SSH user name)
--  client_id (Azure Service Principal client id - must be created with `az ad sp create-for-rbac`, cannot be created via portal, can alternatively set TF_VAR_client_id env var)  
--  client_secret ( Azure SP client secret,can alternatively set TF_VAR_client_secret env var)
+-  client_id (Azure Service Principal client id - must be created with `az ad sp create-for-rbac`, cannot be created via portal, can alternatively set `TF_VAR_client_id` env var)  
+-  client_secret ( Azure SP client secret,can alternatively set `TF_VAR_client_secret` env var)
 - cluster_labels (any cluster labels, an optional map of key value pairs)
 - azure_dns_json - file where the azure SP credentials are stored for creating Azure DNS entries. This SP can be the same as the one previously set up to create cluster etc. but does not have to be, i.e., this SP can be given just the rights for adding DNS records in an existing Azure DNS zone. The json file must be of the form below:
 
