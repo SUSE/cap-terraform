@@ -18,10 +18,16 @@ resource "helm_release" "cert-manager" {
   chart      = "cert-manager"
   namespace  = "cert-manager"
   wait       = "true"
+  version    = "0.8.1"
 
   set {
     name  = "global.rbac.create"
     value = "true"
+  }
+
+  set {
+    name = "webhook.enabled"
+    value = "false"
   }
   
   depends_on = ["null_resource.cert_manager_setup"]

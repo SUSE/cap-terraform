@@ -1,7 +1,0 @@
-*.tfvars
-*.pem
-*.backup
-*.tfstate
-*.info
-.terraform/
-.pending/
