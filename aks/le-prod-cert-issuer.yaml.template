@@ -6,7 +6,7 @@ spec:
   acme:
     # Replace with your email address so you can be notified of expiring certificates
     email: #Email
-    # This is using Let's production so beware of rate-limiting! 
+    # This is using letsencrypt production so beware of rate-limiting! 
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       # The secret that holds the generated private key used to communicate with Let's Encrypt
@@ -20,7 +20,7 @@ spec:
           # A secretKeyRef to a service principal ClientSecret (password)
           # ref: https://docs.microsoft.com/en-us/azure/container-service/kubernetes/container-service-kubernetes-service-principal 
           clientSecretSecretRef:
-            name: AZUREDNS_SECRET_KEY_NAME
+            name: azuredns-config
             key: CLIENT_SECRET
           # Azure subscription Id
           subscriptionID: #AZ_SUB_ID
