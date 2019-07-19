@@ -25,6 +25,9 @@ resource "helm_release" "cert-manager" {
     value = "true"
   }
 
+# webhook seems flaky and frequently runs into intermittent errors due to various race conditions
+# https://docs.cert-manager.io/en/latest/getting-started/troubleshooting.html?highlight=internal%20server%20error#troubleshooting-installation
+  
   set {
     name = "webhook.enabled"
     value = "false"
