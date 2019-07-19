@@ -9,7 +9,7 @@
  These env vars are used by the Terraform AzureRM provider to login to Azure with the configured SP credentials. Note the SP must have sufficient privileges to deploy resources in the subscription and must be created with `az ad sp create-for-rbac`, it cannot be created via the portal.
 
 
-1. Create a terraform.tfvars (should be in your .gitignore or outside source control as it contains sensitive information) file with the following information
+1. Create a `terraform.tfvars` (should be in your `.gitignore` or outside source control as it contains sensitive information) file with the following information
     -  `location` (Azure region - eastus, westus etc.)
     -  `az_resource_group` (the resource group must exist)
     -  `ssh_public_key` (location of the SSH key file for access to worker nodes)
@@ -30,9 +30,9 @@
     ```
     - `chart_values_yaml` - filesystem location of the helm chart values yaml for deploying UAA and SCF.
 
-Note that external-dns needs its own config setup and cannot reuse the values already set for tenant/subscription etc. *Also note the `resourceGroup` here is the resource group where the Azure DNS zone(s) are hosted, it's not the resource group where the cluster will be deployed*. The adClientId/Secret in this file do not have to be the same as the client_id/client_secret in step 1 above as long as this SP has sufficient rights to create DNS records in the resource group hosting the DNS zone.
+Note that `external-dns` needs its own config setup and cannot reuse the values already set for tenant/subscription etc. *Also note the `resourceGroup` here is the resource group where the Azure DNS zone(s) are hosted, it's not the resource group where the cluster will be deployed*. The `aadClientId/Secret` in this file do not have to be the same as the client_id/client_secret in step 1 above as long as this SP has sufficient rights to create DNS records in the resource group hosting the DNS zone.
 
-2. In the helm chart values yaml use the following values to allow cert-manager to generate certificates for the ingress endpoints:
+2. In the helm chart values yaml use the following values to allow `cert-manager` to generate certificates for the ingress endpoints:
 
 ```
 ingress:
@@ -60,6 +60,6 @@ UAA_CA_CERT: |
 
 5. `terraform apply plan <PLAN-path>`
 
-6. A kubeconfig named aksk8scfg is generated in the same directory TF is run from. Set your KUBECONFIG env var to point to this file.
+6. A kubeconfig named `aksk8scfg` is generated in the same directory TF is run from. Set your `KUBECONFIG` env var to point to this file.
 
 7. The `helm install`s should have been triggered as part of step 5. Check the pods in UAA and SCF namespace to make sure they all come up and are ready. 
