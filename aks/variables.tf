@@ -48,10 +48,10 @@ variable "azure_dns_json" {
     type = "string"
 }
 
-variable "scf_domain" {
-    type = "string"
-}
-
+#variable "scf_domain" {
+#    type = "string"
+#}
+#
 variable "chart_values_file" {
     type = "string"
 }
