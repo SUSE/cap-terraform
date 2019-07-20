@@ -54,12 +54,14 @@ UAA_CA_CERT: |
     -----END CERTIFICATE-----
 ```
 
-3. `terraform init`
+3. Make appropriate substituions in the `le-prod-cert-issuer.yaml.template` and rename it to `le-prod-cert-issuer.yaml`.
 
-4. `terraform plan -out <PLAN-path>`
+4. `terraform init`
 
-5. `terraform apply plan <PLAN-path>`
+5. `terraform plan -out <PLAN-path>`
 
-6. A kubeconfig named `aksk8scfg` is generated in the same directory TF is run from. Set your `KUBECONFIG` env var to point to this file.
+6. `terraform apply plan <PLAN-path>`
 
-7. The `helm install`s should have been triggered as part of step 5. Check the pods in UAA and SCF namespace to make sure they all come up and are ready. 
+7. A kubeconfig named `aksk8scfg` is generated in the same directory TF is run from. Set your `KUBECONFIG` env var to point to this file.
+
+8. The `helm install`s should have been triggered as part of step 5. Check the pods in UAA and SCF namespace to make sure they all come up and are ready. 
