@@ -1,0 +1,7 @@
+project             =   "placeholder" #GCP project id
+location            =   "placeholder" #GCP region
+node-pool-name      =   "placeholder" #Name for your nodepool
+vm_type             =   "placeholder" #e.g: Ubuntu
+gke_sa_key          =   "placeholder" #path to your service account key
+gcp_dns_sa_key      =   "placeholder" #path to your dns service account key
+cluster_lables      =   "{key = "placeholder"}" #labels to be attached to cluster
