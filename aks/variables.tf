@@ -10,7 +10,7 @@ variable "node_count" {
     default = "1"
 }
 variable "machine_type" {
-    default = "Standard_DS3_v2"
+    default = "Standard_DS4_v2"
 }
 
 variable "agent_admin" {
