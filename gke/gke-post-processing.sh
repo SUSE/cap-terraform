@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+gcloud auth revoke
+
+gcloud auth activate-service-account --key-file=${SA_KEY_FILE}
+
 gcloud container clusters get-credentials  ${CLUSTER_NAME} --zone ${CLUSTER_ZONE:?required}
 
 checkready() {
