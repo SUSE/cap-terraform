@@ -13,5 +13,5 @@
 
 3. `terraform plan -out <path-to-save-plan>`
 
-4. `terraform apply plan <path-to-saved-plan>`
-  
+4. `terraform apply <path-to-saved-plan>`
+
