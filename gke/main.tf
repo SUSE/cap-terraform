@@ -15,6 +15,8 @@ resource "google_container_cluster" "gke-cluster" {
   remove_default_node_pool = true
 
   initial_node_count = 1
+  min_master_version = "${var.k8s_version}"
+  node_version = "${var.k8s_version}"
 
   resource_labels = "${var.cluster_labels}"
 
