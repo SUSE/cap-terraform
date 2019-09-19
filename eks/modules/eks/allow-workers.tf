@@ -4,7 +4,7 @@ resource "kubernetes_config_map" "aws_auth" {
     namespace = "kube-system"
   }
 
-  data {
+  data = {
     mapRoles = <<ROLES
 - rolearn: ${aws_iam_role.eks-worker.arn}
   username: system:node:{{EC2PrivateDNSName}}
