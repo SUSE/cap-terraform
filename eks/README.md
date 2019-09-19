@@ -1,6 +1,14 @@
+<aside class="notice">
+    These scripts are working in progress so make sure that you know what you are doing before typing 'yes'.
+</aside>
+
 This recipe automates setup of an Elastic Kubernetes Service (EKS) on AWS. It was created to simplify deployment of [SUSE Cloud Foundry](https://github.com/SUSE/scf) which takes Kubernetes as a foundation.
 
 ## Preparation
+
+## Requirements
+
+1. Terraform < v0.12 (tested with v0.11.4)
 
 ### Tools
 
@@ -16,7 +24,7 @@ Not quite sure what to say here but I will add something in future. For now just
 
 ### Configurations
 
-1. Add an EC2 Key Pairs to be used to join the nodes into the k8s cluster
+1. Add an EC2 Key Pairs to be used to join the nodes into the k8s cluster. Make sure that the key pair is created within the same AWS region than the cluster
 2. Make sure that you are using a user with no admin rights
 
 ## Instructions
