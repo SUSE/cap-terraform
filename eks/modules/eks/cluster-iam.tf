@@ -1,20 +1,19 @@
+
+#  * IAM Role to allow EKS service to manage other AWS services
+data "aws_iam_policy_document" "cluster-role-policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["eks.amazonaws.com"]
+    }
+  }
+}
 resource "aws_iam_role" "aws-cluster" {
   name = "terraform-eks-aws-cluster"
-
-  assume_role_policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "eks.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-POLICY
+  assume_role_policy = "${data.aws_iam_policy_document.cluster-role-policy.json}"
+  
 }
 
 resource "aws_iam_role_policy_attachment" "aws-cluster-AmazonEKSClusterPolicy" {
