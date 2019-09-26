@@ -6,7 +6,7 @@ resource "aws_route_table" "main" {
     gateway_id = "${aws_internet_gateway.main.id}"
   }
 
-  tags {
+  tags = {
     Name = "${var.cluster_name}"
   }
 }

@@ -49,7 +49,7 @@ resource "aws_autoscaling_group" "eks-worker" {
   max_size             = 4
   min_size             = 2
   name                 = "${var.cluster_name}"
-  vpc_zone_identifier  = ["${var.app_subnet_ids}"]
+  vpc_zone_identifier  = flatten(["${var.app_subnet_ids}"])
 
   tag {
     key                 = "Name"
