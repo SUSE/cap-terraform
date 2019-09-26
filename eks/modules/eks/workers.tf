@@ -3,7 +3,8 @@
 data "aws_ami" "eks-worker" {
   filter {
     name   = "name"
-    values = ["amazon-eks-node-v25"]
+    //values = ["amazon-eks-node-v25"]
+    values = ["amazon-eks-node-1.13-v20190906"]
   }
 
   most_recent = true
