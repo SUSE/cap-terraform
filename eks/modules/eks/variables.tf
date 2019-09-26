@@ -1,19 +1,15 @@
-variable "cluster_name" {
+variable "cluster-name" {
   type    = "string"
 }
-variable "location" {
-    description = "Used AWS Region."
+
+variable "vpc-id" {
+    type = "string"
 }
 
 variable "app_subnet_ids" {
-  type = "list"
+    type = list(string)
 }
 
-variable "keypair_name" {
-  type = "string"
-  description = "Name of the keypair declared in AWS IAM, used to connect into your instances via SSH."
-}
-
-variable "vpc_id" {
-  type = "string"
+variable "workstation_cidr_block" {
+    type = "string"
 }
