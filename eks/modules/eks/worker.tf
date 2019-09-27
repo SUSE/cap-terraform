@@ -34,9 +34,10 @@ resource "aws_launch_configuration" "aws" {
   iam_instance_profile        = "${aws_iam_instance_profile.aws-node.name}"
   image_id                    = "${data.aws_ami.eks-worker.id}"
   instance_type               = "m4.large"
-  name_prefix                 = "terraform-eks-aws"
+  name_prefix                 = "${var.cluster-name}-worker-launch-config"
   security_groups             = ["${aws_security_group.aws-node.id}"]
   user_data_base64            = "${base64encode(local.aws-node-userdata)}"
+  key_name		              = "${var.keypair_name}"
 
   lifecycle {
     create_before_destroy = true

@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "worker-role-policy" {
   }
 }
 resource "aws_iam_role" "aws-node" {
-  name = "terraform-eks-aws-node"
+  name = "${var.cluster-name}-worker-iam-role"
 
   assume_role_policy = "${data.aws_iam_policy_document.worker-role-policy.json}"
 }
@@ -31,6 +31,6 @@ resource "aws_iam_role_policy_attachment" "aws-node-AmazonEC2ContainerRegistryRe
 }
 
 resource "aws_iam_instance_profile" "aws-node" {
-  name = "terraform-eks-aws"
+  name = "${var.cluster-name}-worker-iam-instance-profile"
   role = "${aws_iam_role.aws-node.name}"
 }

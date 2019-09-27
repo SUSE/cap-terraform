@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "cluster-role-policy" {
   }
 }
 resource "aws_iam_role" "aws-cluster" {
-  name = "terraform-eks-aws-cluster"
+  name = "${var.cluster-name}-iam-role"
   assume_role_policy = "${data.aws_iam_policy_document.cluster-role-policy.json}"
   
 }

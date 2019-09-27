@@ -13,3 +13,7 @@ variable "app_subnet_ids" {
 variable "workstation_cidr_block" {
     type = "string"
 }
+
+variable "keypair_name" {
+    type = "string"
+}
