@@ -6,7 +6,7 @@
 
 
 resource "aws_eks_cluster" "aws" {
-  name     = "${var.cluster-name}"
+  name     = "${var.generated-cluster-name}"
   role_arn = "${aws_iam_role.aws-cluster.arn}"
 
   vpc_config {

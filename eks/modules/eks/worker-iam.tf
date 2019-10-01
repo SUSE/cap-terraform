@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "worker-role-policy" {
   }
 }
 resource "aws_iam_role" "aws-node" {
-  name = "${var.cluster-name}-worker-iam-role"
+  name = "${aws_eks_cluster.aws.name}-worker-iam-role"
 
   assume_role_policy = "${data.aws_iam_policy_document.worker-role-policy.json}"
 }
@@ -30,7 +30,12 @@ resource "aws_iam_role_policy_attachment" "aws-node-AmazonEC2ContainerRegistryRe
   role       = "${aws_iam_role.aws-node.name}"
 }
 
+#resource "aws_iam_role_policy_attachment" "worker-ext-dns-policy" {
+#  policy_arn = "${aws_iam_policy.ext-dns-policy.arn}"
+#  role       = "${aws_iam_role.aws-node.name}"
+#}
+
 resource "aws_iam_instance_profile" "aws-node" {
-  name = "${var.cluster-name}-worker-iam-instance-profile"
+  name = "${aws_eks_cluster.aws.name}-worker-iam-instance-profile"
   role = "${aws_iam_role.aws-node.name}"
 }

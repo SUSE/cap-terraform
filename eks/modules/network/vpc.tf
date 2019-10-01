@@ -5,6 +5,9 @@
 #  * Internet Gateway
 #  * Route Table
 #
+locals {
+    cluster_name = "cap-${random_string.cluster_name.result}"
+}
 data "aws_availability_zones" "available" {}
 
 resource "aws_vpc" "main" {
@@ -12,8 +15,8 @@ resource "aws_vpc" "main" {
 
   tags = "${
     map(
-      "Name", "${var.cluster-name}-worker",
-      "kubernetes.io/cluster/${var.cluster-name}", "shared",
+      "Name", "${local.cluster_name}-vpc",
+      "kubernetes.io/cluster/${local.cluster_name}", "shared",
     )
   }"
 }
@@ -27,8 +30,8 @@ resource "aws_subnet" "main" {
 
   tags = "${
     map(
-      "Name", "${var.cluster-name}-public-az-${count.index}",
-      "kubernetes.io/cluster/${var.cluster-name}", "shared",
+      "Name", "${local.cluster_name}-public-az-${count.index}",
+      "kubernetes.io/cluster/${local.cluster_name}", "shared",
     )
   }"
 }
@@ -37,7 +40,7 @@ resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.main.id}"
 
   tags = {
-    Name = "${var.cluster-name}"
+    Name = "${local.cluster_name}"
   }
 }
 

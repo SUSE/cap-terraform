@@ -1,5 +1,5 @@
 resource "aws_security_group" "aws-node" {
-  name        = "${var.cluster-name}-worker-security-group"
+  name        = "${aws_eks_cluster.aws.name}-worker-security-group"
   description = "Security group for all nodes in the cluster"
   vpc_id      = "${var.vpc-id}"
 
@@ -12,8 +12,8 @@ resource "aws_security_group" "aws-node" {
 
   tags = "${
     map(
-     "Name", "${var.cluster-name}-worker-security-group",
-     "kubernetes.io/cluster/${var.cluster-name}", "owned",
+     "Name", "${aws_eks_cluster.aws.name}-worker-security-group",
+     "kubernetes.io/cluster/${aws_eks_cluster.aws.name}", "owned",
     )
   }"
 }

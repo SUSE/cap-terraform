@@ -1,4 +1,6 @@
 # Add Kubernetes Stable Helm charts repo
+
+
 data "helm_repository" "stable" {
   name = "stable"
   url  = "https://kubernetes-charts.storage.googleapis.com"
@@ -26,4 +28,6 @@ resource "helm_release" "nginx_ingress" {
       value = "true"
   }
 
+  depends_on = ["kubernetes_cluster_role_binding.tiller"]
+  
 }

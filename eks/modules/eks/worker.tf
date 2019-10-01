@@ -25,7 +25,7 @@ locals {
   aws-node-userdata = <<USERDATA
 #!/bin/bash
 set -o xtrace
-/etc/eks/bootstrap.sh --apiserver-endpoint '${aws_eks_cluster.aws.endpoint}' --b64-cluster-ca '${aws_eks_cluster.aws.certificate_authority.0.data}' '${var.cluster-name}'
+/etc/eks/bootstrap.sh --apiserver-endpoint '${aws_eks_cluster.aws.endpoint}' --b64-cluster-ca '${aws_eks_cluster.aws.certificate_authority.0.data}' '${aws_eks_cluster.aws.name}'
 USERDATA
 }
 
@@ -34,7 +34,7 @@ resource "aws_launch_configuration" "aws" {
   iam_instance_profile        = "${aws_iam_instance_profile.aws-node.name}"
   image_id                    = "${data.aws_ami.eks-worker.id}"
   instance_type               = "m4.large"
-  name_prefix                 = "${var.cluster-name}-worker-launch-config"
+  name_prefix                 = "${aws_eks_cluster.aws.name}-worker-launch-config"
   security_groups             = ["${aws_security_group.aws-node.id}"]
   user_data_base64            = "${base64encode(local.aws-node-userdata)}"
   key_name		              = "${var.keypair_name}"
@@ -55,17 +55,17 @@ resource "aws_autoscaling_group" "aws" {
   launch_configuration = "${aws_launch_configuration.aws.id}"
   max_size             = 2
   min_size             = 1
-  name                 = "${var.cluster-name}"
+  name                 = "${aws_eks_cluster.aws.name}"
   vpc_zone_identifier  = "${var.app_subnet_ids}"
 
   tag {
     key                 = "Name"
-    value               = "${var.cluster-name}"
+    value               = "${aws_eks_cluster.aws.name}"
     propagate_at_launch = true
   }
 
   tag {
-    key                 = "kubernetes.io/cluster/${var.cluster-name}"
+    key                 = "kubernetes.io/cluster/${aws_eks_cluster.aws.name}"
     value               = "owned"
     propagate_at_launch = true
   }

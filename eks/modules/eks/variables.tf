@@ -1,6 +1,6 @@
-variable "cluster-name" {
+variable "generated-cluster-name" {
   type    = "string"
-}
+} 
 
 variable "vpc-id" {
     type = "string"
