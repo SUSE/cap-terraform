@@ -1,14 +1,8 @@
-<aside class="notice">
-    These scripts are working in progress so make sure that you know what you are doing before typing 'yes'.
-</aside>
-
-This recipe automates setup of an Elastic Kubernetes Service (EKS) on AWS. It was created to simplify deployment of [SUSE Cloud Foundry](https://github.com/SUSE/scf) which takes Kubernetes as a foundation.
-
 ## Preparation
 
 ## Requirements
 
-1. Terraform < v0.12 (tested with v0.11.4)
+1. Terraform v0.12
 
 ### Tools
 
@@ -20,7 +14,7 @@ This recipe automates setup of an Elastic Kubernetes Service (EKS) on AWS. It wa
 
 ### Permissions
 
-Not quite sure what to say here but I will add something in future. For now just make sure that you have the permissions described [here](https://github.com/SUSE/scf/wiki/IAM-Requirements-for-EKS).
+Make sure that you have the permissions described [here](https://github.com/SUSE/scf/wiki/IAM-Requirements-for-EKS).
 
 ### Configurations
 
@@ -29,13 +23,11 @@ Not quite sure what to say here but I will add something in future. For now just
 
 ## Instructions
 
-:warning: Please note the SCF specific security groups in `eks/terraform/eks-worker.tf`
-
-1. run `aws configure` to authenticate to AWS
-2. Copy `terraform.tfvars.template` to `terraform.tfvars` and edit the values.
-3. Run `terraform apply -var-file=<filename>.tfvars` to create the cluster in AWS
-4. Make sure you have the [latest `kubectl` ready](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
-5. Make sure you have the [latest `helm` ready](https://github.com/helm/helm/releases).
-6. Make sure you have the [`aws-iam-authenticator` binary ready](https://github.com/kubernetes-sigs/aws-iam-authenticator).
-7. Check the health of your workers with `kubectl get nodes`.
-8. (OPTIONAL) Have a look at [this guide](https://github.com/SUSE/scf/wiki/Deployment-on-Amazon-EKS) for setting up SUSE Cloud Application Platform on top of it.
+1. run `aws configure` to authenticate to AWS.
+2. Run `terraform plan -out <path-to-plan>`
+3. Run `terraform apply --parallelism=5 <path-to-plan>` to create the cluster in AWS.   Note that setting the `parallelism` flag value to 5 (default=10) reduces the level of concurrency of Terraform making AWS API calls and might help avoid timeouts due AWS throttling API calls.
+4. Run `terraform output kubeconfig` to generate the kubeconfig. Point your `KUBECONFIG` env var to this file.
+5. Check the health of the worker nodes with `kubectl get nodes`.
+6. The deployment also sets up helm and deploys nginx Ingress Controller in the default namespace. You can check the status of the helm deployment by doing a `helm list`.
+7. (OPTIONAL) Have a look at [this guide](https://github.com/SUSE/scf/wiki/Deployment-on-Amazon-EKS) for setting up SUSE Cloud Application Platform on top of it.
+8. Once you're done, destroy your infrastructure with `terraform destroy`. Note that sometimes, the internet gateway does not get detached and deleted even after 15 minutes and times out. If that happens, you'd have to manually delete the VPC and its dependent resources.

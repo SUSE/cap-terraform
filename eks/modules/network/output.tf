@@ -5,3 +5,7 @@ output "vpc_id" {
 output "app_subnet_ids" {
   value = "${aws_subnet.main.*.id}"
 }
+
+output "generated-cluster-name" {
+    value = "${local.cluster_name}"
+}

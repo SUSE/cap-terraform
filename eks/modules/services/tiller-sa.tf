@@ -3,10 +3,7 @@ resource "kubernetes_service_account" "tiller" {
     name = "tiller"
     namespace = "kube-system"
   }
-
   automount_service_account_token = true
-
-  //depends_on = ["null_resource.post_processor"]
 }
 
 resource "kubernetes_cluster_role_binding" "tiller" {

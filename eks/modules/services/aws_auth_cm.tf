@@ -4,14 +4,14 @@ resource "kubernetes_config_map" "aws_auth" {
     namespace = "kube-system"
   }
 
-  data = {
+  data =  {
     mapRoles = <<ROLES
-- rolearn: ${aws_iam_role.eks-worker.arn}
+- rolearn: ${var.worker-arn}
   username: system:node:{{EC2PrivateDNSName}}
   groups:
     - system:bootstrappers
     - system:nodes
 ROLES
 }
-  depends_on = ["aws_eks_cluster.eks-cluster"]
+  depends_on = ["kubernetes_cluster_role_binding.tiller"]
 }

@@ -1,0 +1,4 @@
+region = "us-east-2"
+workstation_cidr_block = "0.0.0.0/0"
+keypair_name = "some_keypair"
+eks_version = "1.14"
