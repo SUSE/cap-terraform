@@ -16,4 +16,5 @@ module "services" {
     source = "./modules/services"
 
     eks-cluster-name = "${module.eks.eks-cluster-name}"
+    worker-arn      = "${module.eks.aws-node-arn}"
 }

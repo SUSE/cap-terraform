@@ -27,7 +27,7 @@ resource "helm_release" "nginx_ingress" {
       name =  "controller.publishService.enabled"
       value = "true"
   }
+# wait until the worker nodes have joined the cluster...
+  depends_on = ["kubernetes_config_map.aws_auth"]
 
-  depends_on = ["kubernetes_cluster_role_binding.tiller"]
-  
 }

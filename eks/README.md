@@ -23,11 +23,9 @@ Make sure that you have the permissions described [here](https://github.com/SUSE
 
 ## Instructions
 
-1. run `aws configure` to authenticate to AWS
+1. run `aws configure` to authenticate to AWS.
 2. Run `terraform apply` to create the cluster in AWS
 3. Run `terraform output kubeconfig` to generate the kubeconfig. Point your KUBECONFIG env var to point to this file.
-4. Run `terraform output config_map_aws_auth > eks_cm.yaml` to generate a configmap to allow workers to join the node. 
-5. Run `kubectl apply -f eks_cm.yaml`
-6. Check the health of your workers with `kubectl get nodes`.
-7. Wait until the nodes are reported as `Ready`.
-8. (OPTIONAL) Have a look at [this guide](https://github.com/SUSE/scf/wiki/Deployment-on-Amazon-EKS) for setting up SUSE Cloud Application Platform on top of it.
+4. Check the health of your workers with `kubectl get nodes`.
+5. The deployment also sets up helm and deploys and nginx Ingress Controller in the default namespace. You can check the status of the helm deployment by doing a `helm list`.
+6. (OPTIONAL) Have a look at [this guide](https://github.com/SUSE/scf/wiki/Deployment-on-Amazon-EKS) for setting up SUSE Cloud Application Platform on top of it.
