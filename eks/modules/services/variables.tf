@@ -1,14 +1,11 @@
-variable "secret_key" {
-  type = "string"
-  description = "The secret key used by your terraform client to access AWS."
+
+variable "eks-cluster-name" {
+    type = "string"
 }
 
-variable "access_key" {
-  type = "string"
-  description = "The account identification key used by your Terraform client."
+variable "worker-arn" {
+    type = "string"
 }
 
-variable "location" {
-  type    = "string"
-  description = "Used AWS Region."
-}
+
+
