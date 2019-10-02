@@ -16,3 +16,8 @@ variable "keypair_name" {
 }
 
 
+variable "eks_version" {
+    type = "string"
+}
+
+

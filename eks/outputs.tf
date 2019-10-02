@@ -32,7 +32,7 @@ users:
         - "${module.eks.eks-cluster-name}"
 KUBECONFIG
 }
- 
+
 output "kubeconfig" {
   value = "${local.kubeconfig}"
 }

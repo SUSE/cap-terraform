@@ -10,6 +10,7 @@ module "eks" {
     app_subnet_ids = "${module.network.app_subnet_ids}"
     workstation_cidr_block = "${var.workstation_cidr_block}"
     keypair_name  = "${var.keypair_name}"
+    eks_version   = "${var.eks_version}"
 }
 
 module "services" {

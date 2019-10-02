@@ -17,3 +17,8 @@ variable "workstation_cidr_block" {
 variable "keypair_name" {
     type = "string"
 }
+
+variable "eks_version" {
+    type = "string"
+}
+
