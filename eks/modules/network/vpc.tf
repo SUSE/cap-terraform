@@ -59,3 +59,8 @@ resource "aws_route_table_association" "main" {
   subnet_id      = "${aws_subnet.main.*.id[count.index]}"
   route_table_id = "${aws_route_table.main.id}"
 }
+
+resource "null_resource" "aws_ig_dependency" {
+
+    depends_on = ["aws_internet_gateway.main"]
+}

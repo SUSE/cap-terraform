@@ -1,6 +1,12 @@
+
+resource "null_resource" "force-eks-dependency" {
+    provisioner "local-exec" {
+    command = "echo ${var.force-eks-dependency-id} > /dev/null"
+  }
+}
 resource "kubernetes_config_map" "aws_auth" {
   metadata {
-    name = "aws-auth"
+    name = "aws-auth"  
     namespace = "kube-system"
   }
 
@@ -13,5 +19,5 @@ resource "kubernetes_config_map" "aws_auth" {
     - system:nodes
 ROLES
 }
-  depends_on = ["kubernetes_cluster_role_binding.tiller"]
+depends_on = ["null_resource.force-eks-dependency"]
 }

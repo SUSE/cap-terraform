@@ -9,8 +9,10 @@ module "eks" {
     vpc-id      = "${module.network.vpc_id}"
     app_subnet_ids = "${module.network.app_subnet_ids}"
     workstation_cidr_block = "${var.workstation_cidr_block}"
+    aws-ig-dependency-id = "${module.network.aws-internet-gateway-dependency}"
     keypair_name  = "${var.keypair_name}"
     eks_version   = "${var.eks_version}"
+
 }
 
 module "services" {
@@ -18,4 +20,5 @@ module "services" {
 
     eks-cluster-name = "${module.eks.eks-cluster-name}"
     worker-arn      = "${module.eks.aws-node-arn}"
+    force-eks-dependency-id = "${module.eks.force-eks-dependency-id}"
 }

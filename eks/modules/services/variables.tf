@@ -7,5 +7,11 @@ variable "worker-arn" {
     type = "string"
 }
 
+variable "force-eks-dependency-id" {
+    type = "string"
+}
+
+
+
 
 

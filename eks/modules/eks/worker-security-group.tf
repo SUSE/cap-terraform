@@ -39,7 +39,7 @@ resource "aws_security_group_rule" "aws-node-ingress-cluster" {
   to_port                  = 65535
   type                     = "ingress"
 }
-
+/*
 resource "aws_security_group_rule" "aws-node-ingress-cap-http" {
   description              = "Allow CloudFoundry to communicate on http port"
   type                     = "ingress"
@@ -119,3 +119,4 @@ resource "aws_security_group_rule" "aws-node-ingress-tcp-traffic" {
 #  ipv6_cidr_blocks         = ["::/0"]
   security_group_id        = "${aws_security_group.aws-node.id}"
 }
+*/

@@ -9,3 +9,7 @@ output "app_subnet_ids" {
 output "generated-cluster-name" {
     value = "${local.cluster_name}"
 }
+
+output "aws-internet-gateway-dependency" {
+    value = "${null_resource.aws_ig_dependency.id}"
+}
