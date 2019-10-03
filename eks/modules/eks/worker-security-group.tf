@@ -25,6 +25,8 @@ resource "aws_security_group_rule" "aws-node-ingress-self" {
   security_group_id        = "${aws_security_group.aws-node.id}"
   source_security_group_id = "${aws_security_group.aws-node.id}"
   to_port                  = 65535
+ # to_port                  = 0  //https://www.terraform.io/docs/providers/aws/r/security_group.html#protocol
+
   type                     = "ingress"
 }
 
@@ -45,7 +47,7 @@ resource "aws_security_group_rule" "aws-node-ingress-cap-http" {
   to_port                  = 80
   protocol                 = "tcp"
   cidr_blocks              = ["0.0.0.0/0"]
-  ipv6_cidr_blocks         = ["::/0"]
+#  ipv6_cidr_blocks         = ["::/0"]
   security_group_id        = "${aws_security_group.aws-node.id}"
 }
 
@@ -56,7 +58,7 @@ resource "aws_security_group_rule" "aws-node-ingress-cap-https" {
   to_port                  = 443
   protocol                 = "tcp"
   cidr_blocks              = ["0.0.0.0/0"]
-  ipv6_cidr_blocks         = ["::/0"]
+#  ipv6_cidr_blocks         = ["::/0"]
   security_group_id        = "${aws_security_group.aws-node.id}"
 
 }
@@ -68,7 +70,7 @@ resource "aws_security_group_rule" "aws-node-ingress-cap-https" {
   to_port                  = 2793
   protocol                 = "tcp"
   cidr_blocks              = ["0.0.0.0/0"]
-  ipv6_cidr_blocks         = ["::/0"]
+#  ipv6_cidr_blocks         = ["::/0"]
   security_group_id        = "${aws_security_group.aws-node.id}"
 
 }
@@ -80,7 +82,7 @@ resource "aws_security_group_rule" "aws-node-ingress-cap-ssh" {
   to_port                  = 2222
   protocol                 = "tcp"
   cidr_blocks              = ["0.0.0.0/0"]
-  ipv6_cidr_blocks         = ["::/0"]
+#  ipv6_cidr_blocks         = ["::/0"]
   security_group_id        = "${aws_security_group.aws-node.id}"
 }
 
@@ -91,7 +93,7 @@ resource "aws_security_group_rule" "aws-node-ingress-cap-wss" {
   to_port                  = 4443
   protocol                 = "tcp"
   cidr_blocks              = ["0.0.0.0/0"]
-  ipv6_cidr_blocks         = ["::/0"]
+#  ipv6_cidr_blocks         = ["::/0"]
   security_group_id        = "${aws_security_group.aws-node.id}"
 }
 
@@ -102,7 +104,7 @@ resource "aws_security_group_rule" "aws-node-ingress-stratos" {
   to_port                  = 8443
   protocol                 = "tcp"
   cidr_blocks              = ["0.0.0.0/0"]
-  ipv6_cidr_blocks         = ["::/0"]
+#  ipv6_cidr_blocks         = ["::/0"]
   security_group_id        = "${aws_security_group.aws-node.id}"
 
 }
@@ -114,6 +116,6 @@ resource "aws_security_group_rule" "aws-node-ingress-tcp-traffic" {
   to_port                  = 20009
   protocol                 = "tcp"
   cidr_blocks              = ["0.0.0.0/0"]
-  ipv6_cidr_blocks         = ["::/0"]
+#  ipv6_cidr_blocks         = ["::/0"]
   security_group_id        = "${aws_security_group.aws-node.id}"
 }
