@@ -29,6 +29,12 @@ set -o xtrace
 USERDATA
 }
 
+resource "null_resource" "satisfy-aws-ig-dependency" {
+    provisioner "local-exec" {
+    command = "echo ${var.aws-ig-dependency-id} > /dev/null"
+  }
+}
+
 resource "aws_launch_configuration" "aws" {
   associate_public_ip_address = true
   iam_instance_profile        = "${aws_iam_instance_profile.aws-node.name}"
@@ -48,12 +54,14 @@ resource "aws_launch_configuration" "aws" {
     volume_size           = 80
     delete_on_termination = true
   }
+
+  depends_on = ["null_resource.satisfy-aws-ig-dependency"]
 }
 
 resource "aws_autoscaling_group" "aws" {
-  desired_capacity     = 2
+  desired_capacity     = 3
   launch_configuration = "${aws_launch_configuration.aws.id}"
-  max_size             = 2
+  max_size             = 3
   min_size             = 1
   name                 = "${aws_eks_cluster.aws.name}"
   vpc_zone_identifier  = "${var.app_subnet_ids}"
@@ -69,4 +77,10 @@ resource "aws_autoscaling_group" "aws" {
     value               = "owned"
     propagate_at_launch = true
   }
+
+  
+}
+
+resource "null_resource" "force-wait-on-eks" {
+      depends_on = ["aws_autoscaling_group.aws"]
 }

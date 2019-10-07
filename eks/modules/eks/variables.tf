@@ -22,3 +22,7 @@ variable "eks_version" {
     type = "string"
 }
 
+variable "aws-ig-dependency-id" {
+    type = "string"
+}
+
