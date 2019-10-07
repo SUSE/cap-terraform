@@ -10,6 +10,8 @@ resource "aws_eks_cluster" "aws" {
   role_arn = "${aws_iam_role.aws-cluster.arn}"
   version  = "${var.eks_version}"
 
+  tags = "${var.cluster_labels}"
+
   vpc_config {
     security_group_ids = ["${aws_security_group.aws-cluster.id}"]
     subnet_ids         = "${var.app_subnet_ids}"

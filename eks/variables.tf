@@ -12,12 +12,12 @@ variable "workstation_cidr_block" {
 
 variable "keypair_name" {
     type = "string"
-  
 }
-
 
 variable "eks_version" {
     type = "string"
 }
 
-
+variable "cluster_labels" {
+    type = "map"
+}
