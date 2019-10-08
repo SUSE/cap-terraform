@@ -60,7 +60,7 @@ resource "aws_route_table_association" "main" {
   route_table_id = "${aws_route_table.main.id}"
 }
 
-resource "null_resource" "aws_ig_dependency" {
+resource "null_resource" "aws_rt_dependency" {
 
-    depends_on = ["aws_internet_gateway.main"]
+    depends_on = ["aws_route_table_association.main"]
 }
