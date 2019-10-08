@@ -10,6 +10,6 @@ output "generated-cluster-name" {
     value = "${local.cluster_name}"
 }
 
-output "aws-internet-gateway-dependency" {
-    value = "${null_resource.aws_ig_dependency.id}"
+output "aws-network-dependency" {
+    value = "${null_resource.aws_rt_dependency.id}"
 }

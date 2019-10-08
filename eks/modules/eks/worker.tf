@@ -29,9 +29,9 @@ set -o xtrace
 USERDATA
 }
 
-resource "null_resource" "satisfy-aws-ig-dependency" {
+resource "null_resource" "satisfy-aws-network-dependency" {
     provisioner "local-exec" {
-    command = "echo ${var.aws-ig-dependency-id} > /dev/null"
+    command = "echo ${var.aws-network-dependency-id} > /dev/null"
   }
 }
 
@@ -39,7 +39,7 @@ resource "aws_launch_configuration" "aws" {
   associate_public_ip_address = true
   iam_instance_profile        = "${aws_iam_instance_profile.aws-node.name}"
   image_id                    = "${data.aws_ami.eks-worker.id}"
-  instance_type               = "m4.large"
+  instance_type               = "t2.large"
   name_prefix                 = "${aws_eks_cluster.aws.name}-worker-launch-config"
   security_groups             = ["${aws_security_group.aws-node.id}"]
   user_data_base64            = "${base64encode(local.aws-node-userdata)}"
@@ -55,7 +55,7 @@ resource "aws_launch_configuration" "aws" {
     delete_on_termination = true
   }
 
-  depends_on = ["null_resource.satisfy-aws-ig-dependency"]
+  depends_on = ["null_resource.satisfy-aws-network-dependency", "aws_security_group_rule.aws-node-ingress-self", "aws_security_group_rule.aws-node-ingress-cluster"]
 }
 
 resource "aws_autoscaling_group" "aws" {
