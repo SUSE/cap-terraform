@@ -22,7 +22,13 @@ variable "eks_version" {
     type = "string"
 }
 
+
 variable "aws-network-dependency-id" {
     type = "string"
 }
+
+variable "cluster_labels" {
+    type = "map"
+}
+ 
 

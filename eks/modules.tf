@@ -12,7 +12,7 @@ module "eks" {
     aws-network-dependency-id = "${module.network.aws-network-dependency}"
     keypair_name  = "${var.keypair_name}"
     eks_version   = "${var.eks_version}"
-
+    cluster_labels = "${var.cluster_labels}"
 }
 
 module "services" {
