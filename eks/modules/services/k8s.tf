@@ -6,6 +6,10 @@ data "aws_eks_cluster_auth" "eks-auth" {
   name = "${var.eks-cluster-name}"
 }
 
+data "aws_route53_zone" "selected" {
+  name = "${var.hosted_zone_name}"
+}
+
 provider "kubernetes" {
   version = "~> 1.5"
   load_config_file = false

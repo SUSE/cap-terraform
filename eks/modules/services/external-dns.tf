@@ -20,7 +20,7 @@ resource "helm_release" "external-dns" {
 
     set {
         name = "txtOwnerId"
-        value = "${var.hosted_zone_id}"
+        value = "${data.aws_route53_zone.selected.zone_id}"
     }
 
     set {

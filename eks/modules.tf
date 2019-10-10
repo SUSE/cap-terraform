@@ -22,6 +22,5 @@ module "services" {
     worker-arn      = "${module.eks.aws-node-arn}"
     force-eks-dependency-id = "${module.eks.force-eks-dependency-id}"
     region = "${var.region}"
-    hosted_zone_id = "${var.hosted_zone_id}"
     hosted_zone_name = "${var.hosted_zone_name}"
 }

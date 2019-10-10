@@ -9,7 +9,7 @@ data "helm_repository" "suse" {
 # Install Nginx Ingress using Helm Chart
 resource "helm_release" "nginx_ingress" {
   name       = "nginx-ingress"
-  repository = "${data.helm_repository.stable.metadata.0.name}"
+  repository = "${data.helm_repository.suse.metadata.0.name}"
   chart      = "nginx-ingress"
   wait       = "false"
 

@@ -22,10 +22,6 @@ variable "cluster_labels" {
     type = "map"
 }
 
-variable "hosted_zone_id" {
-    type = "string"
-}
-
 variable "hosted_zone_name" {
     type = "string"
 }
