@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "worker-role-policy" {
   }
 }
 resource "aws_iam_role" "aws-node" {
-  name = "${aws_eks_cluster.aws.name}-worker-iam-role"
+  name = "${var.cluster_name}-worker-iam-role"
 
   assume_role_policy = "${data.aws_iam_policy_document.worker-role-policy.json}"
 }

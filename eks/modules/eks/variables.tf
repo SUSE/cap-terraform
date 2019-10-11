@@ -1,6 +1,6 @@
-variable "generated-cluster-name" {
-  type    = "string"
-} 
+variable "cluster_name" {
+  type = "string"
+}
 
 variable "vpc-id" {
     type = "string"
@@ -30,5 +30,3 @@ variable "aws-network-dependency-id" {
 variable "cluster_labels" {
     type = "map"
 }
- 
-
