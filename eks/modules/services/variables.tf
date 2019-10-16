@@ -22,3 +22,11 @@ variable "hosted_zone_id" {
 variable "hosted_zone_name" {
     type = "string"
 }
+
+variable "chart_values_file" {
+    type = "string"
+}
+
+variable "kubeconfig_path" {
+  type = "string"
+}

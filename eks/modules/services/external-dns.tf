@@ -20,11 +20,6 @@ resource "helm_release" "external-dns" {
     }
 
     set {
-        name = "provider"
-        value = "aws"
-    }
-
-    set {
         name = "aws.zoneType"
         value = "public"
     }

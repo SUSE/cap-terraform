@@ -13,5 +13,3 @@ provider "helm" {
   namespace       = "${kubernetes_service_account.tiller.metadata.0.namespace}"
   tiller_image    = "gcr.io/kubernetes-helm/tiller:v2.14.0"
 }
-
-

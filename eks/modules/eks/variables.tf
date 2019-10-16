@@ -30,3 +30,7 @@ variable "aws-network-dependency-id" {
 variable "cluster_labels" {
     type = "map"
 }
+
+variable "kubeconfig_path" {
+    type = "string"
+}

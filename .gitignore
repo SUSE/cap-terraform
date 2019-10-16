@@ -6,4 +6,5 @@ scf*/
 *.info
 **/*cluster-plan/*
 *.tfvars
-temp/*
+**/temp/
+le-prod-cert-issuer.yaml

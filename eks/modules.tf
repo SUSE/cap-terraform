@@ -9,6 +9,7 @@ module "eks" {
     keypair_name = "${var.keypair_name}"
     eks_version = "${var.eks_version}"
     cluster_labels = "${var.cluster_labels}"
+    kubeconfig_path = "${var.kubeconfig_path}"
 }
 
 module "network" {
@@ -26,4 +27,6 @@ module "services" {
     region = "${var.region}"
     hosted_zone_name = "${var.hosted_zone_name}"
     hosted_zone_id = "${module.services.hosted_zone_id}"
+    chart_values_file = "${var.chart_values_file}"
+    kubeconfig_path = "${var.kubeconfig_path}"
 }

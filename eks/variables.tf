@@ -7,7 +7,7 @@ variable "cluster_name" {
 }
 
 variable "region" {
-    type  = "string"
+    type = "string"
 }
 
 variable "workstation_cidr_block" {
@@ -28,4 +28,12 @@ variable "cluster_labels" {
 
 variable "hosted_zone_name" {
     type = "string"
+}
+
+variable "chart_values_file" {
+    type = "string"
+}
+
+variable "kubeconfig_path" {
+  type = "string"
 }
