@@ -25,12 +25,13 @@ Make sure that you have the permissions described [here](https://github.com/SUSE
 
 ## Instructions
 
-1. run `aws configure` to authenticate to AWS.
-2. Run `terraform plan -out <path-to-plan>`
-3. Run `terraform apply <path-to-plan>` to create the cluster in AWS.
-4. Point your `KUBECONFIG` to the printed kubeconfig file path.
-5. Make sure <your-cluster-name>-worker-iam-role> has the displayed policy attached for changing route53 record sets.
-5. Check the health of the worker nodes with `kubectl get nodes`.
-6. Once you're done, destroy your infrastructure with `terraform destroy`. Note that sometimes, the internet gateway does not get detached and deleted even after 15 minutes and times out. If that happens, you'd have to manually delete the VPC and its dependent resources.
+1. Copy `terraform.tfvars.sample` to `terraform.tfvars` and substitute appropriate values.
+2. Run `aws configure` to authenticate to AWS.
+3. Run `terraform plan -out <path-to-plan>`
+4. Run `terraform apply <path-to-plan>` to create the cluster in AWS.
+5. Point your `KUBECONFIG` to the printed kubeconfig file path.
+6. Make sure `<your-cluster-name>-worker-iam-role>` has the displayed policy attached for changing `route53` record sets.
+7. Check the health of the worker nodes with `kubectl get nodes`.
+8. Once you're done, destroy your infrastructure with `terraform destroy`. Note that sometimes, the internet gateway does not get detached and deleted even after 15 minutes and times out. If that happens, you'd have to manually delete the VPC and its dependent resources.
 
 **Note**: Make sure that the attached custom `route53` policy is removed before destroying the cluster.
