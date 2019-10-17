@@ -16,7 +16,7 @@
 
 Make sure that you have the permissions described [here](https://github.com/SUSE/scf/wiki/IAM-Requirements-for-EKS).
 
-**Note**: In order to restrict the IAM permissions for Route53 the script will output policy for the specified hosted zone. You need to create/add this policy to allow external-dns to change record sets.
+**Note**: In order to restrict the IAM permissions for `route53` the script will output policy for the specified hosted zone. You need to create/add this policy to allow external-dns to change record sets.
 
 ### Configurations
 
@@ -32,3 +32,5 @@ Make sure that you have the permissions described [here](https://github.com/SUSE
 5. Make sure <your-cluster-name>-worker-iam-role> has the displayed policy attached for changing route53 record sets.
 5. Check the health of the worker nodes with `kubectl get nodes`.
 6. Once you're done, destroy your infrastructure with `terraform destroy`. Note that sometimes, the internet gateway does not get detached and deleted even after 15 minutes and times out. If that happens, you'd have to manually delete the VPC and its dependent resources.
+
+**Note**: Make sure that the attached custom `route53` policy is removed before destroying the cluster.
