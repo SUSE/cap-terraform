@@ -1,7 +1,11 @@
+module "network" {
+    source = "./modules/network"
+}
+
 module "eks" {
     source = "./modules/eks"
 
-    cluster_name  = "${var.cluster_name}"
+    cluster_name  = "${module.network.generated-cluster-name}"
     vpc-id = "${module.network.vpc_id}"
     app_subnet_ids = "${module.network.app_subnet_ids}"
     workstation_cidr_block = "${var.workstation_cidr_block}"
@@ -9,12 +13,6 @@ module "eks" {
     keypair_name = "${var.keypair_name}"
     eks_version = "${var.eks_version}"
     cluster_labels = "${var.cluster_labels}"
-}
-
-module "network" {
-    source = "./modules/network"
-
-    cluster_name = "${var.cluster_name}"
 }
 
 module "services" {

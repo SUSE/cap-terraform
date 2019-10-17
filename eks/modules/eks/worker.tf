@@ -40,7 +40,7 @@ resource "aws_launch_configuration" "aws" {
   iam_instance_profile        = "${aws_iam_instance_profile.aws-node.name}"
   image_id                    = "${data.aws_ami.eks-worker.id}"
   instance_type               = "t2.large"
-  name_prefix                 = "${aws_eks_cluster.aws.name}-worker-launch-config"
+  name_prefix                 = "${var.cluster_name}-worker-launch-config"
   security_groups             = ["${aws_security_group.aws-node.id}"]
   user_data_base64            = "${base64encode(local.aws-node-userdata)}"
   key_name		              = "${var.keypair_name}"
@@ -63,21 +63,20 @@ resource "aws_autoscaling_group" "aws" {
   launch_configuration = "${aws_launch_configuration.aws.id}"
   max_size             = 3
   min_size             = 1
-  name                 = "${aws_eks_cluster.aws.name}"
+  name                 = "${var.cluster_name}"
   vpc_zone_identifier  = "${var.app_subnet_ids}"
 
   tag {
     key                 = "Name"
-    value               = "${aws_eks_cluster.aws.name}"
+    value               = "${var.cluster_name}"
     propagate_at_launch = true
   }
 
   tag {
-    key                 = "kubernetes.io/cluster/${aws_eks_cluster.aws.name}"
+    key                 = "kubernetes.io/cluster/${var.cluster_name}"
     value               = "owned"
     propagate_at_launch = true
   }
-
   
 }
 

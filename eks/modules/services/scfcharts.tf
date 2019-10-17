@@ -11,7 +11,7 @@ resource "helm_release" "uaa" {
     "${file("${var.chart_values_file}")}"
   ]
 
-  depends_on = ["helm_release.external-dns", "helm_release.nginx_ingress", "null_resource.cluster_issuer_setup"]
+  depends_on = ["local_file.kubeconfig_file", "helm_release.external-dns", "helm_release.nginx_ingress", "null_resource.cluster_issuer_setup"]
 }
 
 resource "helm_release" "scf" {
@@ -25,5 +25,5 @@ resource "helm_release" "scf" {
     "${file("${var.chart_values_file}")}"
   ]
 
-    depends_on = ["helm_release.uaa"]
+    depends_on = ["local_file.kubeconfig_file", "helm_release.uaa"]
   }

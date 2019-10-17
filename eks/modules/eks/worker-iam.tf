@@ -36,6 +36,6 @@ resource "aws_iam_role_policy_attachment" "aws-node-AmazonRoute53ReadOnlyAccess"
 }
 
 resource "aws_iam_instance_profile" "aws-node" {
-  name = "${aws_eks_cluster.aws.name}-worker-iam-instance-profile"
+  name = "${var.cluster_name}-worker-iam-instance-profile"
   role = "${aws_iam_role.aws-node.name}"
 }

@@ -1,4 +1,3 @@
-cluster_name = "<your-cluster-name>"
 region = "us-west-2"
 workstation_cidr_block = "0.0.0.0/0"
 keypair_name = "some_keypair"
