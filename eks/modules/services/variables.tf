@@ -1,5 +1,13 @@
 
-variable "eks-cluster-name" {
+variable "aws-eks-cluster-name" {
+    type = "string"
+}
+
+variable "aws-eks-cluster-endpoint" {
+    type = "string"
+}
+
+variable "aws-eks-cluster-certificate-authority-data" {
     type = "string"
 }
 

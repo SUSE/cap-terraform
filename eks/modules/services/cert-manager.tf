@@ -35,7 +35,7 @@ resource "helm_release" "cert-manager" {
     value = "false"
   }
   
-  depends_on = ["null_resource.cert_manager_setup"]
+  depends_on = ["local_file.kubeconfig_file", "null_resource.cert_manager_setup"]
 }
 
 resource "null_resource" "cluster_issuer_setup" {

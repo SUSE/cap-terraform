@@ -9,7 +9,6 @@ module "eks" {
     keypair_name = "${var.keypair_name}"
     eks_version = "${var.eks_version}"
     cluster_labels = "${var.cluster_labels}"
-    kubeconfig_path = "${var.kubeconfig_path}"
 }
 
 module "network" {
@@ -21,7 +20,9 @@ module "network" {
 module "services" {
     source = "./modules/services"
 
-    eks-cluster-name = "${module.eks.eks-cluster-name}"
+    aws-eks-cluster-name = "${module.eks.aws-eks-cluster-name}"
+    aws-eks-cluster-endpoint = "${module.eks.aws-eks-cluster-endpoint}"
+    aws-eks-cluster-certificate-authority-data = "${module.eks.aws-eks-cluster-certificate-authority-data}"
     worker-arn = "${module.eks.aws-node-arn}"
     force-eks-dependency-id = "${module.eks.force-eks-dependency-id}"
     region = "${var.region}"

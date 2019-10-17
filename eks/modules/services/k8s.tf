@@ -1,9 +1,9 @@
 data "aws_eks_cluster" "eks" {
-  name = "${var.eks-cluster-name}"
+  name = "${var.aws-eks-cluster-name}"
 }
 
 data "aws_eks_cluster_auth" "eks-auth" {
-  name = "${var.eks-cluster-name}"
+  name = "${var.aws-eks-cluster-name}"
 }
 
 provider "kubernetes" {
