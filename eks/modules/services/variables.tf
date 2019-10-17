@@ -38,3 +38,7 @@ variable "chart_values_file" {
 variable "kubeconfig_path" {
   type = "string"
 }
+
+variable "email" {
+  type = "string"
+}

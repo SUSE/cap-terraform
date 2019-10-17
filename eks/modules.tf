@@ -28,4 +28,5 @@ module "services" {
     hosted_zone_id = "${module.services.hosted_zone_id}"
     chart_values_file = "${var.chart_values_file}"
     kubeconfig_path = "${var.kubeconfig_path}"
+    email = "${var.email}"
 }

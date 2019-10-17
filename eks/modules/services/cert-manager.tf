@@ -39,7 +39,7 @@ resource "helm_release" "cert-manager" {
 }
 
 resource "null_resource" "cluster_issuer_setup" {
-    depends_on = ["helm_release.cert-manager"]
+    depends_on = ["helm_release.cert-manager", "local_file.le_prod_cert_issuer"]
 
     provisioner "local-exec" {
       command = "/bin/sh modules/services/setup_cert_issuer.sh"

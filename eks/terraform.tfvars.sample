@@ -6,3 +6,4 @@ cluster_labels = {key = "<user>-eks-cluster"}
 hosted_zone_name = "<route53-hosted-zone-name>"
 chart_values_file = "<path-to-scf-config-values-file>"
 kubeconfig_path = <path-to-save-kubeconfig>
+email = <email-for-cert-manager>
