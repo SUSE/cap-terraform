@@ -5,7 +5,7 @@ data "aws_route53_zone" "selected" {
 data "aws_iam_policy_document" "route53_policy" {
   statement {
     actions   = ["route53:ChangeResourceRecordSets"]
-    resources = ["arn:aws:route53:::hostedzone/${var.hosted_zone_id}"]
+    resources = ["arn:aws:route53:::hostedzone/${data.aws_route53_zone.selected.zone_id}"]
   }
 }
 
@@ -26,7 +26,7 @@ resource "helm_release" "external-dns" {
 
     set {
         name = "txtOwnerId"
-        value = "${var.hosted_zone_id}"
+        value = "${data.aws_route53_zone.selected.zone_id}"
     }
 
     set {

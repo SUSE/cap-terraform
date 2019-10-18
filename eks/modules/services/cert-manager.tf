@@ -4,7 +4,7 @@ resource "null_resource" "cert_manager_setup" {
   provisioner "local-exec" {
     command = "/bin/sh modules/services/setup_cert_manager.sh"
     environment = {
-        "KUBECONFIG" = "${var.kubeconfig_path}"
+        "KUBECONFIG" = "${var.kubeconfig_file_path}"
     }
   }
 }
@@ -44,7 +44,7 @@ resource "null_resource" "cluster_issuer_setup" {
     provisioner "local-exec" {
       command = "/bin/sh modules/services/setup_cert_issuer.sh"
       environment = {
-        "KUBECONFIG" = "${var.kubeconfig_path}"
+        "KUBECONFIG" = "${var.kubeconfig_file_path}"
     }
   }
 }

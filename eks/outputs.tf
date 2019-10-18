@@ -2,7 +2,7 @@
 # Outputs
 #
 output "path-to-kubeconfig" {
-  value = "${var.kubeconfig_path}"
+  value = "${var.kubeconfig_file_path}"
 }
 
 output "aws-route53-hostedzone-policy" {

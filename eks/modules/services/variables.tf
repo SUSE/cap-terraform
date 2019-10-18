@@ -23,10 +23,6 @@ variable "region" {
     type = "string"
 }
 
-variable "hosted_zone_id" {
-    type = "string"
-}
-
 variable "hosted_zone_name" {
     type = "string"
 }
@@ -35,7 +31,7 @@ variable "chart_values_file" {
     type = "string"
 }
 
-variable "kubeconfig_path" {
+variable "kubeconfig_file_path" {
   type = "string"
 }
 

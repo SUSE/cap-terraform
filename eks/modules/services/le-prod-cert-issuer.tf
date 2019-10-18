@@ -16,7 +16,7 @@ spec:
       - name: aws-route53-provider
         route53:
           region: "${var.region}"
-          hostedZoneID: "${var.hosted_zone_id}"
+          hostedZoneID: "${data.aws_route53_zone.selected.zone_id}"
 YAML
 }
 
