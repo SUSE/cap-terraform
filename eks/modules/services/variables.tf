@@ -26,6 +26,9 @@ variable "region" {
 variable "hosted_zone_name" {
     type = "string"
 }
+variable "hosted_zone_id" {
+    type = "string"
+}
 
 variable "chart_values_file" {
     type = "string"

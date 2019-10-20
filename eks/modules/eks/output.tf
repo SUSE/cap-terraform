@@ -17,3 +17,7 @@ output "aws-eks-cluster-certificate-authority-data" {
 output "force-eks-dependency-id" {
     value = "${null_resource.force-wait-on-eks.id}"
 }
+
+output "hosted_zone_id" {
+    value = "${data.aws_route53_zone.selected.zone_id}"
+}

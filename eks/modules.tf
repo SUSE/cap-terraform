@@ -12,6 +12,7 @@ module "eks" {
     aws-network-dependency-id = "${module.network.aws-network-dependency}"
     keypair_name = "${var.keypair_name}"
     eks_version = "${var.eks_version}"
+    hosted_zone_name = "${var.hosted_zone_name}"
     cluster_labels = "${var.cluster_labels}"
 }
 
@@ -25,6 +26,7 @@ module "services" {
     force-eks-dependency-id = "${module.eks.force-eks-dependency-id}"
     region = "${var.region}"
     hosted_zone_name = "${var.hosted_zone_name}"
+    hosted_zone_id = "${module.eks.hosted_zone_id}"
     chart_values_file = "${var.chart_values_file}"
     kubeconfig_file_path = "${var.kubeconfig_file_path}"
     email = "${var.email}"

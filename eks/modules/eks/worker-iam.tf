@@ -1,4 +1,8 @@
 
+data "aws_route53_zone" "selected" {
+  name = "${var.hosted_zone_name}"
+}
+
 data "aws_iam_policy_document" "worker-role-policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -8,7 +12,14 @@ data "aws_iam_policy_document" "worker-role-policy" {
       identifiers = ["ec2.amazonaws.com"]
     }
   }
+  // Need to add another statement here for the external-dns IAM policy for hosted zones
+
+  statement {
+    actions   = ["route53:ChangeResourceRecordSets"]
+    resources = ["arn:aws:route53:::hostedzone/${data.aws_route53_zone.selected.zone_id}"]
+  }
 }
+
 resource "aws_iam_role" "aws-node" {
   name = "${var.cluster_name}-worker-iam-role"
   assume_role_policy = "${data.aws_iam_policy_document.worker-role-policy.json}"

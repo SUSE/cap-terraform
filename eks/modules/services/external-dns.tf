@@ -1,4 +1,4 @@
-data "aws_route53_zone" "selected" {
+/*data "aws_route53_zone" "selected" {
   name = "${var.hosted_zone_name}"
 }
 
@@ -7,7 +7,7 @@ data "aws_iam_policy_document" "route53_policy" {
     actions   = ["route53:ChangeResourceRecordSets"]
     resources = ["arn:aws:route53:::hostedzone/${data.aws_route53_zone.selected.zone_id}"]
   }
-}
+}*/
 
 resource "helm_release" "external-dns" {
     name = "cap-external-dns"
@@ -26,7 +26,7 @@ resource "helm_release" "external-dns" {
 
     set {
         name = "txtOwnerId"
-        value = "${data.aws_route53_zone.selected.zone_id}"
+        value = "${var.hosted_zone_id}"
     }
 
     set {

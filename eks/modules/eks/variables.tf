@@ -26,6 +26,11 @@ variable "aws-network-dependency-id" {
     type = "string"
 }
 
+variable "hosted_zone_name" {
+    type = "string"
+}
+
+
 variable "cluster_labels" {
     type = "map"
 }
