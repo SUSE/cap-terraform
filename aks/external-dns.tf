@@ -23,6 +23,10 @@ resource "helm_release" "external-dns" {
     }
 
     set {
+        name = "azure.resourceGroup"
+        value = "${var.dns_zone_rg}"
+    }
+    set {
         name = "logLevel"
         value = "debug"
     }
