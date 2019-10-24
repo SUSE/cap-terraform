@@ -32,6 +32,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
         client_secret = "${var.client_secret}"
     }
 
+    kubernetes_version = "${var.k8s_version}"
+    
     tags = "${var.cluster_labels}"
 }
 
