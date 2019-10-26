@@ -48,3 +48,7 @@ variable "azure_dns_json" {
 variable "k8s_version" {
     type = "string"
 }
+
+variable "dns_zone_rg" {
+    type="string"
+}
