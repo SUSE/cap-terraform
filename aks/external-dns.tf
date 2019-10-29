@@ -17,11 +17,17 @@ resource "helm_release" "external-dns" {
         name = "azure.secretName"
         value = "${kubernetes_secret.azure_dns_sp_creds.metadata.0.name}"
     }
+    
     set {
         name = "provider"
         value = "azure"
     }
 
+    set {
+        name = "azure.resourceGroup"
+        value = "${var.dns_zone_rg}"
+    }
+    
     set {
         name = "logLevel"
         value = "debug"

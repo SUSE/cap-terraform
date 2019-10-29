@@ -10,7 +10,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     location            = "${var.location}"
     resource_group_name = "${var.az_resource_group}"
     dns_prefix          = "${var.dns_prefix}"
-    kubernetes_version  = "${var.k8s_version}"
 
     linux_profile {
         admin_username = "${var.agent_admin}"
@@ -33,6 +32,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
         client_secret = "${var.client_secret}"
     }
 
+    kubernetes_version = "${var.k8s_version}"
+    
     tags = "${var.cluster_labels}"
 }
 
