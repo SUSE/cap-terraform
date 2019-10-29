@@ -33,7 +33,7 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: 1024m
     certmanager.k8s.io/cluster-issuer: letsencrypt-prod
     certmanager.k8s.io/acme-challenge-type: dns01
-    certmanager.k8s.io/acme-dns01-provider: gcp-clouddns-provider
+    certmanager.k8s.io/acme-dns01-provider: aws-route53-provider
 ```
 If you change the values of the annotations above you'll need to make corresponding changes in the cert-manager setup (see the `cert-manager.tf` template and the associated scripts). Set the value of the `UAA_CA_CERT` key to the PEM encoded value of the Indetrust DST Root CA X3 cert, e.g:
 
