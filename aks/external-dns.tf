@@ -23,6 +23,11 @@ resource "helm_release" "external-dns" {
     }
 
     set {
+        name = "azure.resourceGroup"
+        value = "${var.dns_zone_rg}"
+    }
+
+    set {
         name = "logLevel"
         value = "debug"
     }
@@ -34,3 +39,4 @@ resource "helm_release" "external-dns" {
 
     depends_on = ["kubernetes_cluster_role_binding.tiller"]
 }
+
