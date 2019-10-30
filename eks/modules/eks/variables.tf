@@ -22,6 +22,11 @@ variable "eks_version" {
     type = "string"
 }
 
+variable "instance_type" {
+    type = "string"
+}
+
+
 variable "aws-network-dependency-id" {
     type = "string"
 }

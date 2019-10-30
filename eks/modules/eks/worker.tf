@@ -39,7 +39,7 @@ resource "aws_launch_configuration" "aws" {
   associate_public_ip_address = true
   iam_instance_profile        = "${aws_iam_instance_profile.aws-node.name}"
   image_id                    = "${data.aws_ami.eks-worker.id}"
-  instance_type               = "t2.large"
+  instance_type               = "${var.instance_type}"
   name_prefix                 = "${var.cluster_name}-worker-launch-config"
   security_groups             = ["${aws_security_group.aws-node.id}"]
   user_data_base64            = "${base64encode(local.aws-node-userdata)}"

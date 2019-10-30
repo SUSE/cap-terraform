@@ -9,6 +9,7 @@ module "eks" {
     vpc-id = "${module.network.vpc_id}"
     app_subnet_ids = "${module.network.app_subnet_ids}"
     workstation_cidr_block = "${var.workstation_cidr_block}"
+    instance_type = "${var.instance_type}"
     aws-network-dependency-id = "${module.network.aws-network-dependency}"
     keypair_name = "${var.keypair_name}"
     eks_version = "${var.eks_version}"

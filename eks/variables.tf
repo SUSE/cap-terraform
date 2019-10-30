@@ -30,6 +30,10 @@ variable "chart_values_file" {
     type = "string"
 }
 
+variable "instance_type" {
+    type = "string"
+}
+
 variable "kubeconfig_file_path" {
   type = "string"
 }
