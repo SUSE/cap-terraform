@@ -22,7 +22,8 @@ resource "aws_eks_cluster" "aws" {
     "aws_iam_role_policy_attachment.aws-node-AmazonEKS_CNI_Policy",
     "aws_security_group_rule.aws-cluster-ingress-node-https",
     "aws_security_group_rule.aws-cluster-ingress-workstation-https",
-    "aws_iam_role_policy_attachment.aws-node-AmazonRoute53ReadOnlyAccess",
+//    "aws_iam_role_policy_attachment.aws-node-AmazonRoute53ReadOnlyAccess",
+    "aws_iam_role_policy_attachment.aws-node-AmazonRoute53FullAccess",
     "aws_iam_role_policy_attachment.aws-node-AmazonEKSWorkerNodePolicy",
     "aws_iam_role_policy_attachment.aws-node-AmazonEC2ContainerRegistryReadOnly"
   ]

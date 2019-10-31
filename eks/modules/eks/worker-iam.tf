@@ -21,10 +21,6 @@ data "aws_iam_policy_document" "route53-restricted-update-policy" {
     }   
 }
 
-/*resource "aws_iam_policy" "route-53-update-policy" {
-    name = "restricted-route53-policy"
-    policy = "${data.aws_iam_policy_document.route53-restricted-update-policy.json}"
-}*/
 
 resource "aws_iam_role" "aws-node" {
   name = "${var.cluster_name}-worker-iam-role"
@@ -46,21 +42,15 @@ resource "aws_iam_role_policy_attachment" "aws-node-AmazonEC2ContainerRegistryRe
   role       = "${aws_iam_role.aws-node.name}"
 }
 
-resource "aws_iam_role_policy_attachment" "aws-node-AmazonRoute53ReadOnlyAccess" {
+/* resource "aws_iam_role_policy_attachment" "aws-node-AmazonRoute53ReadOnlyAccess" {
  policy_arn = "arn:aws:iam::aws:policy/AmazonRoute53ReadOnlyAccess"
  role       = "${aws_iam_role.aws-node.name}"
-}
+} */
 
 resource "aws_iam_role_policy_attachment" "aws-node-AmazonRoute53FullAccess" {
  policy_arn = "arn:aws:iam::aws:policy/AmazonRoute53FullAccess"
  role       = "${aws_iam_role.aws-node.name}"
 }
-
-/* resource "aws_iam_role_policy_attachment" "aws-node-selectiveRoute53UpdateAccess" {
-    policy_arn = "${aws_iam_policy.route-53-update-policy.arn}"
-    role       = "${aws_iam_role.aws-node.name}"
-
-} */
 
 resource "aws_iam_instance_profile" "aws-node" {
   name = "${var.cluster_name}-worker-iam-instance-profile"

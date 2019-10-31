@@ -10,6 +10,8 @@ resource "aws_security_group" "aws-node" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  revoke_rules_on_delete = true
+  
   tags = "${
     map(
      "Name", "${var.cluster_name}-worker-security-group",
@@ -40,6 +42,8 @@ resource "aws_security_group_rule" "aws-node-ingress-cluster" {
   type                     = "ingress"
 }
 /*
+These security group rules are automatically created by EKS when LoadBalancer services are provisioned.
+
 resource "aws_security_group_rule" "aws-node-ingress-cap-http" {
   description              = "Allow CloudFoundry to communicate on http port"
   type                     = "ingress"

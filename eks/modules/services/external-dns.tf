@@ -1,13 +1,3 @@
-/*data "aws_route53_zone" "selected" {
-  name = "${var.hosted_zone_name}"
-}
-
-data "aws_iam_policy_document" "route53_policy" {
-  statement {
-    actions   = ["route53:ChangeResourceRecordSets"]
-    resources = ["arn:aws:route53:::hostedzone/${data.aws_route53_zone.selected.zone_id}"]
-  }
-}*/
 
 resource "helm_release" "external-dns" {
     name = "cap-external-dns"
