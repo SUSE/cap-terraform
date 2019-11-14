@@ -4,6 +4,8 @@ data "helm_repository" "suse" {
   url  = "https://kubernetes-charts.suse.com"
 }
 
+
+
 # Install UAA using Helm Chart
 resource "helm_release" "uaa" {
   name       = "scf-uaa"
@@ -35,5 +37,44 @@ resource "helm_release" "scf" {
   }
 
 
+resource "helm_release" "stratos" {
+    name       = "susecf-console"
+    repository = "${data.helm_repository.suse.metadata.0.name}"
+    chart      = "console"
+    namespace  = "stratos"
+    wait       = "false"
+
+    values = [
+    "${file("${var.chart_values_file}")}"
+  ]
+ 
+   set {
+    name  = "services.loadbalanced"
+    value = "true"
+  }
+   set {
+    name  = "console.techPreview"
+    value = "true"
+  }
 
 
+    depends_on = ["helm_release.scf"]
+  }
+
+resource "null_resource" "metrics" {
+
+  provisioner "local-exec" {
+    command = "/bin/sh deploy_metrics.sh "
+
+    environment = {
+        METRICS_FILE = "${var.stratos_metrics_config_file}"
+        SCF_FILE = "${var.chart_values_file}"
+        RESOURCE_GROUP = "${var.az_resource_group}"
+        CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
+        AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
+
+    }
+
+  }
+  depends_on = ["helm_release.stratos"]
+}

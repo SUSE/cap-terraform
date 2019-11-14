@@ -10,7 +10,7 @@ variable "node_count" {
     default = "1"
 }
 variable "machine_type" {
-    default = "Standard_DS4_v2"
+    default = "Standard_DS3_v2"
 }
 
 variable "agent_admin" {
@@ -25,6 +25,9 @@ variable "cluster_labels" {
     type = "map"
 }
 
+variable "k8s_version" {
+    default = "1.13.12"
+}
 variable "disk_size_gb" {
     default = 60
 }
@@ -45,18 +48,16 @@ variable "azure_dns_json" {
     type = "string"
 }
 
-variable "dns_zone_rg" {
-    type = "string"
-}
+#variable "scf_domain" {
+#    type = "string"
+#}
 #
 variable "chart_values_file" {
     type = "string"
 }
 
-variable "k8s_version" {
+variable "stratos_metrics_config_file" {
     type = "string"
 }
-
-
 
 

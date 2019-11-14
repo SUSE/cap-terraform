@@ -12,4 +12,4 @@ for i in $VMNODES
    /etc/default/grub.d/50-cloudimg-settings.cfg && sudo update-grub"
    az vm restart -g $MCRGNAME -n $i
 done
-az logout
+ az logout
