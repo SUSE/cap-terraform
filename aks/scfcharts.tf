@@ -78,3 +78,39 @@ resource "null_resource" "metrics" {
   }
   depends_on = ["helm_release.stratos"]
 }
+
+resource "null_resource" "update_stratos_dns" {
+
+  provisioner "local-exec" {
+    command = "/bin/sh ext-dns-stratos-svc-annotate.sh"
+
+    environment = {
+        RESOURCE_GROUP = "${var.az_resource_group}"
+        CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
+        AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
+	DOMAIN="${var.cap_domain}"
+
+    }
+
+  }
+  depends_on = ["helm_release.stratos"]
+}
+
+
+
+resource "null_resource" "update_metrics_dns" {
+
+  provisioner "local-exec" {
+    command = "/bin/sh ext-dns-metrics-svc-annotate.sh"
+
+    environment = {
+        RESOURCE_GROUP = "${var.az_resource_group}"
+        CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
+        AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
+        DOMAIN="${var.cap_domain}"
+
+    }
+
+  }
+  depends_on = ["null_resource.metrics"]
+}

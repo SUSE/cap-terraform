@@ -60,4 +60,6 @@ variable "stratos_metrics_config_file" {
     type = "string"
 }
 
-
+variable "cap_domain" {
+    type = "string"
+}
