@@ -3,7 +3,7 @@ az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $A
 
 export MCRGNAME=$(az aks show --resource-group $RGNAME --name $AKSNAME --query nodeResourceGroup -o json --subscription $ARM_SUBSCRIPTION_ID | jq -r '.')
 
-export VMNODES=$(az vm list --resource-group $MCRGNAME -o json --subscription $ARM_SUBSCRIPTION_ID $ | jq -r '.[] | select (.tags.poolName | contains("'$NODEPOOLNAME'")) | .name')
+export VMNODES=$(az vm list --resource-group $MCRGNAME -o json --subscription $ARM_SUBSCRIPTION_ID | jq -r '.[] | select (.tags.poolName | contains("'$NODEPOOLNAME'")) | .name')
 
 for i in $VMNODES
  do
