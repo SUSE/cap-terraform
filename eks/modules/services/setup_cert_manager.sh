@@ -1,5 +1,6 @@
 #!/bin/sh
 
+export KUBECONFIG=$KUBECONFIG
 # Create the namespace for cert-manager
 kubectl create namespace cert-manager
 

@@ -41,3 +41,18 @@ variable "kubeconfig_file_path" {
 variable "email" {
   type = "string"
 }
+
+variable "cap_domain" {
+    type = "string"
+}
+
+
+variable "stratos_metrics_config_file" {
+  type = string
+}
+
+
+variable "storage_zones" {
+  type = string
+}
+

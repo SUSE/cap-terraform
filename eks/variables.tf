@@ -3,41 +3,55 @@
 #
 
 variable "region" {
-    type = "string"
+  type = string
 }
 
 variable "workstation_cidr_block" {
-    type = "string"
+  type = string
 }
 
 variable "keypair_name" {
-    type = "string"
+  type = string
 }
 
 variable "eks_version" {
-    type = "string"
+  type = string
 }
 
 variable "cluster_labels" {
-    type = "map"
+  type = map(string)
 }
 
 variable "hosted_zone_name" {
-    type = "string"
+  type = string
 }
 
 variable "chart_values_file" {
-    type = "string"
+  type = string
 }
 
 variable "instance_type" {
-    type = "string"
+  type = string
 }
 
 variable "kubeconfig_file_path" {
-  type = "string"
+  type = string
 }
 
 variable "email" {
-  type = "string"
+  type = string
 }
+
+variable "cap_domain" {
+  type = string
+}
+
+variable "stratos_metrics_config_file" {
+  type = string
+}
+
+
+variable "storage_zones" {
+  type = string
+}
+
