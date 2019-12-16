@@ -6,10 +6,10 @@ variable "location" {
     type = "string"
 }
 
-variable "node_count" {
+variable "instance_count" {
     default = "1"
 }
-variable "machine_type" {
+variable "instance_type" {
     default = "Standard_DS4_v2"
 }
 

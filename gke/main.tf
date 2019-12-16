@@ -45,11 +45,11 @@ resource "google_container_node_pool" "np" {
   name       = "${var.node_pool_name}"
   location   = "${var.location}"
   cluster    = "${google_container_cluster.gke-cluster.name}"
-  node_count = "${var.node_count}"
+  node_count = "${var.instance_count}"
 
   node_config {
     preemptible  = false
-    machine_type = "${var.machine_type}"
+    machine_type = "${var.instance_type}"
     disk_size_gb = "${var.disk_size_gb}"
     image_type   = "${var.vm_type}"
 
@@ -79,7 +79,7 @@ resource "null_resource" "post_processor" {
     environment = {
       CLUSTER_NAME = "${google_container_cluster.gke-cluster.name}"
       CLUSTER_ZONE = "${var.location}"
-      NODE_COUNT   = "${var.node_count}"
+      NODE_COUNT   = "${var.instance_count}"
       SA_KEY_FILE  = "${var.gke_sa_key}"
     }
   }

@@ -10,10 +10,10 @@ variable "node_pool_name" {
     type = "string"
 }
 
-variable "node_count" {
+variable "instance_count" {
     default = "3"
 }
-variable "machine_type" {
+variable "instance_type" {
     default = "n1-standard-4"
 }
 
@@ -40,8 +40,3 @@ variable "gcp_dns_sa_key" {
 variable "k8s_version" {
     type = "string"
 }
-
-
-
-
-
