@@ -29,8 +29,8 @@ resource "helm_release" "scf" {
 
 resource "helm_release" "stratos" {
     name       = "susecf-console"
-    repository = "${data.helm_repository.suse.metadata.0.name}"
-    chart      = "console"
+    #repository = "${data.helm_repository.suse.metadata.0.name}"
+    chart      = "./console"
     namespace  = "stratos"
     wait       = "false"
 

@@ -34,6 +34,68 @@ resource "helm_release" "scf" {
     depends_on = ["helm_release.uaa"]
   }
 
+resource "helm_release" "stratos" {
+    name       = "susecf-console"
+    repository = "${data.helm_repository.suse.metadata.0.name}"
+    chart      = "console"
+    namespace  = "stratos"
+    wait       = "false"
 
+    values = [
+    "${file("${var.chart_values_file}")}"
+  ]
+
+   set {
+    name  = "services.loadbalanced"
+    value = "true"
+  }
+   set {
+    name  = "console.techPreview"
+    value = "true"
+  }
+
+    depends_on = ["helm_release.scf"]
+  }
+
+resource "null_resource" "metrics" {
+
+  provisioner "local-exec" {
+    command = "/bin/sh deploy_metrics.sh "
+
+    environment = {
+        "METRICS_FILE" = "${var.stratos_metrics_config_file}"
+        "SCF_FILE" = "${var.chart_values_file}"
+
+    }
+
+  }
+  depends_on = ["helm_release.stratos"]
+}
+
+resource "null_resource" "update_stratos_dns" {
+
+  provisioner "local-exec" {
+    command = "/bin/sh ext-dns-stratos-svc-annotate.sh"
+
+    environment = {
+        "DOMAIN" = "${var.cap_domain}"
+    }
+
+  }
+  depends_on = ["helm_release.stratos"]
+}
+
+resource "null_resource" "update_metrics_dns" {
+
+  provisioner "local-exec" {
+    command = "/bin/sh ext-dns-metrics-svc-annotate.sh"
+
+    environment = {
+        "DOMAIN" = "${var.cap_domain}"
+    }
+
+  }
+  depends_on = ["null_resource.metrics"]
+}
 
 

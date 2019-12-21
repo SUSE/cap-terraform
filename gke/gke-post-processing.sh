@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
 gcloud container clusters get-credentials  ${CLUSTER_NAME} --zone ${CLUSTER_ZONE:?required}
-
 checkready() {
-	while [[ $node_readiness != "$NODE_COUNT True" ]]; do
+	while [[ $node_readiness != "$(($NODE_COUNT * $ZONES_COUNT)) True" ]]; do
 		sleep 10
 		node_readiness=$(
 			kubectl get nodes -o json \
