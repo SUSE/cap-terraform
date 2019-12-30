@@ -33,7 +33,7 @@ resource "helm_release" "external-dns" {
    
     set {
         name = "txtOwnerId"
-        value = "ZRGW2921VIJNG"
+        value = "xxxxxxx"
     }
 
     set {
