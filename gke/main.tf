@@ -45,7 +45,9 @@ resource "google_container_node_pool" "np" {
   name       = "${var.node_pool_name}"
   location   = "${var.location}"
   cluster    = "${google_container_cluster.gke-cluster.name}"
-  node_count = "${var.instance_count}"
+  node_count = "${var.node_count}"
+  version    = "${var.k8s_version}"
+
 
   node_config {
     preemptible  = false
