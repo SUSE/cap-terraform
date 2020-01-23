@@ -36,7 +36,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     tags = "${var.cluster_labels}"
 }
 
-
 locals {
   k8scfg = "${azurerm_kubernetes_cluster.k8s.kube_config_raw}"
 }

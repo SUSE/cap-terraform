@@ -15,5 +15,3 @@ kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release
 
 rm -f /tmp/aksk8scfg
 az logout
-
-

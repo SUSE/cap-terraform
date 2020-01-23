@@ -4,16 +4,7 @@ resource "kubernetes_secret" "azure_dns_sp_creds" {
     name = "azure-dns-sp-creds"
   }
 
-  data = {
-    "azure.json" = "${file("${var.azure_dns_json}")}"
-  }
 }  
-  data "external" "dns"  {
-
-    program = ["cat", "${var.azure_dns_json}"]
-    query = { }
-
-  } 
 
 
 resource "helm_release" "external-dns" {
@@ -22,12 +13,12 @@ resource "helm_release" "external-dns" {
     wait = "false"
 
     set {
-        name = "azure.secretName"
-        value = "${kubernetes_secret.azure_dns_sp_creds.metadata.0.name}"
+        name = "aws.credentials.mountPath"
+        value = "/home/xxxxxxxxx/.aws"
     }
     set {
         name = "provider"
-        value = "azure"
+        value = "aws"
     }
 
     set {
@@ -36,10 +27,31 @@ resource "helm_release" "external-dns" {
     }
 
     set {
-        name = "azure.resourceGroup"
-        value = "${data.external.dns.result["resourceGroup"]}"
+        name = "aws.zoneType"
+        value = "public"
     }
    
+    set {
+        name = "txtOwnerId"
+        value = "xxxxxxx"
+    }
+
+    set {
+        name = "aws.credentials.accessKey"
+        value = "xxxxxxxxx"
+    }
+
+    set {
+        name = "aws.credentials.secretKey"
+        value = "xxxxxxxxx"
+    }
+
+
+    set {
+        name = "domainFilters[0]"
+        value = "xxxxxxxxx.xxxxxxxxx"
+    }
+
     set {
         name = "rbac.create"
         value = "true"

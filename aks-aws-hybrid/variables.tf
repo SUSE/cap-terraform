@@ -44,10 +44,6 @@ variable "ssh_public_key" {
     type = "string"
 }
 
-variable "azure_dns_json" {
-    type = "string"
-}
-
 #variable "scf_domain" {
 #    type = "string"
 #}

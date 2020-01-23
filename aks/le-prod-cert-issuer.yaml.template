@@ -12,7 +12,7 @@ spec:
       # The secret that holds the generated private key used to communicate with Let's Encrypt
       name: letsencrypt-prod-account-key
     dns01:
-    providers:
+      providers:
       - name: azuredns
         azuredns:
           # Service principal clientId (also called appId)
