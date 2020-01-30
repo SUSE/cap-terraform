@@ -15,8 +15,8 @@ resource "kubernetes_service_account" "tiller" {
 
   automount_service_account_token = true
 
- // depends_on = ["null_resource.post_processor"]
-  depends_on = ["azurerm_kubernetes_cluster.k8s"]
+ // depends_on = [null_resource.post_processor]
+  depends_on = [azurerm_kubernetes_cluster.k8s]
 }
 
 resource "kubernetes_cluster_role_binding" "tiller" {
@@ -33,7 +33,7 @@ resource "kubernetes_cluster_role_binding" "tiller" {
         name = "tiller"
         namespace = "kube-system"
     }
-    depends_on = ["kubernetes_service_account.tiller"]
+    depends_on = [kubernetes_service_account.tiller]
 }
 
 resource "kubernetes_storage_class" "akssc" {
