@@ -13,12 +13,12 @@ You'll need an Azure Service Principal that has adequate permissions to set up a
 2. Create a terraform.tfvars (should be in your .gitignore as contains sensitive information) file with the following information
 -  `location`
 -  `az_resource_group` (the resource group where the cluster will be deployed, must exist beforehand)
--  `ssh_public_key` (SSH key file to SSH into worker nodes)
+-  `ssh_public_key` (SSH public key to SSH into worker nodes)
 -  `agent_admin`(SSH user name)
 -  `client_id` (Azure Service Principal client id -  can alternatively set `TF_VAR_client_id` env var)  
 -  `client_secret` ( Azure SP client secret,can alternatively set `TF_VAR_client_secret` env var)
 - `cluster_labels` (any cluster labels, an optional map of key value pairs)
-- `azure_dns_json` - file where the azure SP credentials are stored for creating Azure DNS entries. This SP can be the same as the one previously set up to create cluster etc. but does not have to be, i.e., this SP can be given just the permissions for adding DNS records in an existing Azure DNS zone. The json file must be of the form below:
+- `azure_dns_json` - azure SP credentials for creating Azure DNS entries. This SP can be the same as the one previously set up to create cluster etc. but does not have to be, i.e., this SP can be given just the permissions for adding DNS records in an existing Azure DNS zone. The value is must be in json format, in the form below:
 
 {
     "tenantId": "REDACTED",
@@ -42,7 +42,6 @@ You'll need an Azure Service Principal that has adequate permissions to set up a
 
 9. If you are using loadbalanced services, once the services are up, run `ext-dns-uaa-svc-annotate.sh` to let `external-dns` generate the DNS entries for the `uaa-uaa-public` service. If you are using Ingress, you don't need to do anything.
 
-10. Grab the CA_CERT from the secret and deploy SCF. 
+10. Grab the CA_CERT from the secret and deploy SCF.
 
 11. Repeat step 9. for SCF k8s `LoadBalancer` services, i.e. run `ext-dns-scf-svc-annotate.sh`.
-  

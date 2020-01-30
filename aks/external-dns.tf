@@ -5,7 +5,7 @@ resource "kubernetes_secret" "azure_dns_sp_creds" {
   }
 
   data = {
-    "azure.json" = "${file("${var.azure_dns_json}")}"
+    "azure.json" = var.azure_dns_json
   }
 }
 resource "helm_release" "external-dns" {
@@ -39,4 +39,3 @@ resource "helm_release" "external-dns" {
 
     depends_on = ["kubernetes_cluster_role_binding.tiller"]
 }
-
