@@ -1,9 +1,9 @@
 variable "az_resource_group" {
-    type = "string"
+    type = string
 }
 
 variable "location" {
-    type = "string"
+    type = string
 }
 
 variable "instance_count" {
@@ -14,7 +14,7 @@ variable "instance_type" {
 }
 
 variable "agent_admin" {
-    type = "string"
+    type = string
 }
 
 variable "dns_prefix" {
@@ -22,7 +22,7 @@ variable "dns_prefix" {
 }
 
 variable "cluster_labels" {
-    type = "map"
+    type = map
 }
 
 variable "disk_size_gb" {
@@ -30,25 +30,25 @@ variable "disk_size_gb" {
 }
 
 variable client_id {
-    type = "string"
+    type = string
 }
 
 variable client_secret {
-    type = "string"
+    type = string
 }
 
 variable "ssh_public_key" {
-    type = "string"
+    type = string
 }
 
 variable "azure_dns_json" {
-    type = "string"
+    type = string
 }
 
 variable "k8s_version" {
-    type = "string"
+    type = string
 }
 
 variable "dns_zone_rg" {
-    type="string"
+    type=string
 }
