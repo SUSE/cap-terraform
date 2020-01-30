@@ -15,7 +15,7 @@ resource "helm_release" "external-dns" {
 
     set {
         name = "azure.secretName"
-        value = "${kubernetes_secret.azure_dns_sp_creds.metadata.0.name}"
+        value = kubernetes_secret.azure_dns_sp_creds.metadata.0.name
     }
     set {
         name = "provider"
@@ -24,7 +24,7 @@ resource "helm_release" "external-dns" {
 
     set {
         name = "azure.resourceGroup"
-        value = "${var.dns_zone_rg}"
+        value = var.dns_zone_rg
     }
 
     set {
@@ -39,4 +39,3 @@ resource "helm_release" "external-dns" {
 
     depends_on = ["kubernetes_cluster_role_binding.tiller"]
 }
-

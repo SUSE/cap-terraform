@@ -7,33 +7,33 @@ resource "random_string" "cluster_name" {
 
 resource "azurerm_kubernetes_cluster" "k8s" {
     name                = "cap-${random_string.cluster_name.result}"
-    location            = "${var.location}"
-    resource_group_name = "${var.az_resource_group}"
-    dns_prefix          = "${var.dns_prefix}"
-    kubernetes_version  = "${var.k8s_version}"
+    location            = var.location
+    resource_group_name = var.az_resource_group
+    dns_prefix          = var.dns_prefix
+    kubernetes_version  = var.k8s_version
 
     linux_profile {
-        admin_username = "${var.agent_admin}"
+        admin_username = var.agent_admin
 
         ssh_key {
-            key_data = "${file("${var.ssh_public_key}")}"
+            key_data = file(var.ssh_public_key)
         }
     }
 
     agent_pool_profile {
         name            = "agentpool"
-        count           = "${var.instance_count}"
-        vm_size         = "${var.instance_type}"
+        count           = var.instance_count
+        vm_size         = var.instance_type
         os_type         = "Linux"
-        os_disk_size_gb = "${var.disk_size_gb}"
+        os_disk_size_gb = var.disk_size_gb
     }
 
     service_principal {
-        client_id     = "${var.client_id}"
-        client_secret = "${var.client_secret}"
+        client_id     = var.client_id
+        client_secret = var.client_secret
     }
 
-    tags = "${var.cluster_labels}"
+    tags = var.cluster_labels
 }
 
 #resource "null_resource" "post_processor" {
@@ -59,6 +59,6 @@ output "kube_config" {
 }
 
 resource "local_file" "k8scfg" {
-  content = "${local.k8scfg}"
+  content = local.k8scfg
   filename = "aksk8scfg"
 }
