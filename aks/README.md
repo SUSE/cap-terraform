@@ -54,14 +54,6 @@ ingress:
 ```
 
 If you change the values of the annotations above you'll need to make corresponding changes in the cert-manager setup (see the `cert-manager.tf` template and the associated scripts)
-Set the value of the `UAA_CA_CERT` key to the PEM encoded value of the Indetrust DST Root CA X3 cert, e.g.,
-
-```
-UAA_CA_CERT: |
-    -----BEGIN CERTIFICATE-----
-    .....
-    -----END CERTIFICATE-----
-```
 
 3. Make appropriate substituions in the `le-prod-cert-issuer.yaml.template` and rename it to `le-prod-cert-issuer.yaml`.
 
