@@ -6,15 +6,15 @@
  export ARM_TENANT_ID=<Tenant Id>
  export ARM_SUBSCRIPTION_ID=<Subscription id>
  ```
- These env vars are used by the Terraform AzureRM provider to login to Azure with the configured SP credentials. 
- Note the SP must have sufficient privileges, the created account must have at least contributor role on the tenant you may used az cli by running  `az ad sp create-for-rbac`or via the portal by creating app 
+ These env vars are used by the Terraform AzureRM provider to login to Azure with the configured SP credentials.
+ Note the SP must have sufficient privileges, the created account must have at least contributor role on the tenant you may used az cli by running  `az ad sp create-for-rbac`or via the portal by creating app
  registration account as assigning the specific role.
 
 
 1. Create a `terraform.tfvars` or update the `terraform.tfvars.json` (should be in your `.gitignore` or outside source control as it contains sensitive information) file with the following information
     -  `location` (Azure region - eastus, westus etc.)
     -  `az_resource_group` (the resource group must exist), it the resource group which will be assigned to the created workers nodes
-    -  `ssh_public_key` (location of the SSH key file for access to worker nodes)
+    -  `ssh_public_key` (SSH public key for access to worker nodes)
     -  `agent_admin`(SSH user name)
     -  `client_id` (Azure Service Principal app id, same as in step 0)  
     -  `client_secret` ( Azure SP password, same as in step 0)
@@ -65,4 +65,4 @@ If you change the values of the annotations above you'll need to make correspond
 
 7. A kubeconfig named `aksk8scfg` is generated in the same directory TF is run from. Set your `KUBECONFIG` env var to point to this file.
 
-8. The `helm install`s should have been triggered as part of step 5. Check the pods in uaa, scf, stratos and metrics namespace to make sure they all come up and are ready. 
+8. The `helm install`s should have been triggered as part of step 5. Check the pods in uaa, scf, stratos and metrics namespace to make sure they all come up and are ready.
