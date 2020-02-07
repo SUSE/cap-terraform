@@ -1,15 +1,9 @@
-0. Set the following env variables:
-
-```
- export ARM_CLIENT_ID=<Azure SP Client ID>
- export ARM_CLIENT_SECRET=<Azure SP Client Secret>
- export ARM_TENANT_ID=<Tenant Id>
- export ARM_SUBSCRIPTION_ID=<Subscription id>
- ```
- These env vars are used by the Terraform AzureRM provider to login to Azure with the configured SP credentials.
- Note the SP must have sufficient privileges, the created account must have at least contributor role on the tenant you may used az cli by running  `az ad sp create-for-rbac`or via the portal by creating app
- registration account as assigning the specific role.
-
+0. Create an Azure Service Principal
+   ```
+   az ad sp create-for-rbac
+   ```
+   Note the SP must have sufficient privileges, the created account must have at least contributor role. The SP may alternatively be created via the portal by creating an app
+   registration account as assigning the specific role.
 
 1. Create a `terraform.tfvars` or update the `terraform.tfvars.json` (should be in your `.gitignore` or outside source control as it contains sensitive information) file with the following information
     -  `location` (Azure region - eastus, westus etc.)

@@ -2,6 +2,22 @@ variable "az_resource_group" {
     type = "string"
 }
 
+variable client_id {
+    type = "string"
+}
+
+variable client_secret {
+    type = "string"
+}
+
+variable "subscription_id" {
+    type = "string"
+}
+
+variable "tenant_id" {
+    type = "string"
+}
+
 variable "location" {
     type = "string"
 }
@@ -32,19 +48,7 @@ variable "disk_size_gb" {
     default = 60
 }
 
-variable client_id {
-    type = "string"
-}
-
-variable client_secret {
-    type = "string"
-}
-
 variable "ssh_public_key" {
-    type = "string"
-}
-
-variable "azure_dns_json" {
     type = "string"
 }
 
