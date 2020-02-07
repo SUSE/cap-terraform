@@ -29,8 +29,8 @@
   - `cluster_labels` - Tags to be applied to resources in your cluster. (Optional)
   - `disk_size_gb` - The worker node storage capacity. (Minimum:80, Maximum: 4095)
   - `k8s_version` - Kubernetes version to apply to AKS; must be supported in the selected region. (Run `az aks get-versions --location $REGION --output table` for a list of supported options)
-  - `node_count` - The number of worker nodes in your cluster. (Minimum: 3, Maximum 50)
-  - `machine_type` - The type of instance used for the provisioned workers.
+  - `instance_count` - The number of worker nodes in your cluster. (Minimum: 3, Maximum 50)
+  - `instance_type` - The type of instance used for the provisioned workers.
   - `cap_domain` - The FQDN of your cluster.
   - `email` - Email address to send TLS certificate notifications to.
   - `dns_zone_name` - Name of the Azure DNS Zone created for the cluster.

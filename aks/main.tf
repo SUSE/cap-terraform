@@ -22,8 +22,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
     agent_pool_profile {
         name            = "agentpool"
-        count           = "${var.node_count}"
-        vm_size         = "${var.machine_type}"
+        count           = "${var.instance_count}"
+        vm_size         = "${var.instance_type}"
         os_type         = "Linux"
         os_disk_size_gb = "${var.disk_size_gb}"
     }
