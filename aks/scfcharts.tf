@@ -6,6 +6,7 @@ data "helm_repository" "suse" {
 
 locals {
     chart_values_file = "${path.cwd}/scf-config-values.yaml"
+    stratos_metrics_config_file = "${path.cwd}/stratos-metrics-values.yaml"
 }
 
 # Install UAA using Helm Chart
@@ -69,7 +70,7 @@ resource "null_resource" "metrics" {
     command = "/bin/sh deploy_metrics.sh "
 
     environment = {
-        METRICS_FILE = "${var.stratos_metrics_config_file}"
+        METRICS_FILE = "${local.stratos_metrics_config_file}"
         SCF_FILE = "${local.chart_values_file}"
         RESOURCE_GROUP = "${var.az_resource_group}"
         CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
