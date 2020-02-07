@@ -1,30 +1,8 @@
-
-resource "kubernetes_secret" "azure_dns_sp_creds" {
-  metadata {
-    name = "azure-dns-sp-creds"
-  }
-
-  data = {
-    "azure.json" = "${file("${var.azure_dns_json}")}"
-  }
-}  
-  data "external" "dns"  {
-
-    program = ["cat", "${var.azure_dns_json}"]
-    query = { }
-
-  } 
-
-
 resource "helm_release" "external-dns" {
     name = "cap-external-dns"
     chart = "stable/external-dns"
     wait = "false"
 
-    set {
-        name = "azure.secretName"
-        value = "${kubernetes_secret.azure_dns_sp_creds.metadata.0.name}"
-    }
     set {
         name = "provider"
         value = "azure"
@@ -37,9 +15,25 @@ resource "helm_release" "external-dns" {
 
     set {
         name = "azure.resourceGroup"
-        value = "${data.external.dns.result["resourceGroup"]}"
+        value = "${var.az_resource_group}"
     }
-   
+    set {
+        name = "azure.tenantId"
+        value = "${var.tenant_id}"
+    }
+    set {
+        name = "azure.subscriptionId"
+        value = "${var.subscription_id}"
+    }
+    set {
+        name = "azure.aadClientId"
+        value = "${var.client_id}"
+    }
+    set {
+        name = "azure.aadClientSecret"
+        value = "${var.client_secret}"
+    }
+
     set {
         name = "rbac.create"
         value = "true"
