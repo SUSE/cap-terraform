@@ -1,0 +1,61 @@
+{
+    "variable": {
+        "az_resource_group": {
+            "type": "string"
+        },
+        "client_id": {
+            "type": "string"
+        },
+        "client_secret": {
+            "type": "string"
+        },
+        "subscription_id": {
+            "type": "string"
+        },
+        "tenant_id": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "node_count": {
+            "type": "number",
+            "default": 1
+        },
+        "machine_type": {
+            "type": "string",
+            "default": "Standard_DS3_v2"
+        },
+        "agent_admin": {
+            "type": "string"
+        },
+        "dns_prefix": {
+            "default": "cap-on-aks"
+        },
+        "cluster_labels": {
+            "type": "map"
+        },
+        "k8s_version": {
+            "type": "string",
+            "default": "1.13.12"
+        },
+        "disk_size_gb": {
+            "type": "number",
+            "default": 60
+        },
+        "ssh_public_key": {
+            "type": "string"
+        },
+        "cap_domain": {
+            "type": "string"
+        },
+        "email": {
+            "type": "string",
+            "description": "email address to send TLS certificate notifications to"
+        },
+        "dns_zone_name": {
+            "type": "string",
+            "description": "name of the Azure DNS Zone created for the cluster"
+        }
+    }
+}
