@@ -4,7 +4,10 @@ data "helm_repository" "suse" {
   url  = "https://kubernetes-charts.suse.com"
 }
 
-
+locals {
+    chart_values_file = "${path.cwd}/scf-config-values.yaml"
+    stratos_metrics_config_file = "${path.cwd}/stratos-metrics-values.yaml"
+}
 
 # Install UAA using Helm Chart
 resource "helm_release" "uaa" {
@@ -15,7 +18,7 @@ resource "helm_release" "uaa" {
   wait       = "false"
 
   values = [
-    "${file("${var.chart_values_file}")}"
+    "${file("${local.chart_values_file}")}"
   ]
 
   depends_on = ["helm_release.external-dns", "helm_release.nginx_ingress", "null_resource.cluster_issuer_setup"]
@@ -30,8 +33,8 @@ resource "helm_release" "scf" {
     wait       = "false"
 
     values = [
-    "${file("${var.chart_values_file}")}"
-  ]
+        "${file("${local.chart_values_file}")}"
+    ]
 
     depends_on = ["helm_release.uaa"]
   }
@@ -45,9 +48,9 @@ resource "helm_release" "stratos" {
     wait       = "false"
 
     values = [
-    "${file("${var.chart_values_file}")}"
-  ]
- 
+        "${file("${local.chart_values_file}")}"
+    ]
+
    set {
     name  = "services.loadbalanced"
     value = "true"
@@ -67,8 +70,8 @@ resource "null_resource" "metrics" {
     command = "/bin/sh deploy_metrics.sh "
 
     environment = {
-        METRICS_FILE = "${var.stratos_metrics_config_file}"
-        SCF_FILE = "${var.chart_values_file}"
+        METRICS_FILE = "${local.stratos_metrics_config_file}"
+        SCF_FILE = "${local.chart_values_file}"
         RESOURCE_GROUP = "${var.az_resource_group}"
         CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
         AZ_CERT_MGR_SP_PWD = "${var.client_secret}"

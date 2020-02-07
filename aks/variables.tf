@@ -56,13 +56,6 @@ variable "ssh_public_key" {
 #    type = "string"
 #}
 #
-variable "chart_values_file" {
-    type = "string"
-}
-
-variable "stratos_metrics_config_file" {
-    type = "string"
-}
 
 variable "cap_domain" {
     type = "string"

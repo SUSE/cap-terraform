@@ -27,8 +27,6 @@
   - `client_secret` (Azure SP "password", from Azure SP data)
   - `tenant_id` (Azure SP "tenantId", from Azure SP data)
   - `cluster_labels` (any cluster labels, an optional map of key value pairs)
-  - `chart_values_file` (absolute filesystem location of the helm chart values yaml for deploying UAA, SCF, stratos and Metrics)
-  - `stratos_metrics_config_file` (absolute filesystem location of the helm chart values yaml for deploying Metrics)
   - `disk_size_gb` ("100" this is the worker node storage capacity.)
   - `k8s_version` ("1.14.8" this is the K8s version, please always note that the used version must be higher than 1.10 and must be supported by the selected region)
   - `node_count` ("2" this is the number of worker nodes)
