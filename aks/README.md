@@ -18,23 +18,23 @@
     The DNS zone will host the cluster's DNS records in a specific domain name. Make note of the _name_ which must be supplied in terraform variables. See https://docs.microsoft.com/en-us/azure/dns/ for details on setting up a DNS zone.
 
 1. Create a `terraform.tfvars` or update the `terraform.tfvars.json` (should be in your `.gitignore` or outside source control as it contains sensitive information) file with the following information
-  - `az_resource_group` - An existing Azure Resource Group where resources will be created.
-  - `client_id` - Azure Service Principal 'appId'
-  - `client_secret` - Azure Service Principal 'password'
-  - `location` - The Azure region where the Resource Group is placed.
-  - `ssh_public_key` - SSH public key for access to worker nodes.
-  - `agent_admin` - SSH username for accessing the cluster.
-  - `subscription_id` - Azure subscription ID
-  - `tenant_id` - "Azure Service Principal 'tenant'"
-  - `cluster_labels` - Tags to be applied to resources in your cluster. (Optional)
-  - `disk_size_gb` - The worker node storage capacity. (Minimum:80, Maximum: 4095)
-  - `k8s_version` - Kubernetes version to apply to AKS; must be supported in the selected region. (Run `az aks get-versions --location $REGION --output table` for a list of supported options)
   - `instance_count` - The number of worker nodes in your cluster. (Minimum: 3, Maximum 50)
   - `instance_type` - The type of instance used for the provisioned workers.
-  - `cap_domain` - The FQDN of your cluster.
-  - `email` - Email address to send TLS certificate notifications to.
+  - `subscription_id` - Azure subscription ID
+  - `az_resource_group` - An existing Azure Resource Group where resources will be created.
+  - `location` - The Azure region where the Resource Group is placed.
+  - `client_id` - Azure Service Principal 'appId'
+  - `client_secret` - Azure Service Principal 'password'
+  - `tenant_id` - "Azure Service Principal 'tenant'"
+  - `agent_admin` - SSH username for accessing the cluster.
+  - `ssh_public_key` - SSH public key for access to worker nodes.
+  - `k8s_version` - Kubernetes version to apply to AKS; must be supported in the selected region. (Run `az aks get-versions --location $REGION --output table` for a list of supported options)
+  - `disk_size_gb` - The worker node storage capacity. (Minimum:80, Maximum: 4095)
+  - `cluster_labels` - Tags to be applied to resources in your cluster. (Optional)
   - `dns_zone_name` - Name of the Azure DNS Zone created for the cluster.
+  - `cap_domain` - The FQDN of your cluster.
   - `dns_prefix` - Prefix for node DNS hostnames. (Must be alphanumeric, may include but not end with dashes)
+  - `email` - Email address to send TLS certificate notifications to.
 
 2. In the helm chart values yaml use the following values to allow `cert-manager` to generate certificates for the ingress endpoints, you may use the scf-config-values.yaml as a reference:
 
