@@ -1,5 +1,7 @@
 # Provision public cloud k8s clusters with Terraform for CAP deployment
 
+**Note: For a full "end-to-end" deployment of SUSE CAP, use the [e2e-cap-deploy branch](https://github.com/SUSE/cap-terraform/tree/e2e-cap-deploy).**
+
 The goal is to setup a cluster and configure it such that all that's needed for CAP deployment is the `helm install`s. 
 If you'd like to do an automated, end-to-end CAP deployment check the `e2e-cap-deployment` branch.
 For details on how to use the templates for specific providers see the respective READMEs in the provider directories.
