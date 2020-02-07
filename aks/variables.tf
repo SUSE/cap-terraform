@@ -67,3 +67,13 @@ variable "stratos_metrics_config_file" {
 variable "cap_domain" {
     type = "string"
 }
+
+variable "email" {
+    type = "string"
+    description = "email address to send certificate notifications to"
+}
+
+variable "dns_zone_name" {
+    type = "string"
+    description = "name of the Azure DNS Zone created for the cluster"
+}
