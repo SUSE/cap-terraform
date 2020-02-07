@@ -15,7 +15,7 @@ resource "helm_release" "external-dns" {
 
     set {
         name = "azure.resourceGroup"
-        value = "${var.az_resource_group}"
+        value = "${var.resource_group}"
     }
     set {
         name = "azure.tenantId"

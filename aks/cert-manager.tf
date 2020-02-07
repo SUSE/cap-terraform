@@ -4,7 +4,7 @@ resource "null_resource" "cert_manager_setup" {
   provisioner "local-exec" {
     command = "/bin/sh setup_cert_manager.sh"
     environment = {
-        RESOURCE_GROUP = "${var.az_resource_group}"
+        RESOURCE_GROUP = "${var.resource_group}"
         CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
     }
 
@@ -47,7 +47,7 @@ resource "local_file" "le-cert-issuer" {
         client_id = "${var.client_id}",
         subscription_id = "${var.subscription_id}",
         tenant_id = "${var.tenant_id}",
-        az_resource_group = "${var.az_resource_group}",
+        az_resource_group = "${var.resource_group}",
         dns_zone_name = "${var.dns_zone_name}"
     })
     filename = "${path.module}/le-cert-issuer.yaml"
@@ -59,7 +59,7 @@ resource "null_resource" "cluster_issuer_setup" {
     provisioner "local-exec" {
     command = "/bin/sh setup_cert_issuer.sh "
     environment = {
-        RESOURCE_GROUP = "${var.az_resource_group}"
+        RESOURCE_GROUP = "${var.resource_group}"
         CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
         AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
     }

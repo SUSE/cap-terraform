@@ -72,7 +72,7 @@ resource "null_resource" "metrics" {
     environment = {
         METRICS_FILE = "${local.stratos_metrics_config_file}"
         SCF_FILE = "${local.chart_values_file}"
-        RESOURCE_GROUP = "${var.az_resource_group}"
+        RESOURCE_GROUP = "${var.resource_group}"
         CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
         AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
 
@@ -88,7 +88,7 @@ resource "null_resource" "update_stratos_dns" {
     command = "/bin/sh ext-dns-stratos-svc-annotate.sh"
 
     environment = {
-        RESOURCE_GROUP = "${var.az_resource_group}"
+        RESOURCE_GROUP = "${var.resource_group}"
         CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
         AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
 	DOMAIN="${var.cap_domain}"
@@ -107,7 +107,7 @@ resource "null_resource" "update_metrics_dns" {
     command = "/bin/sh ext-dns-metrics-svc-annotate.sh"
 
     environment = {
-        RESOURCE_GROUP = "${var.az_resource_group}"
+        RESOURCE_GROUP = "${var.resource_group}"
         CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
         AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
         DOMAIN="${var.cap_domain}"

@@ -14,7 +14,7 @@
             "type": "string",
             "description": "Azure subscription ID"
         },
-        "az_resource_group": {
+        "resource_group": {
             "type": "string",
             "description": "An existing Azure Resource Group where resources will be created."
         },
@@ -34,7 +34,7 @@
             "type": "string",
             "description": "Azure Service Principal 'tenant'"
         },
-        "agent_admin": {
+        "ssh_username": {
             "type": "string",
             "description": "SSH username for accessing the cluster."
         },
