@@ -6,6 +6,7 @@ env:
   DOMAIN: xxx.xxxxx.xxx
   # the UAA prefix is required
   UAA_HOST: uaa.xxxxx.xxxx.xxxx
+  # Both UAA_PORT and UAA_PUBLIC_PORT are required for now; the Ingress Controller will listed on 443
   UAA_PORT: 443
   UAA_PUBLIC_PORT: 443
   GARDEN_ROOTFS_DRIVER: "overlay-xfs"
@@ -34,11 +35,11 @@ secrets:
   # provides root access to everything
   UAA_ADMIN_CLIENT_SECRET: xxxxx
 
-  UAA_CA_CERT: |
-    -----BEGIN CERTIFICATE-----
-    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    -----END CERTIFICATE-----
-
+  #  UAA_CA_CERT: |
+  #    -----BEGIN CERTIFICATE-----
+  #    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  #    -----END CERTIFICATE-----
+  #
     #services:
         #loadbalanced: true
 
