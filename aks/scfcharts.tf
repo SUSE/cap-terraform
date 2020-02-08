@@ -20,6 +20,36 @@ resource "helm_release" "uaa" {
   values = [
     "${file("${local.chart_values_file}")}"
   ]
+  # scf-config-values
+  set {
+    name = "env.DOMAIN"
+    value = "${var.cap_domain}"
+  }
+  set {
+    name = "env.UAA_HOST"
+    value = "uaa.${var.cap_domain}"
+  }
+  set_sensitive {
+    name = "secrets.CLUSTER_ADMIN_PASSWORD"
+    value = "${var.cluster_admin_password}"
+  }
+  set_sensitive {
+    name = "secrets.UAA_ADMIN_CLIENT_SECRET"
+    value = "${var.uaa_admin_client_secret}"
+  }
+  # stratos-metrics-values
+  set {
+    name = "kubernetes.apiEndpoint"
+    value = "${var.cap_domain}"
+  }
+  set {
+    name = "metrics.username"
+    value = "${var.metrics_username}"
+  }
+  set_sensitive {
+    name = "metrics.password"
+    value = "${var.metrics_password}"
+  }
 
   depends_on = ["helm_release.external-dns", "helm_release.nginx_ingress", "null_resource.cluster_issuer_setup"]
 }
@@ -35,6 +65,36 @@ resource "helm_release" "scf" {
     values = [
         "${file("${local.chart_values_file}")}"
     ]
+    # scf-config-values
+    set {
+      name = "env.DOMAIN"
+      value = "${var.cap_domain}"
+    }
+    set {
+      name = "env.UAA_HOST"
+      value = "uaa.${var.cap_domain}"
+    }
+    set_sensitive {
+      name = "secrets.CLUSTER_ADMIN_PASSWORD"
+      value = "${var.cluster_admin_password}"
+    }
+    set_sensitive {
+      name = "secrets.UAA_ADMIN_CLIENT_SECRET"
+      value = "${var.uaa_admin_client_secret}"
+    }
+    # stratos-metrics-values
+    set {
+      name = "kubernetes.apiEndpoint"
+      value = "${var.cap_domain}"
+    }
+    set {
+      name = "metrics.username"
+      value = "${var.metrics_username}"
+    }
+    set_sensitive {
+      name = "metrics.password"
+      value = "${var.metrics_password}"
+    }
 
     depends_on = ["helm_release.uaa"]
   }
@@ -50,6 +110,36 @@ resource "helm_release" "stratos" {
     values = [
         "${file("${local.chart_values_file}")}"
     ]
+    # scf-config-values
+    set {
+      name = "env.DOMAIN"
+      value = "${var.cap_domain}"
+    }
+    set {
+      name = "env.UAA_HOST"
+      value = "uaa.${var.cap_domain}"
+    }
+    set_sensitive {
+      name = "secrets.CLUSTER_ADMIN_PASSWORD"
+      value = "${var.cluster_admin_password}"
+    }
+    set_sensitive {
+      name = "secrets.UAA_ADMIN_CLIENT_SECRET"
+      value = "${var.uaa_admin_client_secret}"
+    }
+    # stratos-metrics-values
+    set {
+      name = "kubernetes.apiEndpoint"
+      value = "${var.cap_domain}"
+    }
+    set {
+      name = "metrics.username"
+      value = "${var.metrics_username}"
+    }
+    set_sensitive {
+      name = "metrics.password"
+      value = "${var.metrics_password}"
+    }
 
    set {
     name  = "services.loadbalanced"
