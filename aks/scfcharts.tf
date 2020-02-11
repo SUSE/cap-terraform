@@ -20,10 +20,22 @@ resource "helm_release" "uaa" {
   values = [
     "${file("${local.chart_values_file}")}"
   ]
+  # scf-config-values
+  set {
+    name = "env.DOMAIN"
+    value = "${var.cap_domain}"
+  }
+  set {
+    name = "env.UAA_HOST"
+    value = "uaa.${var.cap_domain}"
+  }
+  set_sensitive {
+    name = "secrets.UAA_ADMIN_CLIENT_SECRET"
+    value = "${var.uaa_admin_client_secret}"
+  }
 
   depends_on = ["helm_release.external-dns", "helm_release.nginx_ingress", "null_resource.cluster_issuer_setup"]
 }
-
 
 resource "helm_release" "scf" {
     name       = "scf-cf"
@@ -35,6 +47,23 @@ resource "helm_release" "scf" {
     values = [
         "${file("${local.chart_values_file}")}"
     ]
+    # scf-config-values
+    set {
+      name = "env.DOMAIN"
+      value = "${var.cap_domain}"
+    }
+    set {
+      name = "env.UAA_HOST"
+      value = "uaa.${var.cap_domain}"
+    }
+    set_sensitive {
+      name = "secrets.CLUSTER_ADMIN_PASSWORD"
+      value = "${var.cluster_admin_password}"
+    }
+    set_sensitive {
+      name = "secrets.UAA_ADMIN_CLIENT_SECRET"
+      value = "${var.uaa_admin_client_secret}"
+    }
 
     depends_on = ["helm_release.uaa"]
   }
@@ -50,7 +79,15 @@ resource "helm_release" "stratos" {
     values = [
         "${file("${local.chart_values_file}")}"
     ]
-
+    # scf-config-values
+    set {
+      name = "env.DOMAIN"
+      value = "${var.cap_domain}"
+    }
+    set {
+      name = "env.UAA_HOST"
+      value = "uaa.${var.cap_domain}"
+    }
    set {
     name  = "services.loadbalanced"
     value = "true"
@@ -60,25 +97,32 @@ resource "helm_release" "stratos" {
     value = "true"
   }
 
-
     depends_on = ["helm_release.scf"]
   }
 
-resource "null_resource" "metrics" {
+resource "helm_release" "metrics" {
+    name       = "susecf-metrics"
+    repository = "${data.helm_repository.suse.metadata.0.name}"
+    chart      = "metrics"
+    namespace  = "metrics"
+    wait       = "false"
 
-  provisioner "local-exec" {
-    command = "/bin/sh deploy_metrics.sh "
-
-    environment = {
-        METRICS_FILE = "${local.stratos_metrics_config_file}"
-        SCF_FILE = "${local.chart_values_file}"
-        RESOURCE_GROUP = "${var.resource_group}"
-        CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
-        AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
-
+    values = [
+        "${file("${local.stratos_metrics_config_file}")}"
+    ]
+    set {
+      name = "metrics.username"
+      value = "${var.metrics_username}"
+    }
+    set_sensitive {
+      name = "metrics.password"
+      value = "${var.metrics_password}"
+    }
+    set {
+      name = "kubernetes.apiEndpoint"
+      value = "${var.cap_domain}"
     }
 
-  }
   depends_on = ["helm_release.stratos"]
 }
 
