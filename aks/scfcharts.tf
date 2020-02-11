@@ -159,5 +159,5 @@ resource "null_resource" "update_metrics_dns" {
     }
 
   }
-  depends_on = ["null_resource.metrics"]
+  depends_on = ["helm_release.metrics"]
 }
