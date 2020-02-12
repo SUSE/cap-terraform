@@ -1,7 +1,7 @@
 # Add SUSE Helm charts repo
 data "helm_repository" "suse" {
-  name = "suse"
-  url  = "https://kubernetes-charts.suse.com"
+    name = "suse"
+    url  = "https://kubernetes-charts.suse.com"
 }
 
 locals {
@@ -11,30 +11,30 @@ locals {
 
 # Install UAA using Helm Chart
 resource "helm_release" "uaa" {
-  name       = "scf-uaa"
-  repository = "${data.helm_repository.suse.metadata.0.name}"
-  chart      = "uaa"
-  namespace  = "uaa"
-  wait       = "false"
+    name       = "scf-uaa"
+    repository = "${data.helm_repository.suse.metadata.0.name}"
+    chart      = "uaa"
+    namespace  = "uaa"
+    wait       = "false"
 
-  values = [
+    values = [
     "${file("${local.chart_values_file}")}"
-  ]
-  # scf-config-values
-  set {
-    name = "env.DOMAIN"
-    value = "${var.cap_domain}"
-  }
-  set {
-    name = "env.UAA_HOST"
-    value = "uaa.${var.cap_domain}"
-  }
-  set_sensitive {
-    name = "secrets.UAA_ADMIN_CLIENT_SECRET"
-    value = "${var.uaa_admin_client_secret}"
-  }
+    ]
+    # scf-config-values
+    set {
+        name = "env.DOMAIN"
+        value = "${var.cap_domain}"
+    }
+    set {
+        name = "env.UAA_HOST"
+        value = "uaa.${var.cap_domain}"
+    }
+    set_sensitive {
+        name = "secrets.UAA_ADMIN_CLIENT_SECRET"
+        value = "${var.uaa_admin_client_secret}"
+    }
 
-  depends_on = ["helm_release.external-dns", "helm_release.nginx_ingress", "null_resource.cluster_issuer_setup"]
+    depends_on = ["helm_release.external-dns", "helm_release.nginx_ingress", "null_resource.cluster_issuer_setup"]
 }
 
 resource "helm_release" "scf" {
@@ -45,28 +45,28 @@ resource "helm_release" "scf" {
     wait       = "false"
 
     values = [
-        "${file("${local.chart_values_file}")}"
+    "${file("${local.chart_values_file}")}"
     ]
     # scf-config-values
     set {
-      name = "env.DOMAIN"
-      value = "${var.cap_domain}"
+        name = "env.DOMAIN"
+        value = "${var.cap_domain}"
     }
     set {
-      name = "env.UAA_HOST"
-      value = "uaa.${var.cap_domain}"
+        name = "env.UAA_HOST"
+        value = "uaa.${var.cap_domain}"
     }
     set_sensitive {
-      name = "secrets.CLUSTER_ADMIN_PASSWORD"
-      value = "${var.cluster_admin_password}"
+        name = "secrets.CLUSTER_ADMIN_PASSWORD"
+        value = "${var.cluster_admin_password}"
     }
     set_sensitive {
-      name = "secrets.UAA_ADMIN_CLIENT_SECRET"
-      value = "${var.uaa_admin_client_secret}"
+        name = "secrets.UAA_ADMIN_CLIENT_SECRET"
+        value = "${var.uaa_admin_client_secret}"
     }
 
     depends_on = ["helm_release.uaa"]
-  }
+}
 
 
 resource "helm_release" "stratos" {
@@ -77,28 +77,28 @@ resource "helm_release" "stratos" {
     wait       = "false"
 
     values = [
-        "${file("${local.chart_values_file}")}"
+    "${file("${local.chart_values_file}")}"
     ]
     # scf-config-values
     set {
-      name = "env.DOMAIN"
-      value = "${var.cap_domain}"
+        name = "env.DOMAIN"
+        value = "${var.cap_domain}"
     }
     set {
-      name = "env.UAA_HOST"
-      value = "uaa.${var.cap_domain}"
+        name = "env.UAA_HOST"
+        value = "uaa.${var.cap_domain}"
     }
-   set {
-    name  = "services.loadbalanced"
-    value = "true"
-  }
-   set {
-    name  = "console.techPreview"
-    value = "true"
-  }
+    set {
+        name  = "services.loadbalanced"
+        value = "true"
+    }
+    set {
+        name  = "console.techPreview"
+        value = "true"
+    }
 
     depends_on = ["helm_release.scf"]
-  }
+}
 
 resource "helm_release" "metrics" {
     name       = "susecf-metrics"
@@ -108,56 +108,56 @@ resource "helm_release" "metrics" {
     wait       = "false"
 
     values = [
-        "${file("${local.stratos_metrics_config_file}")}"
+    "${file("${local.stratos_metrics_config_file}")}"
     ]
     set {
-      name = "metrics.username"
-      value = "${var.metrics_username}"
+        name = "metrics.username"
+        value = "${var.metrics_username}"
     }
     set_sensitive {
-      name = "metrics.password"
-      value = "${var.metrics_password}"
+        name = "metrics.password"
+        value = "${var.metrics_password}"
     }
     set {
-      name = "kubernetes.apiEndpoint"
-      value = "${var.cap_domain}"
+        name = "kubernetes.apiEndpoint"
+        value = "${var.cap_domain}"
     }
 
-  depends_on = ["helm_release.stratos"]
+    depends_on = ["helm_release.stratos"]
 }
 
 resource "null_resource" "update_stratos_dns" {
 
-  provisioner "local-exec" {
-    command = "/bin/sh ext-dns-stratos-svc-annotate.sh"
+    provisioner "local-exec" {
+        command = "/bin/sh ext-dns-stratos-svc-annotate.sh"
 
-    environment = {
-        RESOURCE_GROUP = "${var.resource_group}"
-        CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
-        AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
-	DOMAIN="${var.cap_domain}"
+        environment = {
+            RESOURCE_GROUP = "${var.resource_group}"
+            CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
+            AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
+            DOMAIN="${var.cap_domain}"
+
+        }
 
     }
-
-  }
-  depends_on = ["helm_release.stratos"]
+    depends_on = ["helm_release.stratos"]
 }
 
 
 
 resource "null_resource" "update_metrics_dns" {
 
-  provisioner "local-exec" {
-    command = "/bin/sh ext-dns-metrics-svc-annotate.sh"
+    provisioner "local-exec" {
+        command = "/bin/sh ext-dns-metrics-svc-annotate.sh"
 
-    environment = {
-        RESOURCE_GROUP = "${var.resource_group}"
-        CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
-        AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
-        DOMAIN="${var.cap_domain}"
+        environment = {
+            RESOURCE_GROUP = "${var.resource_group}"
+            CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
+            AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
+            DOMAIN="${var.cap_domain}"
+
+        }
 
     }
-
-  }
-  depends_on = ["helm_release.metrics"]
+    depends_on = ["helm_release.metrics"]
 }
