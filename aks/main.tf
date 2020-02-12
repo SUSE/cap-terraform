@@ -1,8 +1,8 @@
 resource "random_string" "cluster_name" {
-  length  = 18
-  special = false
-  upper   = false
-  number  = false
+    length  = 18
+    special = false
+    upper   = false
+    number  = false
 }
 
 resource "azurerm_kubernetes_cluster" "k8s" {
@@ -32,20 +32,20 @@ resource "azurerm_kubernetes_cluster" "k8s" {
         client_id     = "${var.client_id}"
         client_secret = "${var.client_secret}"
     }
-
+    
     tags = "${var.cluster_labels}"
 }
 
 
 locals {
-  k8scfg = "${azurerm_kubernetes_cluster.k8s.kube_config_raw}"
+    k8scfg = "${azurerm_kubernetes_cluster.k8s.kube_config_raw}"
 }
 
 output "kube_config" {
-  value = "${local.k8scfg}"
+    value = "${local.k8scfg}"
 }
 
 resource "local_file" "k8scfg" {
-  content = "${local.k8scfg}"
-  filename = "aksk8scfg"
+    content = "${local.k8scfg}"
+    filename = "aksk8scfg"
 }
