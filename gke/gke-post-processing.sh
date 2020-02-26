@@ -4,7 +4,7 @@ gcloud auth revoke
 
 gcloud auth activate-service-account --key-file=${SA_KEY_FILE}
 
-gcloud container clusters get-credentials  ${CLUSTER_NAME} --zone ${CLUSTER_ZONE:?required}
+gcloud container clusters get-credentials  ${CLUSTER_NAME} --zone ${CLUSTER_ZONE:?required} --project ${PROJECT}
 
 checkready() {
 	while [[ $node_readiness != "$NODE_COUNT True" ]]; do

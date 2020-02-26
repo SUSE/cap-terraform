@@ -2,7 +2,8 @@ provider "azurerm" {
   # Remember to set the env variables ARM_TENANT_ID, ARM_CLIENT_ID, ARM_CLIENT_SECRET and ARM_SUBSCRIPTION_ID
   # to allow the SP to login to Azure. 
   # whilst the `version` attribute is optional, we recommend pinning to a given version of the Provider
-  version = "~> 1.27"
+  version = "~> 2.0.0"
+  features {}
 }
 
 terraform {

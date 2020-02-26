@@ -1,5 +1,5 @@
 resource "random_string" "cluster_name" {
-  length  = 18
+  length  = 8
   special = false
   upper   = false
   number  = false
@@ -20,11 +20,10 @@ resource "azurerm_kubernetes_cluster" "k8s" {
         }
     }
 
-    agent_pool_profile {
-        name            = "agentpool"
-        count           = "${var.instance_count}"
+    default_node_pool {
+        name            = "defaultpool"
+        node_count           = "${var.instance_count}"
         vm_size         = "${var.instance_type}"
-        os_type         = "Linux"
         os_disk_size_gb = "${var.disk_size_gb}"
     }
 
@@ -35,20 +34,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
     tags = "${var.cluster_labels}"
 }
-
-#resource "null_resource" "post_processor" {
-#
-#  provisioner "local-exec" {
-#    command = "/bin/sh aks-post-processing.sh"
-#
-#    environment = {
-#      AKSNAME = "${azurerm_kubernetes_cluster.k8s.name}"
-#      RGNAME = "${var.az_resource_group}"
-#      CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
-#      NODEPOOLNAME = "agentpool"
-#    }
-#  }
-#}
 
 locals {
   k8scfg = "${azurerm_kubernetes_cluster.k8s.kube_config_raw}"
@@ -61,4 +46,6 @@ output "kube_config" {
 resource "local_file" "k8scfg" {
   content = "${local.k8scfg}"
   filename = "aksk8scfg"
+
+  depends_on = ["azurerm_kubernetes_cluster.k8s"]
 }

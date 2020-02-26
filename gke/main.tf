@@ -1,5 +1,5 @@
 resource "random_string" "cluster_name" {
-  length  = 18
+  length  = 8
   special = false
   upper   = false
   number  = false
@@ -45,7 +45,7 @@ resource "google_container_node_pool" "np" {
   name       = "${var.node_pool_name}"
   location   = "${var.location}"
   cluster    = "${google_container_cluster.gke-cluster.name}"
-  node_count = "${var.node_count}"
+  node_count = "${var.instance_count}"
   version    = "${var.k8s_version}"
 
 
@@ -83,6 +83,7 @@ resource "null_resource" "post_processor" {
       CLUSTER_ZONE = "${var.location}"
       NODE_COUNT   = "${var.instance_count}"
       SA_KEY_FILE  = "${var.gke_sa_key}"
+      PROJECT      = "${var.project}"
     }
   }
 }

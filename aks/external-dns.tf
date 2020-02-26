@@ -36,7 +36,6 @@ resource "helm_release" "external-dns" {
         name = "rbac.create"
         value = "true"
     }
-
-    depends_on = ["kubernetes_cluster_role_binding.tiller"]
+    depends_on = ["kubernetes_secret.azure_dns_sp_creds"]
 }
 
