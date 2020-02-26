@@ -15,8 +15,8 @@ resource "google_container_cluster" "gke-cluster" {
   remove_default_node_pool = true
 
   initial_node_count = 1
-  min_master_version = "${var.k8s_version}"
-  node_version = "${var.k8s_version}"
+ # min_master_version = "${var.k8s_version}"
+ # node_version = "${var.k8s_version}"
 
   resource_labels = "${var.cluster_labels}"
 
@@ -46,7 +46,7 @@ resource "google_container_node_pool" "np" {
   location   = "${var.location}"
   cluster    = "${google_container_cluster.gke-cluster.name}"
   node_count = "${var.instance_count}"
-  version    = "${var.k8s_version}"
+#  version    = "${var.k8s_version}"
 
 
   node_config {
@@ -67,8 +67,8 @@ resource "google_container_node_pool" "np" {
   }
 
   management {
-    auto_repair  = false
-    auto_upgrade = false
+    auto_repair  = true
+    auto_upgrade = true
   }
 }
 
