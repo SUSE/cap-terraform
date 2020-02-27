@@ -32,7 +32,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
         client_id     = "${var.client_id}"
         client_secret = "${var.client_secret}"
     }
-    
+
     tags = "${var.cluster_labels}"
 }
 
@@ -47,5 +47,5 @@ output "kube_config" {
 
 resource "local_file" "k8scfg" {
     content = "${local.k8scfg}"
-    filename = "aksk8scfg"
+    filename = "kubeconfig"
 }

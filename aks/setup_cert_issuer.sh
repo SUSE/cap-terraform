@@ -1,4 +1,4 @@
 #! /bin/sh
-export KUBECONFIG=./aksk8scfg
+export KUBECONFIG=./kubeconfig
 kubectl create secret generic -n cert-manager azuredns-config --from-literal=CLIENT_SECRET=${AZ_CERT_MGR_SP_PWD}
 kubectl apply -f le-cert-issuer.yaml
