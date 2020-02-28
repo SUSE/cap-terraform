@@ -1,5 +1,5 @@
 #!/bin/sh
-export KUBECONFIG=./aksk8scfg
+export KUBECONFIG=./kubeconfig
 
 # Create the namespace for cert-manager
 kubectl create namespace cert-manager

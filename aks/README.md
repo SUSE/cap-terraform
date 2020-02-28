@@ -51,6 +51,6 @@
 
 ## Results
 
-* A kubeconfig named `aksk8scfg` is generated in the same directory TF is run from. Set your `KUBECONFIG` env var to point to this file.
+* A kubeconfig named `kubeconfig` is generated in the same directory TF is run from. Set your `KUBECONFIG` env var to point to this file.
 
 * The `helm install`s should have been triggered as part of step 4. Check the pods in uaa, scf, stratos and metrics namespace to make sure they all come up and are ready.
