@@ -13,6 +13,10 @@ variable "node_pool_name" {
 variable "instance_count" {
     default = "3"
 }
+variable "node_count" {
+  default = "3"
+}
+
 variable "instance_type" {
     default = "n1-standard-4"
 }
