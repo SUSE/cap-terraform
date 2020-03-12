@@ -122,6 +122,10 @@ resource "helm_release" "metrics" {
         name = "kubernetes.apiEndpoint"
         value = "${var.cap_domain}"
     }
+    set {
+        name = "cloudFoundry.apiEndpoint"
+        value = "api.${var.cap_domain}"
+    }
 
     depends_on = ["helm_release.stratos"]
 }
