@@ -100,36 +100,6 @@ resource "helm_release" "stratos" {
     depends_on = ["helm_release.scf"]
 }
 
-resource "helm_release" "metrics" {
-    name       = "susecf-metrics"
-    repository = "${data.helm_repository.suse.metadata.0.name}"
-    chart      = "metrics"
-    namespace  = "metrics"
-    wait       = "false"
-
-    values = [
-    "${file("${local.stratos_metrics_config_file}")}"
-    ]
-    set {
-        name = "metrics.username"
-        value = "${var.metrics_username}"
-    }
-    set_sensitive {
-        name = "metrics.password"
-        value = "${var.metrics_password}"
-    }
-    set {
-        name = "kubernetes.apiEndpoint"
-        value = "${var.cap_domain}"
-    }
-    set {
-        name = "cloudFoundry.apiEndpoint"
-        value = "api.${var.cap_domain}"
-    }
-
-    depends_on = ["helm_release.stratos"]
-}
-
 resource "null_resource" "update_stratos_dns" {
 
     provisioner "local-exec" {
@@ -145,23 +115,4 @@ resource "null_resource" "update_stratos_dns" {
 
     }
     depends_on = ["helm_release.stratos"]
-}
-
-
-
-resource "null_resource" "update_metrics_dns" {
-
-    provisioner "local-exec" {
-        command = "/bin/sh ext-dns-metrics-svc-annotate.sh"
-
-        environment = {
-            RESOURCE_GROUP = "${var.resource_group}"
-            CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
-            AZ_CERT_MGR_SP_PWD = "${var.client_secret}"
-            DOMAIN="${var.cap_domain}"
-
-        }
-
-    }
-    depends_on = ["helm_release.metrics"]
 }
