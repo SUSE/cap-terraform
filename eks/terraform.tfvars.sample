@@ -1,9 +1,0 @@
-region = "us-west-2"
-workstation_cidr_block = "0.0.0.0/0"
-keypair_name = "some_keypair"
-eks_version = "1.14"
-cluster_labels = {key = "<user>-eks-cluster"}
-hosted_zone_name = "<route53-hosted-zone-name>"
-chart_values_file = "<path-to-scf-config-values-file>"
-kubeconfig_file_path = <path-to-save-kubeconfig>
-email = <email-for-cert-manager>
