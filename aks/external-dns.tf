@@ -15,7 +15,7 @@ resource "helm_release" "external-dns" {
 
     set {
         name = "azure.secretName"
-        value = "${kubernetes_secret.azure_dns_sp_creds.metadata.0.name}"
+        value = kubernetes_secret.azure_dns_sp_creds.metadata.0.name
     }
     set {
         name = "provider"
@@ -36,6 +36,6 @@ resource "helm_release" "external-dns" {
         name = "rbac.create"
         value = "true"
     }
-    depends_on = ["kubernetes_secret.azure_dns_sp_creds"]
+    depends_on = [kubernetes_secret.azure_dns_sp_creds]
 }
 
