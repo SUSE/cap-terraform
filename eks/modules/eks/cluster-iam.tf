@@ -11,9 +11,9 @@ data "aws_iam_policy_document" "cluster-role-policy" {
   }
 }
 resource "aws_iam_role" "aws-cluster" {
-  name = "${var.generated-cluster-name}-iam-role"
+  name               = "${var.generated-cluster-name}-iam-role"
   assume_role_policy = data.aws_iam_policy_document.cluster-role-policy.json
-  
+
 }
 
 resource "aws_iam_role_policy_attachment" "aws-cluster-AmazonEKSClusterPolicy" {

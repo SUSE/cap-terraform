@@ -21,3 +21,7 @@ variable "eks_version" {
 variable "cluster_labels" {
     type = map
 }
+
+variable "instance_type" {
+    type = string
+}

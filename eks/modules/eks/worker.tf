@@ -30,7 +30,7 @@ USERDATA
 }
 
 resource "null_resource" "satisfy-aws-network-dependency" {
-    provisioner "local-exec" {
+  provisioner "local-exec" {
     command = "echo ${var.aws-network-dependency-id} > /dev/null"
   }
 }
@@ -39,11 +39,11 @@ resource "aws_launch_configuration" "aws" {
   associate_public_ip_address = true
   iam_instance_profile        = aws_iam_instance_profile.aws-node.name
   image_id                    = data.aws_ami.eks-worker.id
-  instance_type               = "t2.large"
+  instance_type               = var.instance_type
   name_prefix                 = "${aws_eks_cluster.aws.name}-worker-launch-config"
   security_groups             = [aws_security_group.aws-node.id]
-  user_data_base64            = "${base64encode(local.aws-node-userdata)}"
-  key_name		              = var.keypair_name
+  user_data_base64            = base64encode(local.aws-node-userdata)
+  key_name                    = var.keypair_name
 
   lifecycle {
     create_before_destroy = true
@@ -78,9 +78,9 @@ resource "aws_autoscaling_group" "aws" {
     propagate_at_launch = true
   }
 
-  
+
 }
 
 resource "null_resource" "force-wait-on-eks" {
-      depends_on = [aws_autoscaling_group.aws]
+  depends_on = [aws_autoscaling_group.aws]
 }

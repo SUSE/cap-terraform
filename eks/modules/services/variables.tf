@@ -10,8 +10,3 @@ variable "worker-arn" {
 variable "force-eks-dependency-id" {
     type = string
 }
-
-
-
-
-

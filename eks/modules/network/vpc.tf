@@ -13,27 +13,23 @@ data "aws_availability_zones" "available" {}
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 
-  tags = "${
-    map(
-      "Name", "${local.cluster_name}-vpc",
-      "kubernetes.io/cluster/${local.cluster_name}", "shared",
-    )
-  }"
+  tags = {
+      "Name" = "${local.cluster_name}-vpc",
+      "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+  }
 }
 
 resource "aws_subnet" "main" {
-  count = "${length(data.aws_availability_zones.available.names)}"
+  count = length(data.aws_availability_zones.available.names)
 
   availability_zone = data.aws_availability_zones.available.names[count.index]
   cidr_block        = "10.0.${count.index}.0/24"
-  vpc_id            = "${aws_vpc.main.id}"
+  vpc_id            = aws_vpc.main.id
 
-  tags = "${
-    map(
-      "Name", "${local.cluster_name}-public-az-${count.index}",
-      "kubernetes.io/cluster/${local.cluster_name}", "shared",
-    )
-  }"
+  tags = {
+      "Name" = "${local.cluster_name}-public-az-${count.index}",
+      "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+  }
 }
 
 resource "aws_internet_gateway" "main" {
@@ -54,7 +50,7 @@ resource "aws_route_table" "main" {
 }
 
 resource "aws_route_table_association" "main" {
-  count = "${length(data.aws_availability_zones.available.names)}"
+  count = length(data.aws_availability_zones.available.names)
 
   subnet_id      = aws_subnet.main.*.id[count.index]
   route_table_id = aws_route_table.main.id

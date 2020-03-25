@@ -13,6 +13,7 @@ module "eks" {
     keypair_name  = var.keypair_name
     eks_version   = var.eks_version
     cluster_labels = var.cluster_labels
+    instance_type  = var.instance_type
 }
 
 module "services" {
