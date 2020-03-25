@@ -9,7 +9,7 @@ data "helm_repository" "stable" {
 # Install Nginx Ingress using Helm Chart
 resource "helm_release" "nginx_ingress" {
   name       = "nginx-ingress"
-  repository = "${data.helm_repository.stable.metadata.0.name}"
+  repository = data.helm_repository.stable.metadata.0.name
   chart      = "nginx-ingress"
   wait       = "false"
 
@@ -28,6 +28,6 @@ resource "helm_release" "nginx_ingress" {
       value = "true"
   }
 # wait until the worker nodes have joined the cluster...
-  depends_on = ["kubernetes_config_map.aws_auth"]
+  depends_on = [kubernetes_config_map.aws_auth]
 
 }

@@ -3,21 +3,21 @@
 #
 
 variable "region" {
-    type  = "string"
+    type  = string
 }
 
 variable "workstation_cidr_block" {
-    type = "string"
+    type = string
 }
 
 variable "keypair_name" {
-    type = "string"
+    type = string
 }
 
 variable "eks_version" {
-    type = "string"
+    type = string
 }
 
 variable "cluster_labels" {
-    type = "map"
+    type = map
 }

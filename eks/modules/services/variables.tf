@@ -1,14 +1,14 @@
 
 variable "eks-cluster-name" {
-    type = "string"
+    type = string
 }
 
 variable "worker-arn" {
-    type = "string"
+    type = string
 }
 
 variable "force-eks-dependency-id" {
-    type = "string"
+    type = string
 }
 
 
