@@ -37,5 +37,5 @@ resource "helm_release" "external-dns" {
         value = "true"
     }
 
-    depends_on = [kubernetes_secret.google_dns_sa_creds]
+    depends_on = [null_resource.post_processor]
 }
