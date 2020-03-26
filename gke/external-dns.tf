@@ -5,7 +5,7 @@ resource "kubernetes_secret" "google_dns_sa_creds" {
   }
 
   data = {
-    "credentials.json" = "${file("${var.gcp_dns_sa_key}")}"
+    "credentials.json" = file(var.gcp_dns_sa_key)
   }
 }
 resource "helm_release" "external-dns" {
@@ -16,11 +16,11 @@ resource "helm_release" "external-dns" {
 
     set {
         name = "google.project"
-        value = "${var.project}"
+        value = var.project
     }
     set {
         name = "google.serviceAccountSecret"
-        value = "${kubernetes_secret.google_dns_sa_creds.metadata.0.name}"
+        value = kubernetes_secret.google_dns_sa_creds.metadata.0.name
     }
     set {
         name = "provider"
@@ -37,5 +37,5 @@ resource "helm_release" "external-dns" {
         value = "true"
     }
 
-    depends_on = ["kubernetes_secret.google_dns_sa_creds"]
+    depends_on = [kubernetes_secret.google_dns_sa_creds]
 }

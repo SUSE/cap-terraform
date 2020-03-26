@@ -5,7 +5,7 @@ resource "kubernetes_secret" "azure_dns_sp_creds" {
   }
 
   data = {
-    "azure.json" = "${file("${var.azure_dns_json}")}"
+    "azure.json" = file(var.azure_dns_json)
   }
 }
 resource "helm_release" "external-dns" {
@@ -24,7 +24,7 @@ resource "helm_release" "external-dns" {
 
     set {
         name = "azure.resourceGroup"
-        value = "${var.dns_zone_rg}"
+        value = var.dns_zone_rg
     }
 
     set {
