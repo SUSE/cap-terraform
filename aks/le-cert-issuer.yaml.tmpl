@@ -1,4 +1,4 @@
-apiVersion: certmanager.k8s.io/v1alpha1
+apiVersion: cert-manager.io/v1alpha2
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
@@ -6,23 +6,18 @@ spec:
   acme:
     # Replace with your email address so you can be notified of expiring certificates
     email: ${email}
-    # This is using letsencrypt production so beware of rate-limiting!
+    # CAUTION - this is using LE production!!! Watch out for rate-limiting!
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       # The secret that holds the generated private key used to communicate with Let's Encrypt
       name: letsencrypt-prod-account-key
-    dns01:
-      providers:
-      - name: azuredns
+    solvers: 
+    - dns01: 
         azuredns:
-          # Service principal clientId (also called appId)
           clientID: ${client_id}
-          # A secretKeyRef to a service principal ClientSecret (password)
-          # ref: https://docs.microsoft.com/en-us/azure/container-service/kubernetes/container-service-kubernetes-service-principal
           clientSecretSecretRef:
             name: azuredns-config
             key: CLIENT_SECRET
-          # Azure subscription Id
           subscriptionID: ${subscription_id}
           tenantID: ${tenant_id}
           resourceGroupName: ${az_resource_group}

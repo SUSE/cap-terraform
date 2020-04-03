@@ -18,6 +18,10 @@
             "type": "string",
             "description": "An existing Azure Resource Group where resources will be created."
         },
+        "dns_zone_resource_group": {
+            "type": "string",
+            "description": "An existing Azure Resource Group where your Azure DNS Zone is hosted."
+        },
         "location": {
             "type": "string",
             "description": "The Azure region where the Resource Group is placed."
@@ -49,6 +53,10 @@
         "uaa_admin_client_secret": {
             "type": "string",
             "description": "Password for UAA 'admin' user. This user is only an OAuth client that is authorized to call UAA REST APIs and will need to create a separate user in the UAA server. See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-uaa-ui"
+        },
+        "metrics_password": {
+            "type": "string",
+            "description": "Password for metrics chart."
         },
         "k8s_version": {
             "type": "string",
