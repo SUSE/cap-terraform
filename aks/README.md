@@ -33,6 +33,7 @@
     - `ssh_public_key` - SSH public key for access to worker nodes.
     - `cluster_admin_password` - Intial password for Cloud Foundry 'admin' user. _We recommend changing this password after deployment._ See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-manage-passwords
     - `uaa_admin_client_secret` - Password for UAA 'admin' user. _This user is only an OAuth client that is authorized to call UAA REST APIs and will need to create a separate user in the UAA server._ See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-uaa-ui
+    - `metrics_password` - Password for metrics. (Username is 'admin')
     - `k8s_version` - Kubernetes version to apply to AKS; must be supported in the selected region. (Run `az aks get-versions --location $REGION --output table` for a list of supported options)
     - `disk_size_gb` - The worker node storage capacity. (Minimum:80, Maximum: 4095)
     - `cluster_labels` - Tags to be applied to resources in your cluster. (Optional)
