@@ -1,12 +1,5 @@
-resource "random_string" "cluster_name" {
-  length  = 8
-  special = false
-  upper   = false
-  number  = false
-}
-
 resource "google_container_cluster" "gke-cluster" {
-  name     = "cap-${random_string.cluster_name.result}"
+  name     = "${var.cluster_name}"
   location = "${var.location}"
 
   # We can't create a cluster with no node pool defined, but we want to only use
