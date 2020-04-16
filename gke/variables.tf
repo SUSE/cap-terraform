@@ -1,3 +1,7 @@
+variable "cluster_name" {
+    type = "string"
+}
+
 variable "location" {
     default = "us-central1-a"
 }
