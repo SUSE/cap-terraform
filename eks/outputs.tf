@@ -12,4 +12,3 @@ output "path-to-kubeconfig" {
 output "aws-route53-hostedzone-policy" {
   value = module.eks.aws_route53_hosted_zone_policy
 }
-

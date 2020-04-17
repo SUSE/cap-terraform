@@ -1,45 +1,45 @@
 
 variable "aws-eks-cluster-name" {
-    type = "string"
+  type = string
 }
 
 variable "aws-eks-cluster-endpoint" {
-    type = "string"
+  type = string
 }
 
 variable "aws-eks-cluster-certificate-authority-data" {
-    type = "string"
+  type = string
 }
 
 variable "worker-arn" {
-    type = "string"
+  type = string
 }
 
 variable "force-eks-dependency-id" {
-    type = "string"
+  type = string
 }
 
 variable "region" {
-    type = "string"
+  type = string
 }
 
 variable "hosted_zone_name" {
-    type = "string"
+  type = string
 }
 variable "hosted_zone_id" {
-    type = "string"
+  type = string
 }
 
 variable "kubeconfig_file_path" {
-  type = "string"
+  type = string
 }
 
 variable "email" {
-  type = "string"
+  type = string
 }
 
 variable "cap_domain" {
-    type = "string"
+  type = string
 }
 
 variable "storage_zones" {

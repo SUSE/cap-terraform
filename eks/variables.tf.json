@@ -1,9 +1,9 @@
 {
-  "variable": {
-      "instance_count": {
-          "type": "number",
-          "description": "The number of worker nodes in your cluster. (Minimum: 3, Maximum 50)",
-          "default": 3
+    "variable": {
+        "instance_count": {
+            "type": "number",
+            "description": "The number of worker nodes in your cluster. (Minimum: 3, Maximum 50)",
+            "default": 3
         },
         "instance_type": {
             "type": "string",

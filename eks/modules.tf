@@ -31,7 +31,7 @@ module "services" {
   hosted_zone_id                             = module.eks.hosted_zone_id
   kubeconfig_file_path                       = local.kubeconfig_file_path
   email                                      = var.email
-  cap_domain				     = var.cap_domain
-  storage_zones				     = var.storage_zones
+  cap_domain                                 = var.cap_domain
+  storage_zones                              = var.storage_zones
 }
 

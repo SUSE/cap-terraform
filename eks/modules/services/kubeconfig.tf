@@ -33,6 +33,6 @@ KUBECONFIG
 }
 
 resource "local_file" "kubeconfig_file" {
-  content = "${local.kubeconfig}"
-  filename = "${var.kubeconfig_file_path}"
+  content  = local.kubeconfig
+  filename = var.kubeconfig_file_path
 }

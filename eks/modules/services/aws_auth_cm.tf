@@ -1,16 +1,16 @@
 
 resource "null_resource" "force-eks-dependency" {
-    provisioner "local-exec" {
+  provisioner "local-exec" {
     command = "echo ${var.force-eks-dependency-id} > /dev/null"
   }
 }
 resource "kubernetes_config_map" "aws_auth" {
   metadata {
-    name = "aws-auth"  
+    name      = "aws-auth"
     namespace = "kube-system"
   }
 
-  data =  {
+  data = {
     mapRoles = <<ROLES
 - rolearn: ${var.worker-arn}
   username: system:node:{{EC2PrivateDNSName}}
@@ -18,6 +18,6 @@ resource "kubernetes_config_map" "aws_auth" {
     - system:bootstrappers
     - system:nodes
 ROLES
-}
-depends_on = ["null_resource.force-eks-dependency"]
+  }
+  depends_on = [null_resource.force-eks-dependency]
 }

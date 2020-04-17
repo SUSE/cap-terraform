@@ -1,44 +1,43 @@
 variable "cluster_name" {
-  type = "string"
+  type = string
 }
 
 variable "vpc-id" {
-    type = "string"
+  type = string
 }
 
 variable "app_subnet_ids" {
-    type = list(string)
+  type = list(string)
 }
 
 variable "workstation_cidr_block" {
-    type = "string"
+  type = string
 }
 
 variable "keypair_name" {
-    type = "string"
+  type = string
 }
 
 variable "k8s_version" {
-    type = "string"
+  type = string
 }
 
 variable "instance_type" {
-    type = "string"
+  type = string
 }
 
 variable "instance_count" {
-    type = number
+  type = number
 }
 
 variable "aws-network-dependency-id" {
-    type = "string"
+  type = string
 }
 
 variable "hosted_zone_name" {
-    type = "string"
+  type = string
 }
 
-
 variable "cluster_labels" {
-    type = "map"
+  type = map(string)
 }
