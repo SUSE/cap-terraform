@@ -18,7 +18,7 @@ variable "keypair_name" {
     type = "string"
 }
 
-variable "eks_version" {
+variable "k8s_version" {
     type = "string"
 }
 

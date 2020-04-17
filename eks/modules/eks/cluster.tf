@@ -7,7 +7,7 @@
 resource "aws_eks_cluster" "aws" {
   name     = "${var.cluster_name}"
   role_arn = "${aws_iam_role.aws-cluster.arn}"
-  version  = "${var.eks_version}"
+  version  = "${var.k8s_version}"
 
   tags = "${var.cluster_labels}"
 

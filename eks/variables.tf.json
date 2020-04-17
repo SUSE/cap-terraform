@@ -9,6 +9,39 @@
             "type": "string",
             "description": "The type of instance used for the provisioned workers.",
             "default": "t2.xlarge"
+        },
+        "region": {
+            "type": "string",
+            "description": "The AWS region where your cluster will be created."
+        },
+        "keypair_name": {
+            "type": "string"
+        },
+        "k8s_version": {
+            "type": "string",
+            "description": "Kubernetes version to apply to EKS. (See https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html for a list of supported options)",
+            "default": "1.15.11"
+        },
+        "workstation_cidr_block": {
+            "type": "string"
+        },
+        "storage_zones": {
+            "type": "string"
+        },
+        "cluster_labels": {
+            "type": "map",
+            "description": "Tags to be applied to resources in your cluster. (Optional)"
+        },
+        "hosted_zone_name": {
+            "type": "string"
+        },
+        "cap_domain": {
+            "type": "string",
+            "description": "The FQDN of your cluster."
+        },
+        "email": {
+            "type": "string",
+            "description": "Email address to send TLS certificate notifications to."
         }
     }
 }

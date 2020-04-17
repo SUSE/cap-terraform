@@ -13,7 +13,7 @@ module "eks" {
   instance_count            = var.instance_count
   aws-network-dependency-id = module.network.aws-network-dependency
   keypair_name              = var.keypair_name
-  eks_version               = var.eks_version
+  k8s_version               = var.k8s_version
   hosted_zone_name          = var.hosted_zone_name
   cluster_labels            = var.cluster_labels
 }
