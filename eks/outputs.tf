@@ -1,8 +1,12 @@
 #
 # Outputs
 #
+locals {
+  kubeconfig_file_path = "${path.cwd}/kubeconfig"
+}
+
 output "path-to-kubeconfig" {
-  value = var.kubeconfig_file_path
+  value = local.kubeconfig_file_path
 }
 
 output "aws-route53-hostedzone-policy" {
