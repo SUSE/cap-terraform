@@ -59,10 +59,10 @@ resource "aws_launch_configuration" "aws" {
 }
 
 resource "aws_autoscaling_group" "aws" {
-  desired_capacity     = 3
+  desired_capacity     = var.instance_count
   launch_configuration = "${aws_launch_configuration.aws.id}"
-  max_size             = 3
-  min_size             = 1
+  max_size             = var.instance_count
+  min_size             = var.instance_count
   name                 = "${var.cluster_name}"
   vpc_zone_identifier  = "${var.app_subnet_ids}"
 
@@ -77,7 +77,7 @@ resource "aws_autoscaling_group" "aws" {
     value               = "owned"
     propagate_at_launch = true
   }
-  
+
 }
 
 resource "null_resource" "force-wait-on-eks" {

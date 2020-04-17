@@ -26,6 +26,9 @@ variable "instance_type" {
     type = "string"
 }
 
+variable "instance_count" {
+    type = number
+}
 
 variable "aws-network-dependency-id" {
     type = "string"
