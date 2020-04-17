@@ -23,7 +23,7 @@ Make sure that you have the permissions described [here](https://github.com/SUSE
 
 ## Instructions
 
-1. Copy `terraform.tfvars.sample` to `terraform.tfvars` and substitute appropriate values.
+1. Create `terraform.tfvars` with appropriate values.
 2. In the helm chart values yaml use the following values to allow `cert-manager` to generate certificates for the ingress endpoints:
 
 ```
@@ -41,7 +41,7 @@ If you change the values of the annotations above you'll need to make correspond
 UAA_CA_CERT: |
     -----BEGIN CERTIFICATE-----
     .....
-```   
+```
 
 3. Run `aws configure` to authenticate to AWS.
 4. Run `terraform init` to install required modules.
