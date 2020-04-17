@@ -1,3 +1,8 @@
+locals {
+  chart_values_file           = "${path.cwd}/scf-config-values.yaml"
+  stratos_metrics_config_file = "${path.cwd}/stratos-metrics-values.yaml"
+}
+
 # Install UAA using Helm Chart
 resource "helm_release" "uaa" {
   name       = "scf-uaa"
@@ -7,7 +12,7 @@ resource "helm_release" "uaa" {
   wait       = "false"
 
   values = [
-    "${file("${var.chart_values_file}")}"
+    file(local.chart_values_file),
   ]
 
   depends_on = ["helm_release.external-dns", "helm_release.nginx_ingress", "helm_release.cert-manager"]
@@ -20,8 +25,8 @@ resource "helm_release" "scf" {
     namespace  = "scf"
     wait       = "false"
 
-    values = [
-    "${file("${var.chart_values_file}")}"
+  values = [
+    file(local.chart_values_file),
   ]
 
     depends_on = ["helm_release.external-dns", "helm_release.nginx_ingress", "helm_release.cert-manager"]
@@ -34,8 +39,8 @@ resource "helm_release" "stratos" {
     namespace  = "stratos"
     wait       = "false"
 
-    values = [
-    "${file("${var.chart_values_file}")}"
+  values = [
+    file(local.chart_values_file),
   ]
 
    set {
@@ -60,10 +65,9 @@ resource "null_resource" "metrics" {
     command = "/bin/sh modules/services/deploy_metrics.sh "
 
     environment = {
-        "METRICS_FILE" = "${var.stratos_metrics_config_file}"
-        "SCF_FILE" = "${var.chart_values_file}"
+        "METRICS_FILE" = local.stratos_metrics_config_file
+        "SCF_FILE" = local.chart_values_file
         "KUBECONFIG" = "${var.kubeconfig_file_path}"
-
     }
 
   }

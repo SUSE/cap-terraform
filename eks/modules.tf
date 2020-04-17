@@ -29,11 +29,9 @@ module "services" {
   region                                     = var.region
   hosted_zone_name                           = var.hosted_zone_name
   hosted_zone_id                             = module.eks.hosted_zone_id
-  chart_values_file                          = var.chart_values_file
   kubeconfig_file_path                       = var.kubeconfig_file_path
   email                                      = var.email
   cap_domain				     = var.cap_domain
-  stratos_metrics_config_file		     = var.stratos_metrics_config_file
   storage_zones				     = var.storage_zones
 }
 

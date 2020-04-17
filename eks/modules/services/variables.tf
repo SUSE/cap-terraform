@@ -30,10 +30,6 @@ variable "hosted_zone_id" {
     type = "string"
 }
 
-variable "chart_values_file" {
-    type = "string"
-}
-
 variable "kubeconfig_file_path" {
   type = "string"
 }
@@ -45,12 +41,6 @@ variable "email" {
 variable "cap_domain" {
     type = "string"
 }
-
-
-variable "stratos_metrics_config_file" {
-  type = string
-}
-
 
 variable "storage_zones" {
   type = string
