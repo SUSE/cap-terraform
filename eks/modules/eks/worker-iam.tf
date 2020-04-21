@@ -35,6 +35,16 @@ resource "aws_iam_role_policy_attachment" "aws-node-AmazonEC2ContainerRegistryRe
 #  role       = "${aws_iam_role.aws-node.name}"
 #}
 
+resource "aws_iam_role_policy_attachment" "worker-ext-dns-policy" {
+  policy_arn = var.hosted_zone_policy_arn
+  role       = aws_iam_role.aws-node.name
+}
+
+#resource "aws_iam_role_policy_attachment" "aws-node-AmazonRoute53FullAccess" {
+# policy_arn = "arn:aws:iam::aws:policy/AmazonRoute53FullAccess"
+# role       = "${aws_iam_role.aws-node.name}"
+#}
+
 resource "aws_iam_instance_profile" "aws-node" {
   name = "${aws_eks_cluster.aws.name}-worker-iam-instance-profile"
   role = aws_iam_role.aws-node.name

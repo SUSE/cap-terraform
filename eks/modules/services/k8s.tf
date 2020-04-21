@@ -13,3 +13,17 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority.0.data)
   token = data.aws_eks_cluster_auth.eks-auth.token
 }
+
+resource "kubernetes_storage_class" "persistent" {
+  metadata {
+    name = "persistent"
+  }
+  storage_provisioner = "kubernetes.io/aws-ebs"
+  reclaim_policy      = "Delete"
+  allow_volume_expansion = true
+  parameters = {
+    type = "gp2"
+  }
+    depends_on = [kubernetes_config_map.aws_auth]
+
+}

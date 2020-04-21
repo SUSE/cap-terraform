@@ -1,19 +1,7 @@
-
-resource "kubernetes_secret" "azure_dns_sp_creds" {
-  metadata {
-    name = "azure-dns-sp-creds"
-  }
-
-  data = {
-    "azure.json" = file(var.azure_dns_json)
-  }
-}
-
 data "helm_repository" "external-dns-repo" {
   name = "external-dns-chart-repo"
   url  = "https://charts.bitnami.com/bitnami"
 }
-
 
 resource "helm_release" "external-dns" {
     name = "cap-external-dns"
@@ -22,17 +10,33 @@ resource "helm_release" "external-dns" {
     wait = "false"
 
     set {
-        name = "azure.secretName"
-        value = kubernetes_secret.azure_dns_sp_creds.metadata.0.name
-    }
-    set {
         name = "provider"
-        value = "azure"
+        value = "aws"
     }
 
     set {
-        name = "azure.resourceGroup"
-        value = var.dns_zone_rg
+        name = "aws.zoneType"
+        value = "public"
+    }
+
+    set {
+        name = "aws.preferCNAME"
+        value = "true"
+    }
+
+    set {
+        name = "txtPrefix"
+        value = "ext-dns"
+    }
+
+    set {
+        name = "txtOwnerId"
+        value = var.hosted_zone_id
+    }
+
+    set {
+        name = "domainFilters[0]"
+        value = var.hosted_zone_name
     }
 
     set {
@@ -44,6 +48,6 @@ resource "helm_release" "external-dns" {
         name = "rbac.create"
         value = "true"
     }
-    depends_on = [kubernetes_secret.azure_dns_sp_creds]
-}
 
+    depends_on = [kubernetes_config_map.aws_auth]
+}

@@ -25,3 +25,15 @@ variable "cluster_labels" {
 variable "instance_type" {
     type = string
 }
+
+variable "hosted_zone_id" {
+    type = string
+}
+
+variable "hosted_zone_name" {
+    type = string
+}
+
+variable "hosted_zone_policy_arn" {
+    type = string
+}

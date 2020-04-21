@@ -26,6 +26,10 @@ variable "eks_version" {
   type = string
 }
 
+variable "hosted_zone_policy_arn" {
+  type = string
+}
+
 
 variable "aws-network-dependency-id" {
   type = string
