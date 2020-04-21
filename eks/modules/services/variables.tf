@@ -41,8 +41,3 @@ variable "email" {
 variable "cap_domain" {
   type = string
 }
-
-variable "storage_zones" {
-  type = string
-}
-

@@ -32,6 +32,5 @@ module "services" {
   kubeconfig_file_path                       = local.kubeconfig_file_path
   email                                      = var.email
   cap_domain                                 = var.cap_domain
-  storage_zones                              = var.storage_zones
 }
 

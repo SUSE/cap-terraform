@@ -36,6 +36,5 @@ resource "kubernetes_storage_class" "scopedpersistent" {
   allow_volume_expansion = true
   parameters = {
     type = "gp2"
-    zone = var.storage_zones
   }
 }

@@ -33,9 +33,6 @@
         "workstation_cidr_block": {
             "type": "string"
         },
-        "storage_zones": {
-            "type": "string"
-        },
         "cluster_labels": {
             "type": "map",
             "description": "Tags to be applied to resources in your cluster. (Optional)"
