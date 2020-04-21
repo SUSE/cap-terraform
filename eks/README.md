@@ -1,18 +1,11 @@
-## Requirements
-
-1. Terraform v0.12
-
 ### Tools
 
 1. [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-2. [jq filter](https://stedolan.github.io/jq/)
-3. [aws-cli](https://aws.amazon.com/cli/)
-4. [aws-iam-configuration](https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html)
-4. [terraform](https://www.terraform.io/)
+1. [terraform](https://www.terraform.io/) v0.12
 
-### Permissions
+## Prerequisites
 
-Make sure that you have the permissions described [here](https://github.com/SUSE/scf/wiki/IAM-Requirements-for-EKS).
+* An AWS access key on an account with adequate credentials. See https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys for details, and https://documentation.suse.com/suse-cap/1.5.2/html/cap-guides/cha-cap-depl-eks.html#sec-cap-eks-iam for IAM requirements.
 
 **Note**: In order to restrict the IAM permissions for `route53` the script will output policy for the specified hosted zone. You need to create/add this policy to allow external-dns to change record sets.
 

@@ -14,6 +14,14 @@
             "type": "string",
             "description": "The AWS region where your cluster will be created."
         },
+        "access_key_id": {
+            "type": "string",
+            "description": "AWS access key ID. See https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys for details."
+        },
+        "secret_access_key": {
+            "type": "string",
+            "description": "AWS secret access key (password). See https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys for details."
+        },
         "keypair_name": {
             "type": "string"
         },
