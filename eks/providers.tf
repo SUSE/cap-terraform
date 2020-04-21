@@ -3,7 +3,7 @@
 #
 
 provider "aws" {
-  version     = "~> 2.0"
+  version     = "2.29.0"
   region      = var.region
   max_retries = 15
   access_key  = var.access_key_id

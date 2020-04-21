@@ -1,5 +1,5 @@
 provider "helm" {
-  version = "~> 0.9.0"
+  version = "0.10.4"
 
   kubernetes {
     config_path = var.kubeconfig_file_path
