@@ -36,3 +36,7 @@ KUBECONFIG
 output "kubeconfig" {
   value = "${local.kubeconfig}"
 }
+
+output "cluster-name" {
+  value = "${module.eks.eks-cluster-name}"
+}
