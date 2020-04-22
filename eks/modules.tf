@@ -8,7 +8,6 @@ module "eks" {
   cluster_name              = module.network.generated-cluster-name
   vpc-id                    = module.network.vpc_id
   app_subnet_ids            = module.network.app_subnet_ids
-  workstation_cidr_block    = var.workstation_cidr_block
   instance_type             = var.instance_type
   instance_count            = var.instance_count
   aws-network-dependency-id = module.network.aws-network-dependency

@@ -30,9 +30,6 @@
             "description": "Kubernetes version to apply to EKS. (See https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html for a list of supported options)",
             "default": "1.15.11"
         },
-        "workstation_cidr_block": {
-            "type": "string"
-        },
         "cluster_labels": {
             "type": "map",
             "description": "Tags to be applied to resources in your cluster. (Optional)"

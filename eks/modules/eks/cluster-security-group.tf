@@ -1,3 +1,8 @@
+locals {
+  # Allow ingress to applications from any IP
+  workstation_cidr_block = "0.0.0.0/0"
+}
+
 resource "aws_security_group" "aws-cluster" {
   name        = "${var.cluster_name}-cluster-security-group"
   description = "Cluster communication with worker nodes"
@@ -28,7 +33,7 @@ resource "aws_security_group_rule" "aws-cluster-ingress-node-https" {
 }
 
 resource "aws_security_group_rule" "aws-cluster-ingress-workstation-https" {
-  cidr_blocks       = [var.workstation_cidr_block]
+  cidr_blocks       = [local.workstation_cidr_block]
   description       = "Allow workstation to communicate with the cluster API Server"
   from_port         = 443
   protocol          = "tcp"
