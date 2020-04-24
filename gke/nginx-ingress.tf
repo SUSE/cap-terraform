@@ -27,4 +27,5 @@ resource "helm_release" "nginx_ingress" {
   }
 
   depends_on = [helm_release.external-dns]
+
 }

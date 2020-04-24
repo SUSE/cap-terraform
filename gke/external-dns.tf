@@ -38,4 +38,5 @@ resource "helm_release" "external-dns" {
     }
 
     depends_on = [null_resource.post_processor]
+
 }

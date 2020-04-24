@@ -1,3 +1,4 @@
+cluster_name        =   "placeholder" #Kubernetes cluster name
 project             =   "placeholder" #GCP project id
 location            =   "placeholder" #GCP region
 node_pool_name      =   "placeholder" #Name for your nodepool
