@@ -17,12 +17,12 @@ resource "helm_release" "nginx_ingress" {
   }
 
   set {
-    name  = "controller.service.externalTrafficPolicy"
+    name  = "service.externalTrafficPolicy"
     value = "Local"
   }
 
   set {
-      name =  "controller.publishService.enabled"
+      name =  "publishService.enabled"
       value = "true"
   }
 

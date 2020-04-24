@@ -8,11 +8,18 @@ resource "kubernetes_secret" "google_dns_sa_creds" {
     "credentials.json" = file(var.gcp_dns_sa_key)
   }
 }
+
+data "helm_repository" "external-dns-repo" {
+  name = "external-dns-chart-repo"
+  url  = "https://charts.bitnami.com/bitnami"
+}
+
+
 resource "helm_release" "external-dns" {
     name = "cap-external-dns"
-    chart = "stable/external-dns"
+    repository = data.helm_repository.external-dns-repo.metadata[0].name
+    chart = "bitnami/external-dns"
     wait = "false"
-
 
     set {
         name = "google.project"

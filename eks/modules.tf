@@ -14,7 +14,7 @@ module "eks" {
     eks_version   = var.eks_version
     cluster_labels = var.cluster_labels
     instance_type  = var.instance_type
-    hosted_zone_policy_arn=var.hosted_zone_policy_arn
+    hosted_zone_policy_arn = var.hosted_zone_policy_arn
 }
 
 module "services" {
