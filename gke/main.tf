@@ -1,3 +1,4 @@
+
 resource "random_string" "cluster_name" {
   length  = 8
   special = false
@@ -43,8 +44,6 @@ resource "google_container_node_pool" "np" {
   location   = var.location
   cluster    = google_container_cluster.gke-cluster.name
   node_count = var.instance_count
-#  version    = "${var.k8s_version}"
-
 
   node_config {
     preemptible  = false
