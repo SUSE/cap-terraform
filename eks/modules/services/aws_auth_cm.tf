@@ -19,5 +19,5 @@ resource "kubernetes_config_map" "aws_auth" {
     - system:nodes
 ROLES
 }
-depends_on = ["null_resource.force-eks-dependency"]
+depends_on = [null_resource.force-eks-dependency]
 }

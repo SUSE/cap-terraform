@@ -5,12 +5,20 @@ resource "kubernetes_secret" "azure_dns_sp_creds" {
   }
 
   data = {
-    "azure.json" = "${file("${var.azure_dns_json}")}"
+    "azure.json" = file(var.azure_dns_json)
   }
 }
+
+data "helm_repository" "external-dns-repo" {
+  name = "external-dns-chart-repo"
+  url  = "https://charts.bitnami.com/bitnami"
+}
+
+
 resource "helm_release" "external-dns" {
     name = "cap-external-dns"
-    chart = "stable/external-dns"
+    repository = data.helm_repository.external-dns-repo.metadata[0].name
+    chart = "bitnami/external-dns"
     wait = "false"
 
     set {
@@ -24,7 +32,7 @@ resource "helm_release" "external-dns" {
 
     set {
         name = "azure.resourceGroup"
-        value = "${var.dns_zone_rg}"
+        value = var.dns_zone_rg
     }
 
     set {

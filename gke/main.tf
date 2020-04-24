@@ -1,6 +1,14 @@
+
+resource "random_string" "cluster_name" {
+  length  = 8
+  special = false
+  upper   = false
+  number  = false
+}
+
 resource "google_container_cluster" "gke-cluster" {
-  name     = "${var.cluster_name}"
-  location = "${var.location}"
+  name     = "cap-${random_string.cluster_name.result}"
+  location = var.location
 
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
@@ -8,10 +16,7 @@ resource "google_container_cluster" "gke-cluster" {
   remove_default_node_pool = true
 
   initial_node_count = 1
- # min_master_version = "${var.k8s_version}"
- # node_version = "${var.k8s_version}"
-
-  resource_labels = "${var.cluster_labels}"
+  resource_labels = var.cluster_labels
 
   # Setting an empty username and password explicitly disables basic auth
   master_auth {
@@ -27,26 +32,21 @@ resource "google_container_cluster" "gke-cluster" {
     horizontal_pod_autoscaling {
       disabled = true
     }
-
-    kubernetes_dashboard {
-      disabled = true
-    }
+    
   }
 }
 
 resource "google_container_node_pool" "np" {
-  name       = "${var.node_pool_name}"
-  location   = "${var.location}"
-  cluster    = "${google_container_cluster.gke-cluster.name}"
-  node_count = "${var.instance_count}"
-#  version    = "${var.k8s_version}"
-
+  name       = var.node_pool_name
+  location   = var.location
+  cluster    = google_container_cluster.gke-cluster.name
+  node_count = var.instance_count
 
   node_config {
     preemptible  = false
-    machine_type = "${var.instance_type}"
-    disk_size_gb = "${var.disk_size_gb}"
-    image_type   = "${var.vm_type}"
+    machine_type = var.instance_type
+    disk_size_gb = var.disk_size_gb
+    image_type   = var.vm_type
 
     metadata = {
       disable-legacy-endpoints = "true"
@@ -66,17 +66,17 @@ resource "google_container_node_pool" "np" {
 }
 
 resource "null_resource" "post_processor" {
-  depends_on = ["google_container_node_pool.np"]
+  depends_on = [google_container_node_pool.np]
 
   provisioner "local-exec" {
     command = "/bin/sh gke-post-processing.sh"
 
     environment = {
-      CLUSTER_NAME = "${google_container_cluster.gke-cluster.name}"
-      CLUSTER_ZONE = "${var.location}"
-      NODE_COUNT   = "${var.instance_count}"
-      SA_KEY_FILE  = "${var.gke_sa_key}"
-      PROJECT      = "${var.project}"
+      CLUSTER_NAME = google_container_cluster.gke-cluster.name
+      CLUSTER_ZONE = var.location
+      NODE_COUNT   = var.instance_count
+      SA_KEY_FILE  = var.gke_sa_key
+      PROJECT      = var.project
     }
   }
 }

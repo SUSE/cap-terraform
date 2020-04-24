@@ -7,11 +7,11 @@ variable "location" {
 }
 
 variable "project" {
-    type = "string"
+    type = string
 }
 
 variable "node_pool_name" {
-    type = "string"
+    type = string
 }
 
 variable "instance_count" {
@@ -26,11 +26,11 @@ variable "instance_type" {
 }
 
 variable "vm_type" {
-    type = "string"
+    type = string
 }
 
 variable "cluster_labels" {
-    type = "map"
+    type = map
 }
 
 variable "disk_size_gb" {
@@ -38,13 +38,13 @@ variable "disk_size_gb" {
 }
 
 variable "gke_sa_key" {
-    type = "string"
+    type = string
 }
 
 variable "gcp_dns_sa_key" {
-    type = "string"
+    type = string
 }
 
 variable "k8s_version" {
-    type = "string"
+    type = string
 }
