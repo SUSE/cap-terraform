@@ -44,6 +44,12 @@ resource "helm_release" "external-dns" {
         name = "rbac.create"
         value = "true"
     }
+
+    set {
+      name = "policy"
+      value = "sync"
+    }
+
     depends_on = [kubernetes_secret.azure_dns_sp_creds]
 }
 

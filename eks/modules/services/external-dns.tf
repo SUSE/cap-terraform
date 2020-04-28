@@ -49,5 +49,10 @@ resource "helm_release" "external-dns" {
         value = "true"
     }
 
+    set {
+      name = "policy"
+      value = "sync"
+    }
+
     depends_on = [kubernetes_config_map.aws_auth]
 }

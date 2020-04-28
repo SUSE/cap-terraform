@@ -44,6 +44,11 @@ resource "helm_release" "external-dns" {
         value = "true"
     }
 
+    set {
+      name = "policy"
+      value = "sync"
+    }
+
     depends_on = [null_resource.post_processor]
 
 }
