@@ -7,7 +7,7 @@ metadata:
   name: letsencrypt-prod
 spec:
   acme:
-    email: var.email
+    email: ${var.email}
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-prod
@@ -15,8 +15,8 @@ spec:
       providers:
       - name: aws-route53-provider
         route53:
-          region: var.region
-          hostedZoneID: var.hosted_zone_id
+          region: ${var.region}
+          hostedZoneID: ${var.hosted_zone_id}
 YAML
 }
 

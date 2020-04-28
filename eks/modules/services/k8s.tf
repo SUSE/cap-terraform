@@ -26,6 +26,7 @@ resource "kubernetes_storage_class" "persistent" {
   parameters = {
     type = "gp2"
   }
+  depends_on = [kubernetes_config_map.aws_auth]
 }
 resource "kubernetes_storage_class" "scopedpersistent" {
   metadata {
@@ -37,4 +38,5 @@ resource "kubernetes_storage_class" "scopedpersistent" {
   parameters = {
     type = "gp2"
   }
+  depends_on = [kubernetes_config_map.aws_auth]
 }

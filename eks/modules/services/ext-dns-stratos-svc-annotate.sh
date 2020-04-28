@@ -1,3 +1,3 @@
 #! /bin/sh
-export KUBECONFIG=$KUBECONFIG
+export KUBECONFIG=./kubeconfig
 kubectl annotate svc susecf-console-ui-ext -n stratos  "external-dns.alpha.kubernetes.io/hostname=stratos.${DOMAIN}"

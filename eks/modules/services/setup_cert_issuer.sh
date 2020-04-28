@@ -1,4 +1,4 @@
 #! /bin/sh
-export KUBECONFIG=$KUBECONFIG
+export KUBECONFIG=./kubeconfig
 
 kubectl apply -f modules/services/le-prod-cert-issuer.yaml
