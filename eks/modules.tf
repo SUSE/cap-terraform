@@ -36,5 +36,8 @@ module "services" {
   stratos_admin_password                     = var.admin_password
   uaa_admin_client_secret                    = var.admin_password
   metrics_admin_password                     = var.admin_password
+  # AWS credentials
+  access_key_id                              = var.access_key_id
+  secret_access_key                          = var.secret_access_key
 }
 

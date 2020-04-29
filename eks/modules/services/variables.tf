@@ -53,3 +53,11 @@ variable "uaa_admin_client_secret" {
 variable "metrics_admin_password" {
   type = string
 }
+
+variable "access_key_id" {
+  type = string
+}
+
+variable "secret_access_key" {
+  type = string
+}
