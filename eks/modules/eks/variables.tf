@@ -37,3 +37,7 @@ variable "hosted_zone_name" {
 variable "cluster_labels" {
   type = map(string)
 }
+
+variable "disk_size_gb" {
+  type = number
+}

@@ -51,7 +51,7 @@ resource "aws_launch_configuration" "aws" {
 
   root_block_device {
     volume_type           = "gp2"
-    volume_size           = 80
+    volume_size           = var.disk_size_gb
     delete_on_termination = true
   }
 

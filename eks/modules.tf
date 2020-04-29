@@ -15,6 +15,7 @@ module "eks" {
   k8s_version               = var.k8s_version
   hosted_zone_name          = var.hosted_zone_name
   cluster_labels            = var.cluster_labels
+  disk_size_gb              = var.disk_size_gb
 }
 
 module "services" {
