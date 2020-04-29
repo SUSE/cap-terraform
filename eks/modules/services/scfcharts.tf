@@ -24,6 +24,14 @@ resource "helm_release" "uaa" {
     name  = "env.UAA_HOST"
     value = "uaa.${var.cap_domain}"
   }
+  set {
+    name = "secrets.CLUSTER_ADMIN_PASSWORD"
+    value = var.stratos_admin_password
+  }
+  set {
+    name = "secrets.UAA_ADMIN_CLIENT_SECRET"
+    value = var.uaa_admin_client_secret
+  }
 
   depends_on = [
     helm_release.external-dns,
@@ -53,6 +61,14 @@ resource "helm_release" "scf" {
     name  = "env.UAA_HOST"
     value = "uaa.${var.cap_domain}"
   }
+  set {
+    name = "secrets.CLUSTER_ADMIN_PASSWORD"
+    value = var.stratos_admin_password
+  }
+  set {
+    name = "secrets.UAA_ADMIN_CLIENT_SECRET"
+    value = var.uaa_admin_client_secret
+  }
   depends_on = [
     helm_release.external-dns,
     helm_release.nginx_ingress,
@@ -80,6 +96,14 @@ resource "helm_release" "stratos" {
   set {
     name  = "env.UAA_HOST"
     value = "uaa.${var.cap_domain}"
+  }
+  set {
+    name = "secrets.CLUSTER_ADMIN_PASSWORD"
+    value = var.stratos_admin_password
+  }
+  set {
+    name = "secrets.UAA_ADMIN_CLIENT_SECRET"
+    value = var.uaa_admin_client_secret
   }
   set {
     name  = "services.loadbalanced"
@@ -138,6 +162,10 @@ resource "helm_release" "metrics" {
   set {
     name = "cloudFoundry.apiEndpoint"
     value = "api.${var.cap_domain}"
+  }
+  set {
+    name = "nginx.password"
+    value = var.metrics_admin_password
   }
 
   depends_on = [null_resource.wait_for_uaa]

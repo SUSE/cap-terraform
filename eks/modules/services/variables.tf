@@ -41,3 +41,15 @@ variable "email" {
 variable "cap_domain" {
   type = string
 }
+
+variable "stratos_admin_password" {
+  type = string
+}
+
+variable "uaa_admin_client_secret" {
+  type = string
+}
+
+variable "metrics_admin_password" {
+  type = string
+}

@@ -31,5 +31,10 @@ module "services" {
   kubeconfig_file_path                       = local.kubeconfig_file_path
   email                                      = var.email
   cap_domain                                 = var.cap_domain
+  # One variable is applied to all three security contexts,
+  # override to create distinct passwords for each context.
+  stratos_admin_password                     = var.admin_password
+  uaa_admin_client_secret                    = var.admin_password
+  metrics_admin_password                     = var.admin_password
 }
 
