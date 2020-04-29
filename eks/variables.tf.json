@@ -12,7 +12,7 @@
         },
         "region": {
             "type": "string",
-            "description": "The AWS region where your cluster will be created."
+            "description": "The AWS region where the cluster and related resources will be created."
         },
         "access_key_id": {
             "type": "string",
@@ -23,7 +23,9 @@
             "description": "AWS secret access key (password). See https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys for details."
         },
         "keypair_name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the EC2 Key Pair used for accessing worker nodes via SSH. See https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html for details."
+
         },
         "admin_password": {
             "type": "string",
@@ -39,11 +41,12 @@
             "description": "Tags to be applied to resources in your cluster. (Optional)"
         },
         "hosted_zone_name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the Route 53 Hosted zone created for the cluster."
         },
         "cap_domain": {
             "type": "string",
-            "description": "The FQDN of your cluster."
+            "description": "The FQDN of your cluster - a subdomain of the Hosted zone."
         },
         "email": {
             "type": "string",
