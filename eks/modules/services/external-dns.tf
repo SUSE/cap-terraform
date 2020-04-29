@@ -1,7 +1,7 @@
 
 resource "helm_release" "external-dns" {
   name  = "cap-external-dns"
-  chart = "stable/external-dns"
+  chart = "bitnami/external-dns"
   wait  = "false"
 
   set {
