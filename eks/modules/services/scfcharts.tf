@@ -3,6 +3,30 @@ locals {
   stratos_metrics_config_file = "${path.cwd}/stratos-metrics-values.yaml"
 }
 
+resource "kubernetes_namespace" "uaa" {
+  metadata {
+    name = "uaa"
+  }
+}
+
+resource "kubernetes_namespace" "scf" {
+  metadata {
+    name = "scf"
+  }
+}
+
+resource "kubernetes_namespace" "stratos" {
+  metadata {
+    name = "stratos"
+  }
+}
+
+resource "kubernetes_namespace" "metrics" {
+  metadata {
+    name = "metrics"
+  }
+}
+
 # Install UAA using Helm Chart
 resource "helm_release" "uaa" {
   name       = "scf-uaa"
@@ -37,7 +61,8 @@ resource "helm_release" "uaa" {
     helm_release.external-dns,
     helm_release.nginx_ingress,
     helm_release.cert-manager,
-    null_resource.cluster_issuer_setup
+    null_resource.cluster_issuer_setup,
+    kubernetes_namespace.uaa
   ]
 }
 
@@ -73,7 +98,8 @@ resource "helm_release" "scf" {
     helm_release.external-dns,
     helm_release.nginx_ingress,
     helm_release.cert-manager,
-    helm_release.uaa
+    helm_release.uaa,
+    kubernetes_namespace.scf
   ]
 }
 
@@ -118,7 +144,10 @@ resource "helm_release" "stratos" {
     name  = "kube.storage_class.persistent"
     value = "scopedpersistent"
   }
-  depends_on = [helm_release.scf]
+  depends_on = [
+    helm_release.scf,
+    kubernetes_namespace.stratos
+  ]
 }
 
 resource "null_resource" "update_stratos_dns" {
@@ -170,7 +199,10 @@ resource "helm_release" "metrics" {
     value = var.metrics_admin_password
   }
 
-  depends_on = [null_resource.wait_for_uaa]
+  depends_on = [
+    null_resource.wait_for_uaa,
+    kubernetes_namespace.metrics
+  ]
 }
 
 resource "null_resource" "update_metrics_dns" {
