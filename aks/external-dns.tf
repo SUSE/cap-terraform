@@ -50,6 +50,11 @@ resource "helm_release" "external-dns" {
       value = "sync"
     }
 
+    set {
+        name = "txtOwnerId"
+        value = var.cluster_name
+    }
+
     depends_on = [kubernetes_secret.azure_dns_sp_creds]
 }
 

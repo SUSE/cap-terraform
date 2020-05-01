@@ -2,6 +2,10 @@ variable "generated-cluster-name" {
   type = string
 }
 
+variable "cluster_name" {
+  type = string
+}
+
 variable "vpc-id" {
   type = string
 }

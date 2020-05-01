@@ -6,7 +6,8 @@
 
 
 resource "aws_eks_cluster" "aws" {
-  name     = var.generated-cluster-name
+//  name     = var.generated-cluster-name
+  name     = var.cluster_name
   role_arn = aws_iam_role.aws-cluster.arn
   version  = var.eks_version
 

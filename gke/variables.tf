@@ -1,5 +1,5 @@
 variable "cluster_name" {
-    type = "string"
+    type = string
 }
 
 variable "location" {

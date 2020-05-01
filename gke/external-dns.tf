@@ -49,6 +49,11 @@ resource "helm_release" "external-dns" {
       value = "sync"
     }
 
+    set {
+        name = "txtOwnerId"
+        value = var.cluster_name
+    }
+
     depends_on = [null_resource.post_processor]
 
 }

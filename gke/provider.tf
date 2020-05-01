@@ -4,5 +4,6 @@ provider "google" {
 	version 	= "~> 3.0"
 	credentials = var.gke_sa_key
 	project     = var.project
+    zone        = var.location
 }
 

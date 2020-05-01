@@ -1,3 +1,7 @@
+variable "cluster_name" {
+    type = string
+}
+
 variable "az_resource_group" {
     type = string
 }

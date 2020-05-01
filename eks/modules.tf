@@ -6,6 +6,7 @@ module "eks" {
     source = "./modules/eks"
 
     generated-cluster-name  = module.network.generated-cluster-name
+    cluster_name            = var.cluster_name
     vpc-id      = module.network.vpc_id
     app_subnet_ids = module.network.app_subnet_ids
     workstation_cidr_block = var.workstation_cidr_block

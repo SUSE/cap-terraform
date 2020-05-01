@@ -7,8 +7,8 @@ data "helm_repository" "stable" {
 # Install Nginx Ingress using Helm Chart
 resource "helm_release" "nginx_ingress" {
   name       = "nginx-ingress"
-  repository = data.helm_repository.stable.metadata.0.name
-  chart      = "nginx-ingress"
+  repository = data.helm_repository.stable.metadata[0].url
+  chart      = "bitnami/nginx-ingress-controller"
   wait = "false"
 
   set {

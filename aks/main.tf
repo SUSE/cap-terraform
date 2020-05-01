@@ -6,7 +6,8 @@ resource "random_string" "cluster_name" {
 }
 
 resource "azurerm_kubernetes_cluster" "k8s" {
-    name                = "cap-${random_string.cluster_name.result}"
+//    name                = "cap-${random_string.cluster_name.result}"
+    name                = var.cluster_name
     location            = var.location
     resource_group_name = var.az_resource_group
     dns_prefix          = var.dns_prefix
