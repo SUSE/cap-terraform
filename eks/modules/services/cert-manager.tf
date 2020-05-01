@@ -1,5 +1,18 @@
+resource "kubernetes_namespace" "cert_manager" {
+  metadata {
+    name = "cert-manager"
+
+    labels = {
+      "certmanager.k8s.io/disable-validation" = "true"
+    }
+  }
+}
+
 resource "null_resource" "cert_manager_setup" {
-  depends_on = [helm_release.nginx_ingress]
+  depends_on = [
+    helm_release.nginx_ingress,
+    kubernetes_namespace.cert_manager
+  ]
 
   provisioner "local-exec" {
     command = "/bin/sh modules/services/setup_cert_manager.sh"
