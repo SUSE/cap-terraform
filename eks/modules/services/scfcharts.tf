@@ -123,12 +123,13 @@ resource "helm_release" "stratos" {
 
 resource "null_resource" "update_stratos_dns" {
   provisioner "local-exec" {
-    command = "./modules/services/ext-dns-stratos-svc-annotate.sh"
-    working_dir = "."
-    interpreter = ["/bin/bash", "-c"]
+    command = "/bin/sh modules/services/ext-dns-stratos-svc-annotate.sh"
 
     environment = {
-      DOMAIN        = var.cap_domain
+      "KUBECONFIG"            = var.kubeconfig_file_path
+      "AWS_ACCESS_KEY_ID"     = var.access_key_id
+      "AWS_SECRET_ACCESS_KEY" = var.secret_access_key
+      "DOMAIN"                = var.cap_domain
     }
   }
   depends_on = [helm_release.stratos]
@@ -136,12 +137,13 @@ resource "null_resource" "update_stratos_dns" {
 
 resource "null_resource" "wait_for_uaa" {
   provisioner "local-exec" {
-    command = "./modules/services/wait_for_uaa.sh"
-    working_dir = "."
-    interpreter = ["/bin/bash", "-c"]
+    command = "/bin/sh modules/services/wait_for_uaa.sh"
 
     environment = {
-      METRICS_API_ENDPOINT = var.cap_domain
+      "KUBECONFIG"            = var.kubeconfig_file_path
+      "AWS_ACCESS_KEY_ID"     = var.access_key_id
+      "AWS_SECRET_ACCESS_KEY" = var.secret_access_key
+      "METRICS_API_ENDPOINT"  = var.cap_domain
     }
   }
   depends_on = [helm_release.stratos]
@@ -173,12 +175,13 @@ resource "helm_release" "metrics" {
 
 resource "null_resource" "update_metrics_dns" {
   provisioner "local-exec" {
-    command = "./modules/services/ext-dns-metrics-svc-annotate.sh"
-    working_dir = "."
-    interpreter = ["/bin/bash", "-c"]
+    command = "/bin/sh modules/services/ext-dns-metrics-svc-annotate.sh"
 
     environment = {
-      DOMAIN = var.cap_domain
+      "KUBECONFIG"            = var.kubeconfig_file_path
+      "AWS_ACCESS_KEY_ID"     = var.access_key_id
+      "AWS_SECRET_ACCESS_KEY" = var.secret_access_key
+      "DOMAIN"                = var.cap_domain
     }
   }
 

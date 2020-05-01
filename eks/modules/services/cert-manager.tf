@@ -5,6 +5,8 @@ resource "null_resource" "cert_manager_setup" {
     command = "/bin/sh modules/services/setup_cert_manager.sh"
     environment = {
       "KUBECONFIG" = var.kubeconfig_file_path
+      "AWS_ACCESS_KEY_ID" = var.access_key_id
+      "AWS_SECRET_ACCESS_KEY" = var.secret_access_key
     }
   }
 }
@@ -50,7 +52,9 @@ resource "null_resource" "cluster_issuer_setup" {
   provisioner "local-exec" {
     command = "/bin/sh modules/services/setup_cert_issuer.sh"
     environment = {
-      "KUBECONFIG" = var.kubeconfig_file_path
+      "KUBECONFIG"            = var.kubeconfig_file_path
+      "AWS_ACCESS_KEY_ID"     = var.access_key_id
+      "AWS_SECRET_ACCESS_KEY" = var.secret_access_key
     }
   }
 }
