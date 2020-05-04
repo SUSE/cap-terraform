@@ -7,6 +7,11 @@ data "helm_repository" "suse" {
 locals {
   chart_values_file           = "${path.cwd}/scf-config-values.yaml"
   stratos_metrics_config_file = "${path.cwd}/stratos-metrics-values.yaml"
+  # One variable is applied to all three security contexts,
+  # override to create distinct passwords for each context
+  stratos_admin_password      = var.admin_password
+  uaa_admin_client_secret     = var.admin_password
+  metrics_admin_password      = var.admin_password
 }
 
 resource "kubernetes_namespace" "uaa" {
@@ -60,7 +65,7 @@ resource "helm_release" "uaa" {
   }
   set_sensitive {
     name  = "secrets.UAA_ADMIN_CLIENT_SECRET"
-    value = var.uaa_admin_client_secret
+    value = local.uaa_admin_client_secret
   }
 
   depends_on = [
@@ -93,11 +98,11 @@ resource "helm_release" "scf" {
   }
   set_sensitive {
     name  = "secrets.CLUSTER_ADMIN_PASSWORD"
-    value = var.cluster_admin_password
+    value = local.stratos_admin_password
   }
   set_sensitive {
     name  = "secrets.UAA_ADMIN_CLIENT_SECRET"
-    value = var.uaa_admin_client_secret
+    value = local.uaa_admin_client_secret
   }
 
   depends_on = [helm_release.uaa]
@@ -178,7 +183,7 @@ resource "helm_release" "metrics" {
   }
   set_sensitive {
     name = "metrics.password"
-    value = var.metrics_password
+    value = local.metrics_admin_password
   }
   set {
     name = "kubernetes.apiEndpoint"
@@ -190,7 +195,7 @@ resource "helm_release" "metrics" {
   }
   set_sensitive {
     name  = "cloudFoundry.uaaAdminClientSecret"
-    value = var.uaa_admin_client_secret
+    value = local.uaa_admin_client_secret
   }
 
   depends_on = [null_resource.wait_for_uaa]
