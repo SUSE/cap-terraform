@@ -20,7 +20,7 @@
 
 ## Setup
 
-1. Create a `terraform.tfvars` or update the `terraform.tfvars.json` (should be in your `.gitignore` or outside source control as it contains sensitive information) file with the following information
+1. Create a `terraform.tfvars` or `terraform.tfvars.json` file with the following information:
     - `instance_count` - The number of worker nodes in your cluster. (Minimum: 3, Maximum 50)
     - `instance_type` - The type of instance used for the provisioned workers.
     - `subscription_id` - Azure subscription ID
@@ -31,9 +31,7 @@
     - `tenant_id` - "Azure Service Principal 'tenant'"
     - `ssh_username` - SSH username for accessing the cluster.
     - `ssh_public_key` - SSH public key for access to worker nodes.
-    - `cluster_admin_password` - Intial password for Cloud Foundry 'admin' user. _We recommend changing this password after deployment._ See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-manage-passwords
-    - `uaa_admin_client_secret` - Password for UAA 'admin' user. _This user is only an OAuth client that is authorized to call UAA REST APIs and will need to create a separate user in the UAA server._ See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-uaa-ui
-    - `metrics_password` - Password for metrics. (Username is 'admin')
+    - `admin_password` - Intial password for Cloud Foundry 'admin' user, UAA 'admin' OAuth client, and metrics 'admin' login. We recommend changing this password after deployment. See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-manage-passwords
     - `k8s_version` - Kubernetes version to apply to AKS; must be supported in the selected region. (Run `az aks get-versions --location $REGION --output table` for a list of supported options)
     - `disk_size_gb` - The worker node storage capacity. (Minimum:80, Maximum: 4095)
     - `cluster_labels` - Tags to be applied to resources in your cluster. (Optional)
@@ -41,6 +39,8 @@
     - `cap_domain` - The FQDN of your cluster.
     - `dns_prefix` - Prefix for node DNS hostnames. (Must be alphanumeric, may include but not end with dashes)
     - `email` - Email address to send TLS certificate notifications to.
+
+    **⚠ NOTE:** _This should be in your `.gitignore` or otherwise outside source control as it contains sensitive information._
 
 2. `terraform init`
 

@@ -46,13 +46,9 @@
             "type": "string",
             "description": "SSH public key for access to worker nodes."
         },
-        "cluster_admin_password": {
+        "admin_password": {
             "type": "string",
-            "description":"Intial password for Cloud Foundry 'admin' user. We recommend changing this password after deployment. See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-manage-passwords"
-        },
-        "uaa_admin_client_secret": {
-            "type": "string",
-            "description": "Password for UAA 'admin' user. This user is only an OAuth client that is authorized to call UAA REST APIs and will need to create a separate user in the UAA server. See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-uaa-ui"
+            "description":"Intial password for Cloud Foundry 'admin' user, UAA 'admin' OAuth client, and metrics 'admin' login. We recommend changing this password after deployment. See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-manage-passwords"
         },
         "metrics_password": {
             "type": "string",
