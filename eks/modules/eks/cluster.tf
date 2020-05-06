@@ -7,8 +7,9 @@
 
 resource "aws_eks_cluster" "aws" {
 //  name     = var.generated-cluster-name
-  name     = var.cluster_name
-  role_arn = aws_iam_role.aws-cluster.arn
+  name     = "${var.cluster_name}-${var.generated-cluster-name}"
+//  role_arn = aws_iam_role.aws-cluster.arn
+  role_arn = var.cluster_role_arn
   version  = var.eks_version
 
   tags = var.cluster_labels
@@ -20,7 +21,8 @@ resource "aws_eks_cluster" "aws" {
 
 
   depends_on = [
-    aws_iam_role_policy_attachment.aws-cluster-AmazonEKSClusterPolicy,
-    aws_iam_role_policy_attachment.aws-cluster-AmazonEKSServicePolicy,
+  //  aws_iam_role_policy_attachment.aws-cluster-AmazonEKSClusterPolicy,
+  //  aws_iam_role_policy_attachment.aws-cluster-AmazonEKSServicePolicy,
+  //    data.aws_iam_role.cluster_iam_role
   ]
 }

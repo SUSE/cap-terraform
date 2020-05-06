@@ -1,4 +1,5 @@
 
+/*
 data "aws_iam_policy_document" "worker-role-policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -34,9 +35,10 @@ resource "aws_iam_role_policy_attachment" "worker-ext-dns-policy" {
   policy_arn = var.hosted_zone_policy_arn
   role       = aws_iam_role.aws-node.name
 }
-
+*/
 
 resource "aws_iam_instance_profile" "aws-node" {
   name = "${aws_eks_cluster.aws.name}-worker-iam-instance-profile"
-  role = aws_iam_role.aws-node.name
+ // role = aws_iam_role.aws-node.name
+  role = var.worker_node_role_name
 }

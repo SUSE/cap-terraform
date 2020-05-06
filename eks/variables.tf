@@ -10,9 +10,6 @@ variable "region" {
     type  = string
 }
 
-variable "workstation_cidr_block" {
-    type = string
-}
 
 variable "keypair_name" {
     type = string
@@ -30,14 +27,41 @@ variable "instance_type" {
     type = string
 }
 
+/*
 variable "hosted_zone_id" {
     type = string
 }
+*/
 
 variable "hosted_zone_name" {
     type = string
 }
 
-variable "hosted_zone_policy_arn" {
+
+variable "assume_role_arn" {
+    type = string
+}
+
+variable "cluster_role_name" {
+    type = string
+}
+
+variable "cluster_role_arn" {
+    type = string
+}
+
+variable "worker_node_role_name" {
+    type = string
+}
+
+variable "worker_node_role_arn" {
+    type = string
+}
+
+variable "external_dns_aws_access_key" {
+    type = string
+}
+
+variable "external_dns_aws_secret_key" {
     type = string
 }

@@ -1,4 +1,5 @@
 
+/*
 #  * IAM Role to allow EKS service to manage other AWS services
 data "aws_iam_policy_document" "cluster-role-policy" {
   statement {
@@ -24,4 +25,9 @@ resource "aws_iam_role_policy_attachment" "aws-cluster-AmazonEKSClusterPolicy" {
 resource "aws_iam_role_policy_attachment" "aws-cluster-AmazonEKSServicePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
   role  = aws_iam_role.aws-cluster.name
+}
+*/
+
+data "aws_iam_role" "cluster_iam_role" {
+    name = var.cluster_role_name
 }
