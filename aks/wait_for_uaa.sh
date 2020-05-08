@@ -1,5 +1,4 @@
 #! /bin/sh
-export KUBECONFIG=./kubeconfig
 APISRV="$(kubectl cluster-info| head -n 1|grep -o ' at .*$'| cut -f3 -d' '| cut -f3 -d'/'|cut -f1 -d':')"
 
 echo "checking UAA status before installing metrics"
