@@ -2,18 +2,23 @@
 # Provider Configuration
 #
 
+locals {
+    operator_role = var.deployer_role_arn == "" ? {} : {
+         deployer = var.deployer_role_arn
+    }
+}
+
 provider "aws" {
   version = "~> 2.0"
   region = var.region
   max_retries = 15
-  
-  assume_role {
-  //  role_arn     = "arn:aws:iam::138384977974:role/eksServiceRole"
-  role_arn         = var.assume_role_arn
-    
-  }
 
-
+  dynamic "assume_role" {
+    for_each = local.operator_role
+        content {
+            role_arn = assume_role.value
+        }  
+  }  
 }
 
 # Using these data sources allows the configuration to be

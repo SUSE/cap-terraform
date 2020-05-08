@@ -30,6 +30,8 @@ users:
         - "token"
         - "-i"
         - "${module.eks.eks-cluster-name}"
+        - "-r"
+        - "${var.kube_authorized_role_arn}"
 KUBECONFIG
 }
 

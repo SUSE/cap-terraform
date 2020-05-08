@@ -25,10 +25,10 @@ module "services" {
     eks-cluster-name = module.eks.eks-cluster-name
     worker-arn      = var.worker_node_role_arn
     force-eks-dependency-id = module.eks.force-eks-dependency-id
-  # hosted_zone_id = var.hosted_zone_id
     hosted_zone_name = var.hosted_zone_name
     external_dns_aws_access_key = var.external_dns_aws_access_key
     external_dns_aws_secret_key = var.external_dns_aws_secret_key
+    kube_authorized_role_arn = var.kube_authorized_role_arn
 
 
 }

@@ -1,9 +1,3 @@
-/*
-output "aws-node-arn" {
-   // value = aws_iam_role.aws-node.arn
-   value = data.aws_iam_role.cluster_iam_role.arn
-}
-*/
 output "aws-eks-cluster-endpoint" {
     value = aws_eks_cluster.aws.endpoint
 }
