@@ -50,10 +50,6 @@
             "type": "string",
             "description":"Intial password for Cloud Foundry 'admin' user, UAA 'admin' OAuth client, and metrics 'admin' login. We recommend changing this password after deployment. See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-manage-passwords"
         },
-        "metrics_password": {
-            "type": "string",
-            "description": "Password for metrics chart."
-        },
         "k8s_version": {
             "type": "string",
             "description": "Kubernetes version to apply to AKS; must be supported in the selected region. (Run `az aks get-versions --location $REGION --output table` for a list of supported options)",
