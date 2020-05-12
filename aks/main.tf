@@ -37,6 +37,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
 locals {
   k8scfg = azurerm_kubernetes_cluster.k8s.kube_config_raw
+  kubeconfig_file_path = "${path.module}/kubeconfig"
 }
 
 output "kube_config" {
@@ -45,6 +46,6 @@ output "kube_config" {
 
 resource "local_file" "k8scfg" {
   content  = local.k8scfg
-  filename = "kubeconfig"
+  filename = local.kubeconfig_file_path
 }
 

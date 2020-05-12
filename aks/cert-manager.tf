@@ -8,6 +8,7 @@ resource "null_resource" "cert_manager_setup" {
     environment = {
       RESOURCE_GROUP = var.resource_group
       CLUSTER_NAME   = azurerm_kubernetes_cluster.k8s.name
+      KUBECONFIG     = local.kubeconfig_file_path
     }
   }
 }
@@ -42,21 +43,21 @@ resource "helm_release" "cert-manager" {
 }
 
 resource "local_file" "le-cert-issuer" {
-    depends_on = [helm_release.cert-manager]
+  depends_on = [helm_release.cert-manager]
 
-        content = templatefile("${path.module}/le-cert-issuer.yaml.tmpl", {
-        email = var.email,
-        client_id = var.client_id,
-        subscription_id = var.subscription_id,
-        tenant_id = var.tenant_id,
-        az_resource_group = var.dns_zone_resource_group,
-        dns_zone_name = var.dns_zone_name
-        })
-        filename = "${path.module}/le-cert-issuer.yaml"
-    }
+  content = templatefile("${path.module}/le-cert-issuer.yaml.tmpl", {
+    email = var.email,
+    client_id = var.client_id,
+    subscription_id = var.subscription_id,
+    tenant_id = var.tenant_id,
+    az_resource_group = var.dns_zone_resource_group,
+    dns_zone_name = var.dns_zone_name
+  })
+  filename = "${path.module}/le-cert-issuer.yaml"
+}
 
 resource "null_resource" "cluster_issuer_setup" {
-      depends_on = [local_file.le-cert-issuer]
+  depends_on = [local_file.le-cert-issuer]
 
   provisioner "local-exec" {
     command = "./setup_cert_issuer.sh"
@@ -66,6 +67,8 @@ resource "null_resource" "cluster_issuer_setup" {
       RESOURCE_GROUP     = var.dns_zone_resource_group
       CLUSTER_NAME       = azurerm_kubernetes_cluster.k8s.name
       AZ_CERT_MGR_SP_PWD = var.client_secret
+      KUBECONFIG         = local.kubeconfig_file_path
+
     }
   }
 }

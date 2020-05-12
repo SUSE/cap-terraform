@@ -151,6 +151,7 @@ resource "null_resource" "update_stratos_dns" {
       CLUSTER_NAME       = azurerm_kubernetes_cluster.k8s.name
       AZ_CERT_MGR_SP_PWD = var.client_secret
       DOMAIN             = var.cap_domain
+      KUBECONFIG         = local.kubeconfig_file_path
     }
   }
   depends_on = [helm_release.stratos]
@@ -164,6 +165,7 @@ resource "null_resource" "wait_for_uaa" {
 
     environment = {
       METRICS_API_ENDPOINT = var.cap_domain
+      KUBECONFIG = local.kubeconfig_file_path
     }
   }
   depends_on = [helm_release.stratos]
@@ -212,6 +214,7 @@ resource "null_resource" "update_metrics_dns" {
       CLUSTER_NAME       = azurerm_kubernetes_cluster.k8s.name
       AZ_CERT_MGR_SP_PWD = var.client_secret
       DOMAIN             = var.cap_domain
+      KUBECONFIG         = local.kubeconfig_file_path
     }
   }
 
