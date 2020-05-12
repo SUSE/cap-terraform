@@ -21,6 +21,11 @@ variable "node_count" {
   default = "3"
 }
 
+variable "preemptible" {
+    type = bool
+    default = false
+}
+
 variable "instance_type" {
     default = "n1-standard-4"
 }
