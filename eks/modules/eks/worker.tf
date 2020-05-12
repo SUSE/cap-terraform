@@ -35,32 +35,41 @@ resource "null_resource" "satisfy-aws-network-dependency" {
   }
 }
 
-resource "aws_launch_configuration" "aws" {
-  associate_public_ip_address = true
-  iam_instance_profile        = aws_iam_instance_profile.aws-node.name
-  image_id                    = data.aws_ami.eks-worker.id
-  instance_type               = var.instance_type
-  name_prefix                 = "${aws_eks_cluster.aws.name}-worker-launch-config"
-  security_groups             = [aws_security_group.aws-node.id]
-  user_data_base64            = base64encode(local.aws-node-userdata)
-  key_name                    = var.keypair_name
-
-  lifecycle {
-    create_before_destroy = true
+resource "aws_launch_template" "aws" {
+    instance_type               = var.instance_type
+    iam_instance_profile {
+        name = aws_iam_instance_profile.aws-node.name
   }
+    image_id                    = data.aws_ami.eks-worker.id
+    # vpc_security_group_ids      = [aws_security_group.aws-node.id]
+    user_data                   = base64encode(local.aws-node-userdata)
+    key_name                    = var.keypair_name
+    name_prefix                 = "${aws_eks_cluster.aws.name}-worker-launch-template"
 
-  root_block_device {
-    volume_type           = "gp2"
-    volume_size           = 80
-    delete_on_termination = true
+    network_interfaces {
+        security_groups = [aws_security_group.aws-node.id]
+        associate_public_ip_address = true
+        delete_on_termination = true
+
+    }
+    
+    block_device_mappings {
+    device_name = "/dev/xvda"
+
+    ebs {
+      volume_size = 80
+      volume_type           = "gp2"
+      delete_on_termination = true
+    }
   }
 
   depends_on = [null_resource.satisfy-aws-network-dependency, aws_security_group_rule.aws-node-ingress-self, aws_security_group_rule.aws-node-ingress-cluster]
+
 }
 
 resource "aws_autoscaling_group" "aws" {
   desired_capacity     = 3
-  launch_configuration = aws_launch_configuration.aws.id
+ // launch_configuration = aws_launch_configuration.aws.id
   max_size             = 3
   min_size             = 1
   name                 = aws_eks_cluster.aws.name
@@ -78,6 +87,10 @@ resource "aws_autoscaling_group" "aws" {
     propagate_at_launch = true
   }
 
+  launch_template {
+    id      = aws_launch_template.aws.id
+    version = "$Latest"
+  }
 
 }
 

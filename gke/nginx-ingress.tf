@@ -1,13 +1,13 @@
 # Add Kubernetes Stable Helm charts repo
-data "helm_repository" "stable" {
-  name = "stable"
+data "helm_repository" "bitnami" {
+  name = "bitnami"
   url  = "https://charts.bitnami.com/bitnami"  
 }
 
 # Install Nginx Ingress using Helm Chart
 resource "helm_release" "nginx_ingress" {
   name       = "nginx-ingress"
-  repository = data.helm_repository.stable.metadata[0].url
+  repository = data.helm_repository.bitnami.metadata[0].url
   chart      = "nginx-ingress-controller"
   wait       = "false"
 

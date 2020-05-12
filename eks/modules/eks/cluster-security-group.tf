@@ -13,6 +13,10 @@ resource "aws_security_group" "aws-cluster" {
   tags = {
     Name = "${var.generated-cluster-name}-cluster-security-group"
   }
+  timeouts {
+    create = "15m"
+    delete = "30m"
+  }
 }
 
 resource "aws_security_group_rule" "aws-cluster-ingress-node-https" {

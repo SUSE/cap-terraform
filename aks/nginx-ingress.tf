@@ -1,14 +1,14 @@
 # Add Kubernetes Stable Helm charts repo
-data "helm_repository" "stable" {
-  name = "stable"
-  url  = "https://kubernetes-charts.storage.googleapis.com"
+data "helm_repository" "bitnami" {
+  name = "bitnami"
+  url  = "https://charts.bitnami.com/bitnami"
 }
 
 # Install Nginx Ingress using Helm Chart
 resource "helm_release" "nginx_ingress" {
   name       = "nginx-ingress"
-  repository = data.helm_repository.stable.metadata[0].url
-  chart      = "bitnami/nginx-ingress-controller"
+  repository = data.helm_repository.bitnami.metadata[0].url
+  chart      = "nginx-ingress-controller"
   wait = "false"
 
   set {
@@ -16,13 +16,16 @@ resource "helm_release" "nginx_ingress" {
     value = "true"
   }
 
-  set {
-    name  = "controller.service.externalTrafficPolicy"
-    value = "Local"
-  }
+# Note if you use the chart from kube helm repository the following must be "controller.service.externalTrafficPolicy"
 
   set {
-      name =  "controller.publishService.enabled"
+    name  = "service.externalTrafficPolicy"
+    value = "Local"
+  }
+# Note if you use the chart from kube helm repository the following must be "controller.publishService.enabled"
+
+  set {
+      name =  "publishService.enabled"
       value = "true"
   }
 

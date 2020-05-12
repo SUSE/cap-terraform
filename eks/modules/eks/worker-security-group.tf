@@ -14,6 +14,11 @@ resource "aws_security_group" "aws-node" {
      "Name" = "${var.generated-cluster-name}-worker-security-group",
      "kubernetes.io/cluster/${aws_eks_cluster.aws.name}" = "owned"
   }
+
+  timeouts {
+    create = "15m"
+    delete = "30m"
+  }
 }
 
 resource "aws_security_group_rule" "aws-node-ingress-self" {
