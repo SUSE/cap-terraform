@@ -1,0 +1,23 @@
+env:
+  UAA_PORT: 443
+  UAA_PUBLIC_PORT: 443
+  GARDEN_ROOTFS_DRIVER: "overlay-xfs"
+  DEFAULT_STACK: cflinuxfs3
+  GARDEN_APPARMOR_PROFILE: ""
+kube:
+  storage_class:
+    persistent: "persistent"
+    shared: "persistent"
+  auth: "rbac"
+  registry:
+    hostname: "registry.suse.com"
+    username: ""
+    password: ""
+  organization: "cap"
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    certmanager.k8s.io/acme-challenge-type: dns01
+    certmanager.k8s.io/acme-dns01-provider: aws-route53-provider
