@@ -1,12 +1,7 @@
-data "helm_repository" "external-dns-repo" {
-  name = "external-dns-chart-repo"
-  url  = "https://charts.bitnami.com/bitnami"
-}
-
 resource "helm_release" "external-dns" {
   name  = "cap-external-dns"
-  repository = data.helm_repository.external-dns-repo.metadata.0.name
-  chart      = "bitnami/external-dns"
+  repository = "https://marketplace.azurecr.io/helm/v1/repo"
+  chart      = "external-dns"
   wait  = "false"
 
   set {
