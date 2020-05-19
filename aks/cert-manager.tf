@@ -13,15 +13,10 @@ resource "null_resource" "cert_manager_setup" {
   }
 }
 
-data "helm_repository" "jetstack" {
-  name = "jetstack"
-  url  = "https://charts.jetstack.io"
-}
-
 resource "helm_release" "cert-manager" {
   name       = "cert-manager"
-  repository = data.helm_repository.jetstack.metadata.0.name
-  chart      = "jetstack/cert-manager"
+  repository = "https://charts.jetstack.io"
+  chart      = "cert-manager"
   namespace  = "cert-manager"
   wait       = "true"
   version    = "0.14.0"

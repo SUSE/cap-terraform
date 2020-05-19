@@ -1,15 +1,7 @@
-# Add Kubernetes Stable Helm charts repo
-
-
-data "helm_repository" "suse" {
-  name = "suse"
-  url  = "https://kubernetes-charts.suse.com/"
-}
-
 # Install Nginx Ingress using Helm Chart
 resource "helm_release" "nginx_ingress" {
   name       = "nginx-ingress"
-  repository = data.helm_repository.suse.metadata.0.name
+  repository = "https://kubernetes-charts.suse.com/"
   chart      = "nginx-ingress"
   wait       = "false"
 

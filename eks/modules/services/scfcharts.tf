@@ -30,7 +30,7 @@ resource "kubernetes_namespace" "metrics" {
 # Install UAA using Helm Chart
 resource "helm_release" "uaa" {
   name       = "scf-uaa"
-  repository = data.helm_repository.suse.metadata[0].name
+  repository = "https://kubernetes-charts.suse.com"
   chart      = "uaa"
   namespace  = "uaa"
   wait       = "false"
@@ -68,7 +68,7 @@ resource "helm_release" "uaa" {
 
 resource "helm_release" "scf" {
   name       = "scf-cf"
-  repository = data.helm_repository.suse.metadata[0].name
+  repository = "https://kubernetes-charts.suse.com"
   chart      = "cf"
   namespace  = "scf"
   wait       = "false"
@@ -105,7 +105,7 @@ resource "helm_release" "scf" {
 
 resource "helm_release" "stratos" {
   name       = "susecf-console"
-  repository = data.helm_repository.suse.metadata[0].name
+  repository = "https://kubernetes-charts.suse.com"
   chart      = "console"
   namespace  = "stratos"
   wait       = "false"
@@ -180,7 +180,7 @@ resource "null_resource" "wait_for_uaa" {
 
 resource "helm_release" "metrics" {
   name       = "susecf-metrics"
-  repository = data.helm_repository.suse.metadata.0.name
+  repository = "https://kubernetes-charts.suse.com"
   chart      = "metrics"
   namespace  = "metrics"
   wait       = "false"
