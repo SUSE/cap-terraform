@@ -198,6 +198,10 @@ resource "helm_release" "metrics" {
     name = "nginx.password"
     value = var.metrics_admin_password
   }
+  set_sensitive {
+    name  = "cloudFoundry.uaaAdminClientSecret"
+    value = var.uaa_admin_client_secret
+  }
 
   depends_on = [
     null_resource.wait_for_uaa,
