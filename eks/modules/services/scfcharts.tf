@@ -48,11 +48,11 @@ resource "helm_release" "uaa" {
     name  = "env.UAA_HOST"
     value = "uaa.${var.cap_domain}"
   }
-  set {
+  set_sensitive {
     name = "secrets.CLUSTER_ADMIN_PASSWORD"
     value = var.stratos_admin_password
   }
-  set {
+  set_sensitive {
     name = "secrets.UAA_ADMIN_CLIENT_SECRET"
     value = var.uaa_admin_client_secret
   }
@@ -86,11 +86,11 @@ resource "helm_release" "scf" {
     name  = "env.UAA_HOST"
     value = "uaa.${var.cap_domain}"
   }
-  set {
+  set_sensitive {
     name = "secrets.CLUSTER_ADMIN_PASSWORD"
     value = var.stratos_admin_password
   }
-  set {
+  set_sensitive {
     name = "secrets.UAA_ADMIN_CLIENT_SECRET"
     value = var.uaa_admin_client_secret
   }
@@ -123,11 +123,11 @@ resource "helm_release" "stratos" {
     name  = "env.UAA_HOST"
     value = "uaa.${var.cap_domain}"
   }
-  set {
+  set_sensitive {
     name = "secrets.CLUSTER_ADMIN_PASSWORD"
     value = var.stratos_admin_password
   }
-  set {
+  set_sensitive {
     name = "secrets.UAA_ADMIN_CLIENT_SECRET"
     value = var.uaa_admin_client_secret
   }
@@ -194,9 +194,13 @@ resource "helm_release" "metrics" {
     name = "cloudFoundry.apiEndpoint"
     value = "api.${var.cap_domain}"
   }
-  set {
+  set_sensitive {
     name = "nginx.password"
     value = var.metrics_admin_password
+  }
+  set_sensitive {
+    name  = "cloudFoundry.uaaAdminClientSecret"
+    value = var.uaa_admin_client_secret
   }
 
   depends_on = [
