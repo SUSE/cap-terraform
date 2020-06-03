@@ -45,10 +45,6 @@ locals {
   k8scfg = azurerm_kubernetes_cluster.k8s.kube_config_raw
 }
 
-output "kube_config" {
-  value = local.k8scfg
-}
-
 resource "local_file" "k8scfg" {
   content = local.k8scfg
   filename = "aksk8scfg"
