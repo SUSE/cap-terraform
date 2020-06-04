@@ -32,12 +32,14 @@
         "node_pool_name": {
             "type": "string"
         },
-        "cluster_labels": {
-            "type": "map"
-        },
         "disk_size_gb": {
             "type": "number",
-            "default": 60
+            "description": "The worker node storage capacity. (Minimum:80, Maximum: 65536)",
+            "default": 80
+        },
+        "cluster_labels": {
+            "type": "map",
+            "description": "Tags to be applied to resources in your cluster. (Optional)"
         },
         "chart_values_file": {
             "type": "string"
