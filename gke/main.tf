@@ -78,7 +78,6 @@ resource "null_resource" "post_processor" {
       CLUSTER_NAME = google_container_cluster.gke-cluster.name
       CLUSTER_ZONE = var.location
       NODE_COUNT   = var.instance_count
-      ZONES_COUNT  = var.number_of_zones
     }
   }
 }

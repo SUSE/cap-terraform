@@ -44,9 +44,6 @@
         },
         "stratos_metrics_config_file": {
             "type": "string"
-        },
-        "number_of_zones": {
-            "type": "string"
         }
     }
 }
