@@ -1,3 +1,8 @@
+locals {
+  chart_values_file           = "${path.cwd}/scf-config-values.yaml"
+  stratos_metrics_config_file = "${path.cwd}/stratos-metrics-values.yaml"
+}
+
 # Add SUSE Helm charts repo
 data "helm_repository" "suse" {
   name = "suse"
@@ -13,7 +18,7 @@ resource "helm_release" "uaa" {
   wait       = "false"
 
   values = [
-    file(var.chart_values_file),
+    file(local.chart_values_file),
   ]
 
   depends_on = [
@@ -31,7 +36,7 @@ resource "helm_release" "scf" {
   wait       = "false"
 
   values = [
-    file(var.chart_values_file),
+    file(local.chart_values_file),
   ]
 
   depends_on = [helm_release.uaa]
@@ -45,7 +50,7 @@ resource "helm_release" "stratos" {
   wait       = "false"
 
   values = [
-    file(var.chart_values_file),
+    file(local.chart_values_file),
   ]
 
   set {
@@ -65,8 +70,8 @@ resource "null_resource" "metrics" {
     command = "/bin/sh deploy_metrics.sh "
 
     environment = {
-      "METRICS_FILE" = var.stratos_metrics_config_file
-      "SCF_FILE"     = var.chart_values_file
+      "METRICS_FILE" = local.stratos_metrics_config_file
+      "SCF_FILE"     = local.chart_values_file
     }
   }
   depends_on = [helm_release.stratos]

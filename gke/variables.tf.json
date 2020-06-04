@@ -38,13 +38,7 @@
             "type": "map",
             "description": "Tags to be applied to resources in your cluster. (Optional)"
         },
-        "chart_values_file": {
-            "type": "string"
-        },
         "cap_domain": {
-            "type": "string"
-        },
-        "stratos_metrics_config_file": {
             "type": "string"
         }
     }
