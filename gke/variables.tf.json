@@ -29,9 +29,6 @@
             "description": "Contents of a service account key file in JSON format, with rights to edit DNS.",
             "default": "{}"
         },
-        "node_pool_name": {
-            "type": "string"
-        },
         "disk_size_gb": {
             "type": "number",
             "description": "The worker node storage capacity. (Minimum:80, Maximum: 65536)",

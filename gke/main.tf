@@ -44,7 +44,7 @@ resource "google_container_cluster" "gke-cluster" {
 }
 
 resource "google_container_node_pool" "np" {
-  name       = var.node_pool_name
+  name       = "${google_container_cluster.gke-cluster.name}-node-pool"
   location   = var.location
   cluster    = google_container_cluster.gke-cluster.name
   node_count = var.instance_count
