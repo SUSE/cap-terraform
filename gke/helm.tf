@@ -1,12 +1,11 @@
 provider "helm" {
-    version = "~> 0.9.0"
+  version = "~> 0.9.0"
 
-  kubernetes {   
+  kubernetes {
   }
 
-  service_account = "${kubernetes_service_account.tiller.metadata.0.name}"
-  namespace       = "${kubernetes_service_account.tiller.metadata.0.namespace}"
+  service_account = kubernetes_service_account.tiller.metadata[0].name
+  namespace       = kubernetes_service_account.tiller.metadata[0].namespace
   tiller_image    = "gcr.io/kubernetes-helm/tiller:v2.16.0"
 }
-
 

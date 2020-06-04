@@ -1,9 +1,8 @@
 resource "null_resource" "cert_manager_setup" {
-  depends_on = ["helm_release.nginx_ingress"]
+  depends_on = [helm_release.nginx_ingress]
 
   provisioner "local-exec" {
     command = "/bin/sh setup_cert_manager.sh"
-
   }
 }
 
@@ -14,7 +13,7 @@ data "helm_repository" "jetstack" {
 
 resource "helm_release" "cert-manager" {
   name       = "cert-manager"
-  repository = "${data.helm_repository.jetstack.metadata.0.name}"
+  repository = data.helm_repository.jetstack.metadata[0].name
   chart      = "cert-manager"
   namespace  = "cert-manager"
   wait       = "true"
@@ -25,26 +24,25 @@ resource "helm_release" "cert-manager" {
     value = "true"
   }
 
-# webhook seems flaky and frequently runs into intermittent errors due to various race conditions
-# https://docs.cert-manager.io/en/latest/getting-started/troubleshooting.html?highlight=internal%20server%20error#troubleshooting-installation
-  
+  # webhook seems flaky and frequently runs into intermittent errors due to various race conditions
+  # https://docs.cert-manager.io/en/latest/getting-started/troubleshooting.html?highlight=internal%20server%20error#troubleshooting-installation
+
   set {
-    name = "webhook.enabled"
+    name  = "webhook.enabled"
     value = "false"
   }
-  
-  depends_on = ["null_resource.cert_manager_setup"]
+
+  depends_on = [null_resource.cert_manager_setup]
 }
 
 resource "null_resource" "cluster_issuer_setup" {
-    depends_on = ["helm_release.cert-manager"]
+  depends_on = [helm_release.cert-manager]
 
-    provisioner "local-exec" {
+  provisioner "local-exec" {
     command = "/bin/sh setup_cert_issuer.sh "
     environment = {
-        KEYFILE = "${var.gcp_dns_sa_key}"
+      KEYFILE = var.gcp_dns_sa_key
     }
-
   }
 }
 

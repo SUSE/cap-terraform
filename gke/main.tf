@@ -7,7 +7,7 @@ resource "random_string" "cluster_name" {
 
 resource "google_container_cluster" "gke-cluster" {
   name     = "cap-${random_string.cluster_name.result}"
-  location = "${var.location}"
+  location = var.location
 
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
@@ -16,7 +16,7 @@ resource "google_container_cluster" "gke-cluster" {
 
   initial_node_count = 1
 
-  resource_labels = "${var.cluster_labels}"
+  resource_labels = var.cluster_labels
 
   # Setting an empty username and password explicitly disables basic auth
   master_auth {
@@ -40,16 +40,16 @@ resource "google_container_cluster" "gke-cluster" {
 }
 
 resource "google_container_node_pool" "np" {
-  name       = "${var.node_pool_name}"
-  location   = "${var.location}"
-  cluster    = "${google_container_cluster.gke-cluster.name}"
-  node_count = "${var.node_count}"
+  name       = var.node_pool_name
+  location   = var.location
+  cluster    = google_container_cluster.gke-cluster.name
+  node_count = var.node_count
 
   node_config {
     preemptible  = false
-    machine_type = "${var.machine_type}"
-    disk_size_gb = "${var.disk_size_gb}"
-    image_type   = "${var.vm_type}"
+    machine_type = var.machine_type
+    disk_size_gb = var.disk_size_gb
+    image_type   = var.vm_type
 
     metadata = {
       disable-legacy-endpoints = "true"
@@ -69,18 +69,20 @@ resource "google_container_node_pool" "np" {
 }
 
 resource "null_resource" "post_processor" {
-  depends_on = ["google_container_node_pool.np"]
+  depends_on = [google_container_node_pool.np]
 
   provisioner "local-exec" {
     command = "/bin/sh gke-post-processing.sh"
 
     environment = {
-      CLUSTER_NAME = "${google_container_cluster.gke-cluster.name}"
-      CLUSTER_ZONE = "${var.location}"
-      NODE_COUNT   = "${var.node_count}"
-      ZONES_COUNT   = "${var.number_of_zones}"
+      CLUSTER_NAME = google_container_cluster.gke-cluster.name
+      CLUSTER_ZONE = var.location
+      NODE_COUNT   = var.node_count
+      ZONES_COUNT  = var.number_of_zones
     }
   }
 }
 
-data "google_client_config" "current" {}
+data "google_client_config" "current" {
+}
+

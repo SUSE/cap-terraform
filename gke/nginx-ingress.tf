@@ -7,7 +7,7 @@ data "helm_repository" "stable" {
 # Install Nginx Ingress using Helm Chart
 resource "helm_release" "nginx_ingress" {
   name       = "nginx-ingress"
-  repository = "${data.helm_repository.stable.metadata.0.name}"
+  repository = data.helm_repository.stable.metadata[0].name
   chart      = "nginx-ingress"
   wait       = "false"
 
@@ -22,9 +22,10 @@ resource "helm_release" "nginx_ingress" {
   }
 
   set {
-      name =  "controller.publishService.enabled"
-      value = "true"
+    name  = "controller.publishService.enabled"
+    value = "true"
   }
 
-  depends_on = ["helm_release.external-dns"]
+  depends_on = [helm_release.external-dns]
 }
+
