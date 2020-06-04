@@ -1,9 +1,9 @@
 1. Create a terraform.tfvars (should be in your .gitignore as contains sensitive information) file with the following information
 - `project` (GCP project id)
-- `location` 
-- `node-pool-name` 
-- `gke_sa_key` (location of the key file for the GCP service account)
-- `gcp_dns_sa_key` (location of the key file for the GCP service account that will do the DNS records setup, can be same as above as long as the account has sufficent rights to do DNS management)
+- `location`
+- `node-pool-name`
+- `credentials_json` (JSON contents of the key file for the GCP service account)
+- `dns_credentials_json` (JSON contents of the key file for the GCP service account that will do the DNS records setup, can be same as above as long as the account has sufficent rights to do DNS management)
 - `cluster_labels` (optional map of key-value pairs)
 
 2. Make appropriate substituions in the `le-prod-cert-issuer.yaml.template` and rename it to `le-prod-cert-issuer.yaml`.
@@ -35,5 +35,4 @@ UAA_CA_CERT: |
 
 6. `terraform apply plan <PLAN-path>`
 
-7. The `helm install`s should have been triggered as part of step 5. Check the pods in UAA and SCF namespace to make sure they all come up and are ready. 
-  
+7. The `helm install`s should have been triggered as part of step 5. Check the pods in UAA and SCF namespace to make sure they all come up and are ready.

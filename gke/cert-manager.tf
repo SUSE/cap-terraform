@@ -35,14 +35,16 @@ resource "helm_release" "cert-manager" {
   depends_on = [null_resource.cert_manager_setup]
 }
 
+resource "local_file" "dns_credentials" {
+  content = var.dns_credentials_json
+  filename = "dns_credentials.json"
+}
+
 resource "null_resource" "cluster_issuer_setup" {
   depends_on = [helm_release.cert-manager]
 
   provisioner "local-exec" {
-    command = "/bin/sh setup_cert_issuer.sh "
-    environment = {
-      KEYFILE = var.gcp_dns_sa_key
-    }
+    command = "/bin/sh setup_cert_issuer.sh"
   }
 }
 

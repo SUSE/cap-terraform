@@ -10,12 +10,24 @@
             "description": "The number of worker nodes in your cluster. (Minimum: 3, Maximum 50)",
             "default": 3
         },
+        "project": {
+            "type": "string",
+            "description": "The project to manage resources in."
+        },
         "location": {
             "type": "string",
+            "description": "The GCP region where the cluster is placed, including the zone.",
             "default": "us-central1-a"
         },
-        "project": {
-            "type": "string"
+        "credentials_json": {
+            "type": "string",
+            "description": "Contents of a service account key file in JSON format, with rights to create the GKE cluster and associated resources.",
+            "default": "{}"
+        },
+        "dns_credentials_json": {
+            "type": "string",
+            "description": "Contents of a service account key file in JSON format, with rights to edit DNS.",
+            "default": "{}"
         },
         "node_pool_name": {
             "type": "string"
@@ -29,12 +41,6 @@
         "disk_size_gb": {
             "type": "number",
             "default": 60
-        },
-        "gke_sa_key": {
-            "type": "string"
-        },
-        "gcp_dns_sa_key": {
-            "type": "string"
         },
         "chart_values_file": {
             "type": "string"
