@@ -37,8 +37,7 @@ resource "helm_release" "external-dns" {
     value = "true"
   }
 
-  depends_on = [
-    local_file.kubeconfig_file,
-    kubernetes_cluster_role_binding.tiller
-  ]
+ 
+    depends_on = [kubernetes_config_map.aws_auth]
+  
 }

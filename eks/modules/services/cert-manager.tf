@@ -6,6 +6,7 @@ resource "kubernetes_namespace" "cert_manager" {
       "certmanager.k8s.io/disable-validation" = "true"
     }
   }
+  depends_on = [kubernetes_config_map.aws_auth]
 }
 
 resource "null_resource" "cert_manager_setup" {

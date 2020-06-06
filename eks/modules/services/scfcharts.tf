@@ -7,24 +7,30 @@ resource "kubernetes_namespace" "uaa" {
   metadata {
     name = "uaa"
   }
+   depends_on = [kubernetes_config_map.aws_auth]
+ 
 }
 
 resource "kubernetes_namespace" "scf" {
   metadata {
     name = "scf"
   }
+  depends_on = [kubernetes_config_map.aws_auth]
 }
 
 resource "kubernetes_namespace" "stratos" {
   metadata {
     name = "stratos"
   }
+  depends_on = [kubernetes_config_map.aws_auth]
+
 }
 
 resource "kubernetes_namespace" "metrics" {
   metadata {
     name = "metrics"
   }
+  depends_on = [kubernetes_config_map.aws_auth]
 }
 
 # Install UAA using Helm Chart
@@ -60,9 +66,7 @@ resource "helm_release" "uaa" {
   depends_on = [
     helm_release.external-dns,
     helm_release.nginx_ingress,
-    helm_release.cert-manager,
-    null_resource.cluster_issuer_setup,
-    kubernetes_namespace.uaa
+    helm_release.cert-manager
   ]
 }
 
@@ -98,8 +102,6 @@ resource "helm_release" "scf" {
     helm_release.external-dns,
     helm_release.nginx_ingress,
     helm_release.cert-manager,
-    helm_release.uaa,
-    kubernetes_namespace.scf
   ]
 }
 
@@ -145,8 +147,7 @@ resource "helm_release" "stratos" {
     value = "scopedpersistent"
   }
   depends_on = [
-    helm_release.scf,
-    kubernetes_namespace.stratos
+    helm_release.scf
   ]
 }
 
@@ -176,9 +177,20 @@ resource "null_resource" "wait_for_uaa" {
     }
   }
   depends_on = [helm_release.stratos]
+
+}
+
+provider "helm" {
+  alias = "metrics"
+  version = "1.0.0"
+
+  kubernetes {
+    config_path = var.kubeconfig_file_path
+  }
 }
 
 resource "helm_release" "metrics" {
+  provider   = helm.metrics
   name       = "susecf-metrics"
   repository = "https://kubernetes-charts.suse.com"
   chart      = "metrics"
@@ -205,7 +217,7 @@ resource "helm_release" "metrics" {
 
   depends_on = [
     null_resource.wait_for_uaa,
-    kubernetes_namespace.metrics
+    helm_release.stratos
   ]
 }
 

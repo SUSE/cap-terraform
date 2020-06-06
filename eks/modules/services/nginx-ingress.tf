@@ -21,9 +21,6 @@ resource "helm_release" "nginx_ingress" {
   }
 
   # wait until the worker nodes have joined the cluster...
-  depends_on = [
-    local_file.kubeconfig_file,
-    kubernetes_cluster_role_binding.tiller
-  ]
+  depends_on = [kubernetes_config_map.aws_auth]
 
 }

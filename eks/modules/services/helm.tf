@@ -1,6 +1,7 @@
 provider "helm" {
   version = "1.0.0"
-
+  
+  
   kubernetes {
     load_config_file = false
     host = data.aws_eks_cluster.eks.endpoint
