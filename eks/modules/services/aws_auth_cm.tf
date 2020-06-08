@@ -1,7 +1,7 @@
 
 resource "null_resource" "force-eks-dependency" {
   provisioner "local-exec" {
-    command = "echo ${var.force-eks-dependency-id} > /dev/null"
+    command = "echo ${var.force-eks-dependency-id} > /dev/null; sleep 120"
   }
 }
 resource "kubernetes_config_map" "aws_auth" {

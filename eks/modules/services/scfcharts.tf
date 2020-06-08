@@ -15,6 +15,9 @@ resource "kubernetes_namespace" "scf" {
   metadata {
     name = "scf"
   }
+  timeouts {
+    delete = "15m"
+  }
   depends_on = [kubernetes_config_map.aws_auth]
 }
 
