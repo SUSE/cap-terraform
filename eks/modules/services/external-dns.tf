@@ -1,7 +1,8 @@
 
 resource "helm_release" "external-dns" {
   name  = "cap-external-dns"
-  chart = "bitnami/external-dns"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart = "external-dns"
   wait  = "false"
 
   set {
@@ -37,7 +38,7 @@ resource "helm_release" "external-dns" {
     value = "true"
   }
 
- 
+
     depends_on = [kubernetes_config_map.aws_auth]
-  
+
 }
