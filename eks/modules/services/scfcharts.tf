@@ -8,7 +8,7 @@ resource "kubernetes_namespace" "uaa" {
     name = "uaa"
   }
    depends_on = [kubernetes_config_map.aws_auth]
- 
+
 }
 
 resource "kubernetes_namespace" "scf" {
@@ -193,7 +193,6 @@ provider "helm" {
 }
 
 resource "helm_release" "metrics" {
-  provider   = helm.metrics
   name       = "susecf-metrics"
   repository = "https://kubernetes-charts.suse.com"
   chart      = "metrics"
