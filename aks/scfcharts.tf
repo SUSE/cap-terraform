@@ -106,6 +106,7 @@ resource "helm_release" "stratos" {
   name       = "susecf-console"
   repository = "https://kubernetes-charts.suse.com"
   chart      = "console"
+  version    = "3.2.0"
   namespace  = "stratos"
   wait       = "false"
 
@@ -169,6 +170,7 @@ resource "helm_release" "metrics" {
   name       = "susecf-metrics"
   repository = "https://kubernetes-charts.suse.com"
   chart      = "metrics"
+  version    = "1.2.1"
   namespace  = "metrics"
   wait       = "false"
 
