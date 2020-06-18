@@ -14,12 +14,12 @@ resource "helm_release" "external-dns" {
         value = "aws"
     }
 
-    set {
+    set_sensitive {
         name = "aws.credentials.accessKey"
         value = var.external_dns_aws_access_key
     }
 
-    set {
+    set_sensitive {
         name = "aws.credentials.secretKey"
         value = var.external_dns_aws_secret_key
     }
