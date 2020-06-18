@@ -25,6 +25,7 @@ variable "cluster_labels" {
 
 variable "instance_type" {
     type = string
+    default = "t3.xlarge"
 }
 
 

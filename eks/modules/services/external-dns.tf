@@ -24,8 +24,6 @@ resource "helm_release" "external-dns" {
         value = var.external_dns_aws_secret_key
     }
 
-    
-
     set {
         name = "aws.zoneType"
         value = "public"
