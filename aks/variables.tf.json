@@ -53,7 +53,7 @@
         "k8s_version": {
             "type": "string",
             "description": "Kubernetes version to apply to AKS; must be supported in the selected region. (Run `az aks get-versions --location $REGION --output table` for a list of supported options)",
-            "default": "1.15.7"
+            "default": "1.15.11"
         },
         "disk_size_gb": {
             "type": "number",
