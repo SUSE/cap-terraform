@@ -34,7 +34,7 @@
         "k8s_version": {
             "type": "string",
             "description": "Kubernetes major.minor version to apply to EKS. (See https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html for a list of supported options)",
-            "default": "1.15"
+            "default": "1.16"
         },
         "disk_size_gb": {
             "type": "number",
