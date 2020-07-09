@@ -3,16 +3,42 @@ locals {
   stratos_metrics_config_file = "${path.cwd}/stratos-metrics-values.yaml"
 }
 
-# Add SUSE Helm charts repo
-data "helm_repository" "suse" {
-  name = "suse"
-  url  = "https://kubernetes-charts.suse.com"
+resource "kubernetes_namespace" "uaa" {
+  depends_on = [google_container_node_pool.np]
+
+  metadata {
+    name = "uaa"
+  }
+}
+
+resource "kubernetes_namespace" "scf" {
+  depends_on = [google_container_node_pool.np]
+
+  metadata {
+    name = "scf"
+  }
+}
+
+resource "kubernetes_namespace" "stratos" {
+  depends_on = [google_container_node_pool.np]
+
+  metadata {
+    name = "stratos"
+  }
+}
+
+resource "kubernetes_namespace" "metrics" {
+  depends_on = [google_container_node_pool.np]
+
+  metadata {
+    name = "metrics"
+  }
 }
 
 # Install UAA using Helm Chart
 resource "helm_release" "uaa" {
   name       = "scf-uaa"
-  repository = data.helm_repository.suse.metadata[0].name
+  repository = "https://kubernetes-charts.suse.com"
   chart      = "uaa"
   namespace  = "uaa"
   wait       = "false"
@@ -25,12 +51,13 @@ resource "helm_release" "uaa" {
     helm_release.external-dns,
     helm_release.nginx_ingress,
     null_resource.cluster_issuer_setup,
+    kubernetes_namespace.uaa
   ]
 }
 
 resource "helm_release" "scf" {
   name       = "scf-cf"
-  repository = data.helm_repository.suse.metadata[0].name
+  repository = "https://kubernetes-charts.suse.com"
   chart      = "cf"
   namespace  = "scf"
   wait       = "false"
@@ -39,12 +66,15 @@ resource "helm_release" "scf" {
     file(local.chart_values_file),
   ]
 
-  depends_on = [helm_release.uaa]
+  depends_on = [
+    helm_release.uaa,
+    kubernetes_namespace.scf
+  ]
 }
 
 resource "helm_release" "stratos" {
   name       = "susecf-console"
-  repository = data.helm_repository.suse.metadata[0].name
+  repository = "https://kubernetes-charts.suse.com"
   chart      = "console"
   namespace  = "stratos"
   wait       = "false"
@@ -62,7 +92,10 @@ resource "helm_release" "stratos" {
     value = "true"
   }
 
-  depends_on = [helm_release.scf]
+  depends_on = [
+    helm_release.scf,
+    kubernetes_namespace.stratos
+  ]
 }
 
 resource "null_resource" "metrics" {
@@ -74,7 +107,10 @@ resource "null_resource" "metrics" {
       "SCF_FILE"     = local.chart_values_file
     }
   }
-  depends_on = [helm_release.stratos]
+  depends_on = [
+    helm_release.stratos,
+    kubernetes_namespace.metrics
+  ]
 }
 
 resource "null_resource" "update_stratos_dns" {

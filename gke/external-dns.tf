@@ -38,6 +38,6 @@ resource "helm_release" "external-dns" {
     value = "true"
   }
 
-  depends_on = [kubernetes_cluster_role_binding.tiller]
+  depends_on = [null_resource.post_processor]
 }
 
