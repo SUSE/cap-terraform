@@ -76,6 +76,7 @@ resource "helm_release" "stratos" {
   name       = "susecf-console"
   repository = "https://kubernetes-charts.suse.com"
   chart      = "console"
+  version    = "3.2.0"
   namespace  = "stratos"
   wait       = "false"
 
