@@ -32,9 +32,6 @@
         "node_pool_name": {
             "type": "string"
         },
-        "vm_type": {
-            "type": "string"
-        },
         "cluster_labels": {
             "type": "map"
         },

@@ -5,6 +5,10 @@ resource "random_string" "cluster_name" {
   number  = false
 }
 
+locals {
+  cluster_node_image = "ubuntu"
+}
+
 resource "google_container_cluster" "gke-cluster" {
   name     = "cap-${random_string.cluster_name.result}"
   location = var.location
@@ -49,7 +53,7 @@ resource "google_container_node_pool" "np" {
     preemptible  = false
     machine_type = var.instance_type
     disk_size_gb = var.disk_size_gb
-    image_type   = var.vm_type
+    image_type   = local.cluster_node_image
 
     metadata = {
       disable-legacy-endpoints = "true"
