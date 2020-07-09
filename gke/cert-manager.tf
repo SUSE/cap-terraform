@@ -1,23 +1,29 @@
+resource "local_file" "le_cert_issuer" {
+  content = templatefile("le-cert-issuer.yaml.tmpl", {
+    email = var.email,
+    project = var.project,
+  })
+  filename = "le-cert-issuer.yaml"
+}
+
 resource "null_resource" "cert_manager_setup" {
-  depends_on = [helm_release.nginx_ingress]
+  depends_on = [
+    helm_release.nginx_ingress,
+    local_file.le_cert_issuer
+  ]
 
   provisioner "local-exec" {
     command = "/bin/sh setup_cert_manager.sh"
   }
 }
 
-data "helm_repository" "jetstack" {
-  name = "jetstack"
-  url  = "https://charts.jetstack.io"
-}
-
 resource "helm_release" "cert-manager" {
   name       = "cert-manager"
-  repository = data.helm_repository.jetstack.metadata[0].name
+  repository = "https://charts.jetstack.io"
   chart      = "cert-manager"
   namespace  = "cert-manager"
   wait       = "true"
-  version    = "0.8.1"
+  version    = "0.14.0"
 
   set {
     name  = "global.rbac.create"

@@ -5,9 +5,7 @@
 - `dns_credentials_json` (JSON contents of the key file for the GCP service account that will do the DNS records setup, can be same as above as long as the account has sufficent rights to do DNS management)
 - `cluster_labels` (optional map of key-value pairs)
 
-2. Make appropriate substituions in the `le-prod-cert-issuer.yaml.template` and rename it to `le-prod-cert-issuer.yaml`.
-
-3. In the helm chart values yaml use the following values to allow `cert-manager` to generate certificates for the ingress endpoints:
+2. In the helm chart values yaml use the following values to allow `cert-manager` to generate certificates for the ingress endpoints:
 
 ```
 ingress:

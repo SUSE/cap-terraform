@@ -39,7 +39,12 @@
             "description": "Tags to be applied to resources in your cluster. (Optional)"
         },
         "cap_domain": {
-            "type": "string"
+            "type": "string",
+            "description": "The FQDN of your cluster."
+        },
+        "email": {
+            "type": "string",
+            "description": "Email address to send TLS certificate notifications to."
         }
     }
 }
