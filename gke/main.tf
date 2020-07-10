@@ -73,6 +73,19 @@ resource "google_container_node_pool" "np" {
   }
 }
 
+resource "local_file" "kubeconfig" {
+  # it's only good for one hour, though
+  content  = templatefile("kubeconfig.tmpl", {
+    cluster_name = google_container_cluster.gke-cluster.name
+    endpoint     = google_container_cluster.gke-cluster.endpoint
+    cluster_ca   = google_container_cluster.gke-cluster.master_auth[0].cluster_ca_certificate
+    token        = data.google_client_config.current.access_token
+  })
+  filename = "${path.module}/kubeconfig"
+
+  depends_on = [google_container_node_pool.np]
+}
+
 resource "null_resource" "post_processor" {
   depends_on = [google_container_node_pool.np]
 
