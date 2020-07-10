@@ -6,14 +6,32 @@ resource "local_file" "le_cert_issuer" {
   filename = "le-cert-issuer.yaml"
 }
 
+resource "kubernetes_namespace" "cert-manager" {
+  depends_on = [google_container_node_pool.np]
+
+  metadata {
+    name = "cert-manager"
+
+    labels = {
+      "certmanager.k8s.io/disable-validation" = "true"
+    }
+  }
+}
+
 resource "null_resource" "cert_manager_setup" {
   depends_on = [
     helm_release.nginx_ingress,
-    local_file.le_cert_issuer
+    local_file.le_cert_issuer,
+    local_file.kubeconfig,
+    kubernetes_namespace.cert-manager
   ]
 
   provisioner "local-exec" {
-    command = "/bin/sh setup_cert_manager.sh"
+    command = "kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.14/deploy/manifests/00-crds.yaml"
+
+    environment = {
+      KUBECONFIG = "./kubeconfig"
+    }
   }
 }
 
