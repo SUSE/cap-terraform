@@ -13,7 +13,7 @@ resource "kubernetes_namespace" "cert-manager" {
     name = "cert-manager"
 
     labels = {
-      "certmanager.k8s.io/disable-validation" = "true"
+      "cert-manager.io/disable-validation" = "true"
     }
   }
 }
@@ -64,11 +64,35 @@ resource "local_file" "dns_credentials" {
   filename = "dns_credentials.json"
 }
 
+resource "kubernetes_secret" "dns_credentials" {
+  depends_on = [
+    kubernetes_namespace.cert-manager,
+  ]
+
+  metadata {
+    name = "clouddns-dns01-solver-svc-acct"
+    namespace = "cert-manager"
+  }
+
+  data = {
+    "dns_credentials.json" = var.dns_credentials_json
+  }
+}
+
 resource "null_resource" "cluster_issuer_setup" {
-  depends_on = [helm_release.cert-manager]
+  depends_on = [
+    helm_release.cert-manager,
+    local_file.le_cert_issuer,
+    local_file.kubeconfig,
+    kubernetes_secret.dns_credentials
+  ]
 
   provisioner "local-exec" {
-    command = "/bin/sh setup_cert_issuer.sh"
+    command = "kubectl apply -f le-cert-issuer.yaml"
+
+    environment = {
+      KUBECONFIG = "./kubeconfig"
+    }
   }
 }
 
