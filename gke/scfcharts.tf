@@ -52,6 +52,15 @@ resource "helm_release" "uaa" {
     file(local.chart_values_file),
   ]
 
+  # scf-config-values
+  set {
+    name  = "env.DOMAIN"
+    value = var.cap_domain
+  }
+  set {
+    name  = "env.UAA_HOST"
+    value = "uaa.${var.cap_domain}"
+  }
   set_sensitive {
     name  = "secrets.UAA_ADMIN_CLIENT_SECRET"
     value = local.uaa_admin_client_secret
@@ -76,6 +85,15 @@ resource "helm_release" "scf" {
     file(local.chart_values_file),
   ]
 
+  # scf-config-values
+  set {
+    name  = "env.DOMAIN"
+    value = var.cap_domain
+  }
+  set {
+    name  = "env.UAA_HOST"
+    value = "uaa.${var.cap_domain}"
+  }
   set_sensitive {
     name  = "secrets.CLUSTER_ADMIN_PASSWORD"
     value = local.stratos_admin_password
@@ -103,6 +121,15 @@ resource "helm_release" "stratos" {
     file(local.chart_values_file),
   ]
 
+  # scf-config-values
+  set {
+    name  = "env.DOMAIN"
+    value = var.cap_domain
+  }
+  set {
+    name  = "env.UAA_HOST"
+    value = "uaa.${var.cap_domain}"
+  }
   set {
     name  = "services.loadbalanced"
     value = "true"
