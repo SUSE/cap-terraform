@@ -145,6 +145,18 @@ resource "helm_release" "stratos" {
   ]
 }
 
+resource "null_resource" "wait_for_uaa" {
+  depends_on = [helm_release.uaa]
+
+  provisioner "local-exec" {
+    command = "./wait_for_url.sh"
+
+    environment = {
+      URL = "https://uaa.${var.cap_domain}/.well-known/openid-configuration"
+    }
+  }
+}
+
 resource "null_resource" "metrics" {
   provisioner "local-exec" {
     command = "/bin/sh deploy_metrics.sh "
@@ -166,7 +178,8 @@ resource "null_resource" "metrics" {
 
   depends_on = [
     helm_release.stratos,
-    kubernetes_namespace.metrics
+    kubernetes_namespace.metrics,
+    null_resource.wait_for_uaa
   ]
 }
 
