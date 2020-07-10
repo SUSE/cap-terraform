@@ -82,20 +82,6 @@ resource "local_file" "kubeconfig" {
   depends_on = [google_container_node_pool.np]
 }
 
-resource "null_resource" "post_processor" {
-  depends_on = [google_container_node_pool.np]
-
-  provisioner "local-exec" {
-    command = "/bin/sh gke-post-processing.sh"
-
-    environment = {
-      CLUSTER_NAME = google_container_cluster.gke-cluster.name
-      CLUSTER_ZONE = var.location
-      NODE_COUNT   = var.instance_count
-    }
-  }
-}
-
 data "google_client_config" "current" {
 }
 

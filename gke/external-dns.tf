@@ -1,5 +1,5 @@
 resource "kubernetes_secret" "google_dns_sa_creds" {
-  depends_on = [null_resource.post_processor]
+  depends_on = [google_container_node_pool.np]
 
   metadata {
     name = "dns-sa-creds"
@@ -38,6 +38,6 @@ resource "helm_release" "external-dns" {
     value = "true"
   }
 
-  depends_on = [null_resource.post_processor]
+  depends_on = [google_container_node_pool.np]
 }
 

@@ -9,7 +9,7 @@ provider "kubernetes" {
 }
 
 resource "kubernetes_storage_class" "gkesc" {
-  depends_on = [null_resource.post_processor]
+  depends_on = [google_container_node_pool.np]
 
   metadata {
     name = "persistent"
