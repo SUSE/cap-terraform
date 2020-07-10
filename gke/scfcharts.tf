@@ -157,30 +157,42 @@ resource "null_resource" "wait_for_uaa" {
   }
 }
 
-resource "null_resource" "metrics" {
-  provisioner "local-exec" {
-    command = "/bin/sh deploy_metrics.sh "
-
-    environment = {
-      "METRICS_FILE" = local.stratos_metrics_config_file
-      "SCF_FILE"     = local.chart_values_file
-    }
-  }
-
-  # set {
-  #   name = "metrics.username"
-  #   value = "admin"
-  # }
-  # set_sensitive {
-  #   name = "metrics.password"
-  #   value = local.metrics_admin_password
-  # }
-
+resource "helm_release" "metrics" {
   depends_on = [
     helm_release.stratos,
     kubernetes_namespace.metrics,
     null_resource.wait_for_uaa
   ]
+
+  name       = "susecf-metrics"
+  repository = "https://kubernetes-charts.suse.com"
+  chart      = "metrics"
+  version    = "1.2.1"
+  namespace  = "metrics"
+  wait       = "false"
+
+  values = [file(local.stratos_metrics_config_file)]
+  #scf-metrics-values
+  set {
+    name = "metrics.username"
+    value = "admin"
+  }
+  set_sensitive {
+    name = "metrics.password"
+    value = local.metrics_admin_password
+  }
+  set {
+    name = "kubernetes.apiEndpoint"
+    value = var.cap_domain
+  }
+  set {
+    name = "cloudFoundry.apiEndpoint"
+    value = "api.${var.cap_domain}"
+  }
+  set_sensitive {
+    name  = "cloudFoundry.uaaAdminClientSecret"
+    value = local.uaa_admin_client_secret
+  }
 }
 
 resource "null_resource" "update_stratos_dns" {
@@ -202,6 +214,6 @@ resource "null_resource" "update_metrics_dns" {
       "DOMAIN" = var.cap_domain
     }
   }
-  depends_on = [null_resource.metrics]
+  depends_on = [helm_release.metrics]
 }
 
