@@ -14,6 +14,10 @@ resource "kubernetes_namespace" "uaa" {
   metadata {
     name = "uaa"
   }
+
+  timeouts {
+    delete = "15m"
+  }
 }
 
 resource "kubernetes_namespace" "scf" {
@@ -21,6 +25,10 @@ resource "kubernetes_namespace" "scf" {
 
   metadata {
     name = "scf"
+  }
+
+  timeouts {
+    delete = "15m"
   }
 }
 
@@ -30,6 +38,10 @@ resource "kubernetes_namespace" "stratos" {
   metadata {
     name = "stratos"
   }
+
+  timeouts {
+    delete = "15m"
+  }
 }
 
 resource "kubernetes_namespace" "metrics" {
@@ -37,6 +49,10 @@ resource "kubernetes_namespace" "metrics" {
 
   metadata {
     name = "metrics"
+  }
+
+  timeouts {
+    delete = "15m"
   }
 }
 

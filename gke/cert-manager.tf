@@ -16,6 +16,10 @@ resource "kubernetes_namespace" "cert-manager" {
       "cert-manager.io/disable-validation" = "true"
     }
   }
+
+  timeouts {
+    delete = "15m"
+  }
 }
 
 resource "null_resource" "cert_manager_setup" {
