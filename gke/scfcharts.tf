@@ -197,23 +197,29 @@ resource "helm_release" "metrics" {
 
 resource "null_resource" "update_stratos_dns" {
   provisioner "local-exec" {
-    command = "/bin/sh ext-dns-stratos-svc-annotate.sh"
+    command = "kubectl annotate svc susecf-console-ui-ext -n stratos  \"external-dns.alpha.kubernetes.io/hostname=stratos.${var.cap_domain}\""
 
     environment = {
-      "DOMAIN" = var.cap_domain
+      KUBECONFIG = "./kubeconfig"
     }
   }
-  depends_on = [helm_release.stratos]
+  depends_on = [
+    helm_release.stratos,
+    local_file.kubeconfig
+  ]
 }
 
 resource "null_resource" "update_metrics_dns" {
   provisioner "local-exec" {
-    command = "/bin/sh ext-dns-metrics-svc-annotate.sh"
+    command = "kubectl annotate svc susecf-metrics-metrics-nginx -n metrics  \"external-dns.alpha.kubernetes.io/hostname=metrics.${var.cap_domain}\""
 
     environment = {
-      "DOMAIN" = var.cap_domain
+      KUBECONFIG = "./kubeconfig"
     }
   }
-  depends_on = [helm_release.metrics]
+  depends_on = [
+    helm_release.metrics,
+    local_file.kubeconfig
+  ]
 }
 
