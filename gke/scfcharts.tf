@@ -239,3 +239,12 @@ resource "null_resource" "update_metrics_dns" {
   ]
 }
 
+output "uaa_url" {
+  value = "https://uaa.${var.cap_domain}/login"
+}
+output "stratos_url" {
+  value = "https://stratos.${var.cap_domain}"
+}
+output "metrics_url" {
+  value = "https://metrics.${var.cap_domain}"
+}
