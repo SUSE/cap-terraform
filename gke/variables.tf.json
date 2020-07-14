@@ -12,7 +12,7 @@
         },
         "project": {
             "type": "string",
-            "description": "The project to manage resources in."
+            "description": "The GCP project to manage resources in."
         },
         "location": {
             "type": "string",
@@ -44,7 +44,7 @@
         },
         "cap_domain": {
             "type": "string",
-            "description": "The FQDN of your cluster."
+            "description": "The FQDN of your cluster. Must be a subdomain of your Cloud DNS Zone."
         },
         "email": {
             "type": "string",
