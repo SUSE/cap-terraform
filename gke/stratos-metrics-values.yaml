@@ -1,0 +1,8 @@
+env:
+  DOPPLER_PORT: 443
+prometheus:
+  kubeStateMetrics:
+    enabled: true
+services:
+  loadbalanced: true
+

@@ -1,0 +1,26 @@
+### example deployment configuration file
+### scf-config-values.yaml
+
+env:
+  UAA_PORT: 443
+  UAA_PUBLIC_PORT: 443
+  GARDEN_ROOTFS_DRIVER: "overlay-xfs"
+  DEFAULT_STACK: cflinuxfs3
+
+kube:
+  storage_class:
+    persistent: "persistent"
+    shared: "persistent"
+  auth: "rbac"
+
+  registry:
+    hostname: "registry.suse.com"
+    username: ""
+    password: ""
+  organization: "cap"
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+    cert-manager.io/cluster-issuer: letsencrypt-prod
