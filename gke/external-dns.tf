@@ -11,9 +11,10 @@ resource "kubernetes_secret" "google_dns_sa_creds" {
 }
 
 resource "helm_release" "external-dns" {
-  name  = "cap-external-dns"
-  chart = "stable/external-dns"
-  wait  = "false"
+  name = "cap-external-dns"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart = "external-dns"
+  wait = "false"
 
   set {
     name  = "google.project"
