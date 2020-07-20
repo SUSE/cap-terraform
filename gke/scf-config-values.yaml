@@ -24,5 +24,3 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 1024m
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    cert-manager.io/acme-challenge-type: dns01
-    cert-manager.io/acme-dns01-provider: gcp-clouddns-provider
