@@ -20,7 +20,7 @@ resource "kubernetes_namespace" "cert_manager" {
   }
 
   timeouts {
-    delete = "15m"
+    delete = "30m"
   }
 }
 

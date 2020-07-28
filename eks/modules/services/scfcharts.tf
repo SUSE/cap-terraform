@@ -11,7 +11,7 @@ resource "kubernetes_namespace" "uaa" {
   }
 
   timeouts {
-    delete = "15m"
+    delete = "30m"
   }
 }
 
@@ -23,7 +23,7 @@ resource "kubernetes_namespace" "scf" {
   }
 
   timeouts {
-    delete = "15m"
+    delete = "30m"
   }
 }
 
@@ -35,7 +35,7 @@ resource "kubernetes_namespace" "stratos" {
   }
 
   timeouts {
-    delete = "15m"
+    delete = "30m"
   }
 }
 
@@ -47,7 +47,7 @@ resource "kubernetes_namespace" "metrics" {
   }
 
   timeouts {
-    delete = "15m"
+    delete = "30m"
   }
 }
 
