@@ -17,7 +17,7 @@
         "location": {
             "type": "string",
             "description": "The GCP region where the cluster is placed, including the zone.",
-            "default": "us-central1-a"
+            "default": ""
         },
         "credentials_json": {
             "type": "string",
