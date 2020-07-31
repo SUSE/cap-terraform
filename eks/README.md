@@ -26,7 +26,6 @@
     - `keypair_name` - Name of the EC2 Key Pair used for accessing worker nodes via SSH. See https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html for details.
     - `admin_password` - Intial password for Cloud Foundry 'admin' user, UAA 'admin' OAuth client, and metrics 'admin' login. We recommend changing this password after deployment. See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-manage-passwords
     - `disk_size_gb` - The worker node storage capacity. (Minimum:80, Maximum: 16383)
-    - `k8s_version` - Kubernetes major.minor version to apply to EKS. (See https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html for a list of supported options)
     - `cluster_labels` - Tags to be applied to resources in your cluster. (Optional)
     - `hosted_zone_name` - Name of the Route 53 Hosted zone created for the cluster.
     - `cap_domain` - The FQDN of your cluster - a subdomain of the Hosted zone.
