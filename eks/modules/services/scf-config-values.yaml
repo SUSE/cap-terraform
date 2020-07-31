@@ -18,6 +18,4 @@ ingress:
   enabled: true
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 1024m
-    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
-    certmanager.k8s.io/acme-challenge-type: dns01
-    certmanager.k8s.io/acme-dns01-provider: aws-route53-provider
+    cert-manager.io/cluster-issuer: letsencrypt-prod

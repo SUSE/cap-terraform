@@ -1,43 +1,65 @@
 locals {
-  chart_values_file           = "${path.cwd}/scf-config-values.yaml"
-  stratos_metrics_config_file = "${path.cwd}/stratos-metrics-values.yaml"
+  chart_values_file           = "${path.module}/scf-config-values.yaml"
+  stratos_metrics_config_file = "${path.module}/stratos-metrics-values.yaml"
 }
 
 resource "kubernetes_namespace" "uaa" {
+  depends_on = [kubernetes_config_map.aws_auth]
+ 
   metadata {
     name = "uaa"
   }
-   depends_on = [kubernetes_config_map.aws_auth]
 
+  timeouts {
+    delete = "30m"
+  }
 }
 
 resource "kubernetes_namespace" "scf" {
+  depends_on = [kubernetes_config_map.aws_auth]
+
   metadata {
     name = "scf"
   }
+
   timeouts {
-    delete = "15m"
+    delete = "30m"
   }
-  depends_on = [kubernetes_config_map.aws_auth]
 }
 
 resource "kubernetes_namespace" "stratos" {
+  depends_on = [kubernetes_config_map.aws_auth]
+
   metadata {
     name = "stratos"
   }
-  depends_on = [kubernetes_config_map.aws_auth]
 
+  timeouts {
+    delete = "30m"
+  }
 }
 
 resource "kubernetes_namespace" "metrics" {
+  depends_on = [kubernetes_config_map.aws_auth]
+
   metadata {
     name = "metrics"
   }
-  depends_on = [kubernetes_config_map.aws_auth]
+
+  timeouts {
+    delete = "30m"
+  }
 }
 
 # Install UAA using Helm Chart
 resource "helm_release" "uaa" {
+  depends_on = [
+    helm_release.external-dns,
+    helm_release.nginx_ingress,
+    helm_release.cert-manager,
+    kubernetes_namespace.uaa
+  ]
+
   name       = "scf-uaa"
   repository = "https://kubernetes-charts.suse.com"
   chart      = "uaa"
@@ -65,15 +87,14 @@ resource "helm_release" "uaa" {
     name = "secrets.UAA_ADMIN_CLIENT_SECRET"
     value = var.uaa_admin_client_secret
   }
-
-  depends_on = [
-    helm_release.external-dns,
-    helm_release.nginx_ingress,
-    helm_release.cert-manager
-  ]
 }
 
 resource "helm_release" "scf" {
+  depends_on = [
+    helm_release.uaa,
+    kubernetes_namespace.scf
+  ]
+
   name       = "scf-cf"
   repository = "https://kubernetes-charts.suse.com"
   chart      = "cf"
@@ -101,14 +122,14 @@ resource "helm_release" "scf" {
     name = "secrets.UAA_ADMIN_CLIENT_SECRET"
     value = var.uaa_admin_client_secret
   }
-  depends_on = [
-    helm_release.external-dns,
-    helm_release.nginx_ingress,
-    helm_release.cert-manager,
-  ]
 }
 
 resource "helm_release" "stratos" {
+  depends_on = [
+    helm_release.scf,
+    kubernetes_namespace.stratos
+  ]
+
   name       = "susecf-console"
   repository = "https://kubernetes-charts.suse.com"
   chart      = "console"
@@ -150,38 +171,18 @@ resource "helm_release" "stratos" {
     name  = "kube.storage_class.persistent"
     value = "scopedpersistent"
   }
-  depends_on = [
-    helm_release.scf
-  ]
-}
-
-resource "null_resource" "update_stratos_dns" {
-  provisioner "local-exec" {
-    command = "/bin/sh modules/services/ext-dns-stratos-svc-annotate.sh"
-
-    environment = {
-      "KUBECONFIG"            = var.kubeconfig_file_path
-      "AWS_ACCESS_KEY_ID"     = var.access_key_id
-      "AWS_SECRET_ACCESS_KEY" = var.secret_access_key
-      "DOMAIN"                = var.cap_domain
-    }
-  }
-  depends_on = [helm_release.stratos]
 }
 
 resource "null_resource" "wait_for_uaa" {
+  depends_on = [helm_release.uaa]
+
   provisioner "local-exec" {
-    command = "/bin/sh modules/services/wait_for_uaa.sh"
+    command = "${path.module}/wait_for_url.sh"
 
     environment = {
-      "KUBECONFIG"            = var.kubeconfig_file_path
-      "AWS_ACCESS_KEY_ID"     = var.access_key_id
-      "AWS_SECRET_ACCESS_KEY" = var.secret_access_key
-      "METRICS_API_ENDPOINT"  = var.cap_domain
+      URL = "https://uaa.${var.cap_domain}/.well-known/openid-configuration"
     }
   }
-  depends_on = [helm_release.stratos]
-
 }
 
 provider "helm" {
@@ -194,6 +195,13 @@ provider "helm" {
 }
 
 resource "helm_release" "metrics" {
+  depends_on = [
+    helm_release.stratos,
+    kubernetes_namespace.metrics,
+    null_resource.wait_for_uaa
+  ]
+
+  provider   = helm.metrics
   name       = "susecf-metrics"
   repository = "https://kubernetes-charts.suse.com"
   chart      = "metrics"
@@ -218,25 +226,38 @@ resource "helm_release" "metrics" {
     name  = "cloudFoundry.uaaAdminClientSecret"
     value = var.uaa_admin_client_secret
   }
-
-  depends_on = [
-    null_resource.wait_for_uaa,
-    helm_release.stratos
-  ]
 }
 
-resource "null_resource" "update_metrics_dns" {
+resource "null_resource" "update_stratos_dns" {
+  depends_on = [
+    helm_release.stratos,
+    local_file.kubeconfig_file
+  ]
+
   provisioner "local-exec" {
-    command = "/bin/sh modules/services/ext-dns-metrics-svc-annotate.sh"
+    command = "kubectl annotate svc susecf-console-ui-ext -n stratos  \"external-dns.alpha.kubernetes.io/hostname=stratos.${var.cap_domain}\""
 
     environment = {
       "KUBECONFIG"            = var.kubeconfig_file_path
       "AWS_ACCESS_KEY_ID"     = var.access_key_id
       "AWS_SECRET_ACCESS_KEY" = var.secret_access_key
-      "DOMAIN"                = var.cap_domain
     }
   }
-
-  depends_on = [helm_release.metrics]
 }
 
+resource "null_resource" "update_metrics_dns" {
+  depends_on = [
+    helm_release.metrics,
+    local_file.kubeconfig_file
+  ]
+
+  provisioner "local-exec" {
+    command = "kubectl annotate svc susecf-metrics-metrics-nginx -n metrics  \"external-dns.alpha.kubernetes.io/hostname=metrics.${var.cap_domain}\""
+
+    environment = {
+      "KUBECONFIG"            = var.kubeconfig_file_path
+      "AWS_ACCESS_KEY_ID"     = var.access_key_id
+      "AWS_SECRET_ACCESS_KEY" = var.secret_access_key
+    }
+  }
+}
