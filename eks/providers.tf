@@ -9,7 +9,7 @@ locals {
 }
 
 provider "aws" {
-  version = "~> 2.0"
+  version = "~> 3.1.0"
   region = var.region
   max_retries = 15
 

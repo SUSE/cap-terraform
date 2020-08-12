@@ -63,6 +63,10 @@ resource "aws_launch_template" "aws" {
     }
   }
 
+    credit_specification {
+        cpu_credits = "unlimited"
+    }
+
   depends_on = [null_resource.satisfy-aws-network-dependency, aws_security_group_rule.aws-node-ingress-self, aws_security_group_rule.aws-node-ingress-cluster]
 
 }
