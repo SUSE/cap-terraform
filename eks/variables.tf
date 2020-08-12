@@ -17,6 +17,7 @@ variable "keypair_name" {
 
 variable "eks_version" {
     type = string
+    default =""
 }
 
 variable "cluster_labels" {
