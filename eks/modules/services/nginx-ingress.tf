@@ -1,5 +1,7 @@
 # Install Nginx Ingress using Helm Chart
 resource "helm_release" "nginx_ingress" {
+  depends_on = [local_file.kubeconfig_file]
+
   name       = "nginx-ingress"
   repository = "https://kubernetes-charts.suse.com/"
   chart      = "nginx-ingress"
@@ -19,8 +21,5 @@ resource "helm_release" "nginx_ingress" {
     name  = "controller.publishService.enabled"
     value = "true"
   }
-
-  # wait until the worker nodes have joined the cluster...
-  depends_on = [kubernetes_config_map.aws_auth]
 
 }

@@ -44,6 +44,11 @@ resource "null_resource" "cert_manager_setup" {
 }
 
 resource "helm_release" "cert-manager" {
+  depends_on = [
+    null_resource.cert_manager_setup,
+    local_file.kubeconfig_file
+  ]
+
   name       = "cert-manager"
   repository = "https://charts.jetstack.io"
   chart      = "cert-manager"
@@ -63,8 +68,6 @@ resource "helm_release" "cert-manager" {
     name  = "webhook.enabled"
     value = "false"
   }
-
-  depends_on = [null_resource.cert_manager_setup]
 }
 
 resource "null_resource" "cluster_issuer_setup" {
