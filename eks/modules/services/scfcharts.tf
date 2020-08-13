@@ -207,7 +207,7 @@ resource "helm_release" "metrics" {
   chart      = "metrics"
   version    = "1.2.1"
   namespace  = "metrics"
-  wait       = "false"
+  wait       = "true"
 
   values = [file(local.stratos_metrics_config_file)]
   set {
