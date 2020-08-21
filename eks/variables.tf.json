@@ -31,11 +31,6 @@
             "type": "string",
             "description":"Intial password for Cloud Foundry 'admin' user, UAA 'admin' OAuth client, and metrics 'admin' login. We recommend changing this password after deployment. See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-manage-passwords"
         },
-        "k8s_version": {
-            "type": "string",
-            "description": "Kubernetes major.minor version to apply to EKS. (See https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html for a list of supported options)",
-            "default": "1.16"
-        },
         "disk_size_gb": {
             "type": "number",
             "description": "The worker node storage capacity. (Minimum:80, Maximum: 16383)",
