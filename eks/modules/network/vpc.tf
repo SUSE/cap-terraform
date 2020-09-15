@@ -6,7 +6,7 @@
 #  * Route Table
 #
 locals {
-    cluster_name = "cap-${random_string.cluster_name.result}"
+    cluster_name = "cap-ci-${random_string.cluster_name.result}"
 }
 data "aws_availability_zones" "available" {}
 
