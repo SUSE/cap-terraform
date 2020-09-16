@@ -1,4 +1,4 @@
-module "aks_cluster" {
+module "aks-cluster" {
     source = "./cluster"
 
     location            = var.location
@@ -29,7 +29,7 @@ module "aks_cluster" {
 }
 
 resource "local_file" "k8scfg" {
-  content  = module.aks_cluster.kube_config
+  content  = module.aks-cluster.kube_config
   filename = "${path.cwd}/kubeconfig"
 }
 
@@ -43,7 +43,7 @@ provider "helm" {
 }
 
 module "helper-charts" {
-    source = "../modules/helper-charts"
+    source = "../common/helper-charts"
 
     providers = {
         helm = helm.helm-cap
@@ -58,11 +58,11 @@ module "helper-charts" {
     email         = var.email
     dns_zone_resource_group = var.dns_zone_resource_group
 
-    depends_on = [module.aks_cluster]
+    depends_on = [module.aks-cluster]
 }
 
-module "cap_deployment" {
-    source = "../modules/cap-deploy"
+module "cap-charts" {
+    source = "../common/cap-charts"
 
     providers = {
         helm = helm.helm-cap
@@ -70,9 +70,9 @@ module "cap_deployment" {
 
     cap_domain = var.cap_domain
     cap_version = var.cap_version
-    cluster_url = module.aks_cluster.cluster_url
+    cluster_url = module.aks-cluster.cluster_url
 
-    depends_on = [module.aks_cluster,
+    depends_on = [module.aks-cluster,
                   module.helper-charts]
 }
 

@@ -14,14 +14,14 @@ metrics:
 
       annotations: 
         cert-manager.io/cluster-issuer: letsencrypt-prod
-      host: metrics.tfe2e.susecap.biz
+#     host: metrics.tfe2e.susecap.biz
 
   username: admin
   password: password
 
 
 cloudFoundry:
-  apiEndpoint: https://api.tfe2e.susecap.biz
+# apiEndpoint: https://api.tfe2e.susecap.biz
   uaaAdminClient: admin
   uaaAdminClientSecret: alsochangeme
 

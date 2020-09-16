@@ -1,8 +1,8 @@
 #stratos
 #
-env:
-    DOMAIN: tfe2e.susecap.biz
-    UAA_HOST: uaa.tfe2e.susecap.biz
+#env:
+#    DOMAIN: tfe2e.susecap.biz
+#    UAA_HOST: uaa.tfe2e.susecap.biz
 console:
     service:
         ingress:
