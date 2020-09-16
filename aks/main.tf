@@ -1,51 +1,78 @@
-resource "random_string" "cluster_name" {
-  length  = 8
-  special = false
-  upper   = false
-  number  = false
-}
+module "aks_cluster" {
+    source = "./cluster"
 
-resource "azurerm_kubernetes_cluster" "k8s" {
-  name                = "cap-${random_string.cluster_name.result}"
-  location            = var.location
-  resource_group_name = var.resource_group
-  dns_prefix          = var.dns_prefix
-  kubernetes_version  = var.k8s_version
+    location            = var.location
+    resource_group      = var.resource_group
+    dns_prefix          = var.dns_prefix
+    k8s_version         = var.k8s_version
+    cluster_labels      = var.cluster_labels
 
-  linux_profile {
-    admin_username = var.ssh_username
 
-    ssh_key {
-      key_data = var.ssh_public_key
-    }
-  }
+    ssh_username = var.ssh_username
+    ssh_public_key = var.ssh_public_key
 
-  default_node_pool {
-    name            = "defaultpool"
-    node_count      = var.instance_count
-    vm_size         = var.instance_type
-    os_disk_size_gb = var.disk_size_gb
-  }
+    instance_count      = var.instance_count
+    instance_type       = var.instance_type
+    disk_size_gb     = var.disk_size_gb
 
-  service_principal {
     client_id     = var.client_id
     client_secret = var.client_secret
-  }
+    tenant_id     = var.tenant_id
+    subscription_id = var.subscription_id
+    dns_zone_name = var.dns_zone_name
+    
+    
+    email         = var.email
+    admin_password = var.admin_password
+    dns_zone_resource_group = var.dns_zone_resource_group
 
-  tags = var.cluster_labels
-}
-
-locals {
-  k8scfg = azurerm_kubernetes_cluster.k8s.kube_config_raw
-  kubeconfig_file_path = "${path.module}/kubeconfig"
-}
-
-output "kube_config" {
-  value = local.k8scfg
 }
 
 resource "local_file" "k8scfg" {
-  content  = local.k8scfg
-  filename = local.kubeconfig_file_path
+  content  = module.aks_cluster.kube_config
+  filename = "${path.cwd}/kubeconfig"
+}
+
+provider "helm" {
+  version = "1.2.0"
+  alias   = "helm-cap"
+
+  kubernetes {
+    config_path = "${path.cwd}/kubeconfig"
+  }
+}
+
+module "helper-charts" {
+    source = "../modules/helper-charts"
+
+    providers = {
+        helm = helm.helm-cap
+    }
+
+    client_id     = var.client_id
+    client_secret = var.client_secret
+    tenant_id     = var.tenant_id
+    subscription_id = var.subscription_id
+    dns_zone_name = var.dns_zone_name
+
+    email         = var.email
+    dns_zone_resource_group = var.dns_zone_resource_group
+
+    depends_on = [module.aks_cluster]
+}
+
+module "cap_deployment" {
+    source = "../modules/cap-deploy"
+
+    providers = {
+        helm = helm.helm-cap
+    }
+
+    cap_domain = var.cap_domain
+    cap_version = var.cap_version
+    cluster_url = module.aks_cluster.cluster_url
+
+    depends_on = [module.aks_cluster,
+                  module.helper-charts]
 }
 

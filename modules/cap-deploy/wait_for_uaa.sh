@@ -1,5 +1,4 @@
 #! /bin/sh
-APISRV="$(kubectl cluster-info| head -n 1|grep -o ' at .*$'| cut -f3 -d' '| cut -f3 -d'/'|cut -f1 -d':')"
 
 echo "checking UAA status before installing metrics"
 url=https://uaa.${METRICS_API_ENDPOINT}/.well-known/openid-configuration
@@ -20,8 +19,8 @@ do
     else
         count_string="${count}th"
     fi
-    echo "${count_string} try - connecting to UAA..."
-    code=$(curl -k -o /dev/null -Isw '%{http_code}\n' --connect-timeout 5 --max-time 5 $url)
+    echo "${count_string} try - connecting to UAA at ${url}..."
+    code=$(curl -o /dev/null -Isw '%{http_code}\n' --connect-timeout 5 --max-time 5 $url)
     if [[ "$code" == '200' ]]; then
         break;
     fi
@@ -32,7 +31,7 @@ do
         exit 1
     fi
 
-    echo "...but received status ${code}; will check again in a minute ..."
-    sleep 60
+    echo "...but received status ${code}; will check again in 2 minutes ..."
+    sleep 120
 done
 echo "UAA status check returned ${code}; proceeding..."

@@ -5,6 +5,11 @@ env:
   UAA_PUBLIC_PORT: 443
   GARDEN_ROOTFS_DRIVER: "overlay-xfs"
   DEFAULT_STACK: cflinuxfs3
+  DOMAIN: sroy.cap152.susecap.biz
+  UAA_HOST: uaa.sroy.cap152.susecap.biz
+
+secrets:
+  UAA_ADMIN_CLIENT_SECRET: alsochangeme
 
 kube:
   storage_class:
@@ -23,3 +28,4 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 1024m
     cert-manager.io/cluster-issuer: letsencrypt-prod
+

@@ -1,3 +1,7 @@
+terraform {
+  required_version = ">= 0.13"
+}
+
 provider "azurerm" {
   version = "2.4.0"
   features {}
@@ -5,6 +9,7 @@ provider "azurerm" {
   client_id       = var.client_id
   client_secret   = var.client_secret
   tenant_id       = var.tenant_id
+  skip_provider_registration = true
 }
 
 provider "local" {

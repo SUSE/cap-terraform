@@ -68,10 +68,6 @@
             "type": "string",
             "description": "Name of the Azure DNS Zone created for the cluster."
         },
-        "cap_domain": {
-            "type": "string",
-            "description": "The FQDN of your cluster."
-        },
         "dns_prefix": {
             "type": "string",
             "description": "Prefix for node DNS hostnames. (Must be alphanumeric, may include but not end with dashes)",
@@ -80,11 +76,6 @@
         "email": {
             "type": "string",
             "description": "Email address to send TLS certificate notifications to."
-        },
-        "cap_version": {
-            "type": "string",
-            "description": "Version of CAP",
-            "default" : "latest"
         }
     }
 }

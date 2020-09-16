@@ -37,6 +37,5 @@ resource "helm_release" "external-dns" {
     value = "true"
   }
 
-  depends_on = [azurerm_kubernetes_cluster.k8s]
 }
 
