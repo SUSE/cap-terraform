@@ -48,7 +48,7 @@ output "cluster_url" {
     value = azurerm_kubernetes_cluster.k8s.kube_config[0].host
 }
 
-/* resource "local_file" "k8scfg" {
+ resource "local_file" "k8scfg" {
   content  = local.k8scfg
-  filename = local.kubeconfig_file_path
-} */
+  filename = "${path.cwd}/kubeconfig"
+} 

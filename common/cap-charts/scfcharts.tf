@@ -6,7 +6,7 @@ locals {
   kubeconfig_file             = "${path.cwd}/kubeconfig"
   
 }
-
+/* 
 # Install UAA using Helm Chart
 resource "helm_release" "uaa" {
   name       = "scf-uaa"
@@ -22,7 +22,7 @@ resource "helm_release" "uaa" {
     file(local.chart_values_file),
   ]
   
-}
+} */
 
 resource "helm_release" "scf" {
   name       = "scf-cf"
@@ -38,7 +38,22 @@ resource "helm_release" "scf" {
     file(local.chart_values_file),
   ]
 
-  depends_on = [helm_release.uaa] 
+  set {
+      name = "env.DOMAIN"
+      value = var.cap_domain
+  }
+
+  set {
+      name = "env.UAA_HOST"
+      value = "uaa.${var.cap_domain}"
+  }
+
+  set {
+      name = "enable.uaa"
+      value = "true"
+  }
+
+ // depends_on = [helm_release.uaa] 
 }
 
 resource "helm_release" "cf-operator" {
@@ -58,6 +73,9 @@ resource "helm_release" "cf-operator" {
 
 }
 
+//Setting values from a config file as-well-as command line goes against helm best practices 
+// but is perhaps unavoidable here to keep things DRY for various domain related settings
+
 resource "helm_release" "kubecf" {
   name       = "kubecf"
   repository = "https://kubernetes-charts.suse.com"
@@ -70,6 +88,10 @@ resource "helm_release" "kubecf" {
     file(local.chart_values_file),
   ]
 
+  set {
+      name = "system_domain"
+      value = var.cap_domain
+  }
 
   count = (var.cap_version == "latest") ? 1 : 0
 
@@ -89,6 +111,21 @@ resource "helm_release" "stratos" {
   values = [
     file(local.stratos_chart_values_file),
   ]
+
+  set {
+      name = "env.DOMAIN"
+      value = var.cap_domain
+  }
+
+  set {
+      name = "env.UAA_HOST"
+      value = "uaa.${var.cap_domain}"
+  }
+
+  set {
+      name = "console.service.ingress.host"
+      value = "stratos.${var.cap_domain}"
+  }
   
   depends_on = [helm_release.scf,
                 helm_release.kubecf
@@ -98,7 +135,7 @@ resource "helm_release" "stratos" {
 
 resource "null_resource" "wait_for_uaa" {
   provisioner "local-exec" {
-    command = "../modules/cap-deploy/wait_for_uaa.sh"
+    command = "../common/cap-charts/wait_for_uaa.sh"
     working_dir = "."
     interpreter = ["/bin/bash", "-c"]
 
@@ -124,6 +161,18 @@ resource "helm_release" "metrics" {
     name = "kubernetes.apiEndpoint"
     value = var.cluster_url
   }
+  
+  set {
+    name = "cloudFoundry.apiEndpoint"
+    value = "api.${var.cap_domain}"
+  }
+  
+  set {
+      name = "metrics.service.ingress.host"
+      value = "metrics.${var.cap_domain}"
+  }
+
+
   
   depends_on = [null_resource.wait_for_uaa] 
 }

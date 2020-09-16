@@ -2,9 +2,6 @@
 # Set the system_domain from helm command line
 kube:
   storage_class: persistent
-# system_domain: tfe2e.susecap.biz - AKS
-#system_domain: kubecf.sroy.aws.howdoi.website- EKS
-#system_domain: sroy.kubecf.charmedquarks.me- GKE
 features:
     embedded_database:
         enabled: true
