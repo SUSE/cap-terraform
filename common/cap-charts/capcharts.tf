@@ -3,7 +3,7 @@ locals {
   //chart_values_file           = (var.cap_version == 2) ? "${path.module}/kubecf-config-values.yaml" : "${path.module}/scf-config-values.yaml"
   chart_values_file           = "${path.module}/kubecf-config-values.yaml"
   stratos_chart_values_file   = "${path.module}/stratos-config-values.yaml"
-  stratos_metrics_config_file = "${path.module}/stratos-metrics-values.yaml"
+  stratos_metrics_config_file = "${path.module}/metrics-config-values.yaml"
   kubeconfig_file             = "${path.cwd}/kubeconfig"
   
 }
