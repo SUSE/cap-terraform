@@ -1,6 +1,7 @@
 locals {
   
-  chart_values_file           = (var.cap_version == "latest") ? "${path.module}/kubecf-config-values.yaml" : "${path.module}/scf-config-values.yaml"
+  //chart_values_file           = (var.cap_version == 2) ? "${path.module}/kubecf-config-values.yaml" : "${path.module}/scf-config-values.yaml"
+  chart_values_file           = "${path.module}/kubecf-config-values.yaml"
   stratos_chart_values_file   = "${path.module}/stratos-config-values.yaml"
   stratos_metrics_config_file = "${path.module}/stratos-metrics-values.yaml"
   kubeconfig_file             = "${path.cwd}/kubeconfig"
@@ -16,15 +17,15 @@ resource "helm_release" "uaa" {
   wait       = "false"
   create_namespace = true
 
-  count = (var.cap_version == "latest") ? 0 : 1
+  count = (var.cap_version == 2) ? 0 : 1
 
   values = [
-    file(local.chart_values_file),
+    file(local.chart_values_file)
   ]
   
 } */
 
-resource "helm_release" "scf" {
+/* resource "helm_release" "scf" {
   name       = "scf-cf"
   repository = "https://kubernetes-charts.suse.com"
   chart      = "cf"
@@ -32,10 +33,10 @@ resource "helm_release" "scf" {
   wait       = "false"
   create_namespace = true
 
-  count = (var.cap_version == "latest") ? 0 : 1
+  count = (var.cap_version == 2) ? 0 : 1
 
   values = [
-    file(local.chart_values_file),
+    file(local.chart_values_file)
   ]
 
   set {
@@ -54,7 +55,7 @@ resource "helm_release" "scf" {
   }
 
  // depends_on = [helm_release.uaa] 
-}
+} */
 
 resource "helm_release" "cf-operator" {
   name       = "cf-operator"
@@ -69,7 +70,7 @@ resource "helm_release" "cf-operator" {
     value = "kubecf"
   }
 
-  count = (var.cap_version == "latest") ? 1 : 0
+//  count = (var.cap_version == 2) ? 1 : 0
 
 }
 
@@ -93,7 +94,7 @@ resource "helm_release" "kubecf" {
       value = var.cap_domain
   }
 
-  count = (var.cap_version == "latest") ? 1 : 0
+//  count = (var.cap_version == 2) ? 1 : 0
 
   depends_on = [helm_release.cf-operator] 
 
@@ -127,9 +128,7 @@ resource "helm_release" "stratos" {
       value = "stratos.${var.cap_domain}"
   }
   
-  depends_on = [helm_release.scf,
-                helm_release.kubecf
-               ] 
+  depends_on = [helm_release.kubecf] 
 }
 
 

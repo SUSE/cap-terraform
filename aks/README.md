@@ -1,3 +1,9 @@
+## Directory structure
+
+* `aks/cluster` contains the AKS cluster setup related terraform templates.
+
+* `../common` directory contains two sub-directories, `helper-charts` containing templates for various helper helm charts (`external-dns` and `cert-manager`) and `cap-charts` for `KubeCF`, `Stratos` and `Metrics` charts.
+
 ## Prerequisites
 
 * Create an Azure Service Principal
@@ -50,6 +56,9 @@
 
 ## Results
 
+* All CAP services including Stratos and Metrics would be installed with an Ingress Controller. You can configure the endpoint
+settings in the various helm chart configuration values in the cap-charts directory.
+
 * A kubeconfig named `kubeconfig` is generated in the same directory TF is run from. Set your `KUBECONFIG` env var to point to this file.
 
-* The `helm install`s should have been triggered as part of step 4. Check the pods in uaa, scf, stratos and metrics namespace to make sure they all come up and are ready.
+* The `helm install`s should have been triggered as part of step 4. Check the pods in kubecf, stratos and metrics namespace to make sure they all come up and are ready.

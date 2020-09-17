@@ -80,11 +80,6 @@
         "email": {
             "type": "string",
             "description": "Email address to send TLS certificate notifications to."
-        },
-        "cap_version": {
-            "type": "string",
-            "description": "Version of CAP",
-            "default" : "latest"
-        }
+        } 
     }
 }

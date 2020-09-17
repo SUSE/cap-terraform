@@ -66,7 +66,7 @@ module "cap-charts" {
     }
 
     cap_domain = var.cap_domain
-    cap_version = var.cap_version
+  //  cap_version = var.cap_version
     cluster_url = module.aks-cluster.cluster_url
 
     depends_on = [module.aks-cluster,
