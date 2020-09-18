@@ -1,5 +1,7 @@
 
 resource "helm_release" "external-dns" {
+  depends_on = [local_file.kubeconfig_file]
+
   name  = "cap-external-dns"
   repository = "https://charts.bitnami.com/bitnami"
   chart = "external-dns"
@@ -37,8 +39,4 @@ resource "helm_release" "external-dns" {
     name  = "rbac.create"
     value = "true"
   }
-
-
-    depends_on = [kubernetes_config_map.aws_auth]
-
 }

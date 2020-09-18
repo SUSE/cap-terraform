@@ -39,25 +39,15 @@ resource "kubernetes_namespace" "stratos" {
   }
 }
 
-resource "kubernetes_namespace" "metrics" {
-  depends_on = [kubernetes_config_map.aws_auth]
-
-  metadata {
-    name = "metrics"
-  }
-
-  timeouts {
-    delete = "30m"
-  }
-}
-
 # Install UAA using Helm Chart
 resource "helm_release" "uaa" {
   depends_on = [
     helm_release.external-dns,
     helm_release.nginx_ingress,
     helm_release.cert-manager,
-    kubernetes_namespace.uaa
+    kubernetes_namespace.uaa,
+    null_resource.cluster_issuer_setup,
+    local_file.kubeconfig_file
   ]
 
   name       = "scf-uaa"
@@ -92,7 +82,9 @@ resource "helm_release" "uaa" {
 resource "helm_release" "scf" {
   depends_on = [
     helm_release.uaa,
-    kubernetes_namespace.scf
+    kubernetes_namespace.scf,
+    null_resource.cluster_issuer_setup,
+    local_file.kubeconfig_file
   ]
 
   name       = "scf-cf"
@@ -127,7 +119,9 @@ resource "helm_release" "scf" {
 resource "helm_release" "stratos" {
   depends_on = [
     helm_release.scf,
-    kubernetes_namespace.stratos
+    kubernetes_namespace.stratos,
+    null_resource.cluster_issuer_setup,
+    local_file.kubeconfig_file
   ]
 
   name       = "susecf-console"
@@ -185,12 +179,17 @@ resource "null_resource" "wait_for_uaa" {
   }
 }
 
-provider "helm" {
-  alias = "metrics"
-  version = "1.0.0"
+resource "kubernetes_namespace" "metrics" {
+  depends_on = [
+    kubernetes_config_map.aws_auth
+  ]
 
-  kubernetes {
-    config_path = var.kubeconfig_file_path
+  metadata {
+    name = "metrics"
+  }
+
+  timeouts {
+    delete = "30m"
   }
 }
 
@@ -198,16 +197,17 @@ resource "helm_release" "metrics" {
   depends_on = [
     helm_release.stratos,
     kubernetes_namespace.metrics,
-    null_resource.wait_for_uaa
+    null_resource.wait_for_uaa,
+    null_resource.cluster_issuer_setup,
+    local_file.kubeconfig_file
   ]
 
-  provider   = helm.metrics
   name       = "susecf-metrics"
   repository = "https://kubernetes-charts.suse.com"
   chart      = "metrics"
   version    = "1.2.1"
   namespace  = "metrics"
-  wait       = "false"
+  wait       = "true"
 
   values = [file(local.stratos_metrics_config_file)]
   set {
