@@ -17,4 +17,6 @@ checkready() {
 	done
 }
 
+kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+
 checkready
