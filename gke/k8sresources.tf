@@ -9,6 +9,7 @@ provider "kubernetes" {
 resource "kubernetes_storage_class" "gkesc" {
   metadata {
     name = "persistent"
+    annotations = {"storageclass.kubernetes.io/is-default-class" = "true"}
   }
   storage_provisioner = "kubernetes.io/gce-pd"
   parameters = {
