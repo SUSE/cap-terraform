@@ -52,8 +52,8 @@ resource "google_container_node_pool" "np" {
   }
 
   management {
-    auto_repair  = true
-    auto_upgrade = true
+    auto_repair  = false
+    auto_upgrade = false
   }
 }
 
