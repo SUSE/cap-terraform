@@ -93,6 +93,14 @@ resource "helm_release" "kubecf" {
       name = "system_domain"
       value = var.cap_domain
   }
+  set_sensitive {
+    name = "credentials.cf_admin_password"
+    value = var.cf_admin_password
+  }
+  set_sensitive {
+    name = "credentials.uaa_admin_client_secret"
+    value = var.uaa_admin_client_secret
+  }
 
 //  count = (var.cap_version == 2) ? 1 : 0
 
@@ -117,17 +125,19 @@ resource "helm_release" "stratos" {
       name = "env.DOMAIN"
       value = var.cap_domain
   }
-
   set {
       name = "env.UAA_HOST"
       value = "uaa.${var.cap_domain}"
   }
-
   set {
       name = "console.service.ingress.host"
       value = "stratos.${var.cap_domain}"
   }
-  
+  set_sensitive {
+    name = "console.localAdminPassword"
+    value = var.stratos_admin_password
+  }
+
   depends_on = [helm_release.kubecf] 
 }
 
@@ -160,18 +170,22 @@ resource "helm_release" "metrics" {
     name = "kubernetes.apiEndpoint"
     value = var.cluster_url
   }
-  
   set {
     name = "cloudFoundry.apiEndpoint"
     value = "api.${var.cap_domain}"
   }
-  
   set {
       name = "metrics.service.ingress.host"
       value = "metrics.${var.cap_domain}"
   }
-
-
+  set_sensitive {
+    name = "metrics.password"
+    value = var.metrics_admin_password
+  }
+  set_sensitive {
+    name = "cloudFoundry.uaaAdminClientSecret"
+    value = var.uaa_admin_client_secret
+  }
   
   depends_on = [null_resource.wait_for_uaa] 
 }

@@ -69,6 +69,13 @@ module "cap-charts" {
   //  cap_version = var.cap_version
     cluster_url = module.aks-cluster.cluster_url
 
+    # One variable is initially applied to all security contexts,
+    # override to create distinct passwords for each context
+    cf_admin_password       = var.admin_password
+    uaa_admin_client_secret = var.admin_password
+    stratos_admin_password  = var.admin_password
+    metrics_admin_password  = var.admin_password
+
     depends_on = [module.aks-cluster,
                   module.helper-charts]
 }
