@@ -1,12 +1,11 @@
 ---
-# Set the system_domain from helm command line
 kube:
   storage_class: persistent
 features:
-    embedded_database:
-        enabled: true
-    ingress:
-        enabled: true
-        annotations:
-            cert-manager.io/cluster-issuer: letsencrypt-prod
-            nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+  embedded_database:
+    enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/proxy-body-size: 1024m

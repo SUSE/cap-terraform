@@ -1,3 +1,4 @@
+---
 env:
   DOPPLER_PORT: 443
   prometheus:
@@ -8,14 +9,9 @@ metrics:
   service:
     ingress:
       enabled: true
-      annotations: 
+      annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
   username: admin
 
 cloudFoundry:
   uaaAdminClient: admin
-
-
-
-
-
