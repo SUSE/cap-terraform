@@ -2,7 +2,7 @@
 
 * `aks/cluster` contains the AKS cluster setup related terraform templates.
 
-* `../common` directory contains two sub-directories, `helper-charts` containing templates for various helper helm charts (`external-dns` and `cert-manager`) and `cap-charts` for `KubeCF`, `Stratos` and `Metrics` charts.
+* `common` (linked to the `../common` directory), contains two sub-directories: `helper-charts` containing templates for various helper helm charts (`external-dns` and `cert-manager`) and `cap-charts` for `KubeCF`, `Stratos` and `Metrics` charts.
 
 ## Prerequisites
 

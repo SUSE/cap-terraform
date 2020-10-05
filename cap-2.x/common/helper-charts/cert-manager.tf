@@ -54,7 +54,7 @@ resource "null_resource" "cluster_issuer_setup" {
 
   provisioner "local-exec" {
 
-    command = "../common/helper-charts/setup_cert_issuer.sh"
+    command = "./common/helper-charts/setup_cert_issuer.sh"
     working_dir = "."
     interpreter = ["/bin/bash", "-c"]
     environment = {

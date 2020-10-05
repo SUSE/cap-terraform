@@ -134,7 +134,7 @@ resource "helm_release" "stratos" {
 
 resource "null_resource" "wait_for_uaa" {
   provisioner "local-exec" {
-    command = "../common/cap-charts/wait_for_uaa.sh"
+    command = "./common/cap-charts/wait_for_uaa.sh"
     working_dir = "."
     interpreter = ["/bin/bash", "-c"]
 

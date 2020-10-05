@@ -40,7 +40,7 @@ provider "helm" {
 }
 
 module "helper-charts" {
-    source = "../common/helper-charts"
+    source = "./common/helper-charts"
 
     providers = {
         helm = helm.helm-cap
@@ -59,7 +59,7 @@ module "helper-charts" {
 }
 
 module "cap-charts" {
-    source = "../common/cap-charts"
+    source = "./common/cap-charts"
 
     providers = {
         helm = helm.helm-cap
