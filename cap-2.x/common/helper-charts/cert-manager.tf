@@ -1,10 +1,10 @@
 resource "helm_release" "cert-manager" {
-  name       = "cert-manager"
-  repository = "https://charts.jetstack.io"
-  chart      = "cert-manager"
-  namespace  = "cert-manager"
-  wait       = "true"
-  version    = "v1.0.1"
+  name             = "cert-manager"
+  repository       = "https://charts.jetstack.io"
+  chart            = "cert-manager"
+  namespace        = "cert-manager"
+  wait             = "true"
+  version          = "v1.0.1"
   create_namespace = true
 
   set {
@@ -22,12 +22,12 @@ resource "helm_release" "cert-manager" {
 resource "local_file" "le-cert-issuer" {
 
   content = templatefile("${path.module}/le-cert-issuer.yaml.tmpl", {
-    email = var.email,
-    client_id = var.client_id,
-    subscription_id = var.subscription_id,
-    tenant_id = var.tenant_id,
+    email             = var.email,
+    client_id         = var.client_id,
+    subscription_id   = var.subscription_id,
+    tenant_id         = var.tenant_id,
     az_resource_group = var.dns_zone_resource_group,
-    dns_zone_name = var.dns_zone_name
+    dns_zone_name     = var.dns_zone_name
   })
   filename = "${path.module}/le-cert-issuer.yaml"
 }
@@ -45,16 +45,16 @@ resource "local_file" "le-cert-issuer" {
 
   depends_on = [helm_release.cert-manager]
 
-} */ 
+} */
 
 resource "null_resource" "cluster_issuer_setup" {
   depends_on = [local_file.le-cert-issuer,
-                helm_release.cert-manager
-                ]
+    helm_release.cert-manager
+  ]
 
   provisioner "local-exec" {
 
-    command = "../common/helper-charts/setup_cert_issuer.sh"
+    command     = "./common/helper-charts/setup_cert_issuer.sh"
     working_dir = "."
     interpreter = ["/bin/bash", "-c"]
     environment = {
