@@ -1,0 +1,32 @@
+{
+  "variable": {
+    "subscription_id": {
+      "type": "string",
+      "description": "Azure subscription ID"
+    },
+    "dns_zone_resource_group": {
+      "type": "string",
+      "description": "An existing Azure Resource Group where your Azure DNS Zone is hosted."
+    },
+    "client_id": {
+      "type": "string",
+      "description": "Azure Service Principal 'appId'"
+    },
+    "client_secret": {
+      "type": "string",
+      "description": "Azure Service Principal 'password'"
+    },
+    "tenant_id": {
+      "type": "string",
+      "description": "Azure Service Principal 'tenant'"
+    },
+    "dns_zone_name": {
+      "type": "string",
+      "description": "Name of the Azure DNS Zone created for the cluster."
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address to send TLS certificate notifications to."
+    }
+  }
+}
