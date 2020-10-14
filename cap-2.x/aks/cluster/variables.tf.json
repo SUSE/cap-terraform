@@ -53,7 +53,7 @@
         "k8s_version": {
             "type": "string",
             "description": "Kubernetes version to apply to AKS; must be supported in the selected region. (Run `az aks get-versions --location $REGION --output table` for a list of supported options)",
-            "default": "1.15.11"
+            "default": "1.17.9"
         },
         "disk_size_gb": {
             "type": "number",
@@ -68,10 +68,6 @@
             "type": "string",
             "description": "Name of the Azure DNS Zone created for the cluster."
         },
-        "cap_domain": {
-            "type": "string",
-            "description": "The FQDN of your cluster."
-        },
         "dns_prefix": {
             "type": "string",
             "description": "Prefix for node DNS hostnames. (Must be alphanumeric, may include but not end with dashes)",
@@ -80,6 +76,6 @@
         "email": {
             "type": "string",
             "description": "Email address to send TLS certificate notifications to."
-        } 
+        }
     }
 }

@@ -1,0 +1,17 @@
+---
+env:
+  DOPPLER_PORT: 443
+  prometheus:
+  kubeStateMetrics:
+    enabled: true
+
+metrics:
+  service:
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+  username: admin
+
+cloudFoundry:
+  uaaAdminClient: admin

@@ -1,0 +1,28 @@
+{
+  "variable": {
+    "cap_domain": {
+      "type": "string",
+      "description": "The FQDN of your cluster"
+    },
+    "cluster_url": {
+      "type": "string",
+      "description": "Cluster APIServer URL"
+    },
+    "cf_admin_password": {
+      "type": "string",
+      "description": "Password for 'admin' user via 'cf' API"
+    },
+    "uaa_admin_client_secret": {
+      "type": "string",
+      "description": "Secret for 'admin' user via UAA OAuth client"
+    },
+    "stratos_admin_password": {
+      "type": "string",
+      "description": "Password for 'admin' user in Stratos"
+    },
+    "metrics_admin_password": {
+      "type": "string",
+      "description": "Password for 'admin' user in Stratos-Metrics"
+    }
+  }
+}
