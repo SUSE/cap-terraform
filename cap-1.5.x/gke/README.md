@@ -31,7 +31,7 @@
     - `instance_count` - The number of worker nodes in your cluster. (Minimum: 3, Maximum 50)
     - `instance_type` - The type of instance used for the provisioned workers.
     - `project` - The GCP project to manage resources in.
-    - `location` - The GCP region where the cluster is placed, including the zone.
+    - `location` - The GCP region or the zone where the cluster will be deployed. Note that if you specify a region GKE will create a regional cluster with multiple masters and worker nodes spread across multiple zones. If you specify a zone GKE will create a single master node with workers in that zone.  
     - `credentials_json` - Contents of a service account key file in JSON format, with rights to create the GKE cluster and associated resources.
     - `dns_credentials_json` - Contents of a service account key file in JSON format, with rights to edit DNS.
     - `admin_password` - Intial password for Cloud Foundry 'admin' user, UAA 'admin' OAuth client, and metrics 'admin' login. We recommend changing this password after deployment. See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-manage-passwords
