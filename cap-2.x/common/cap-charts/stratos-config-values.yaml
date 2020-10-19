@@ -1,0 +1,12 @@
+---
+console:
+  service:
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+  techPreview: true
+
+kube:
+  storage_class:
+    persistent: persistent
