@@ -43,6 +43,10 @@ module "helper-charts" {
     helm = helm.helm-cap
   }
 
+  platform             = "aks"  // for common helper-charts' tmpl files
+
+  service_provider     = "azure"
+
   client_id       = var.client_id
   client_secret   = var.client_secret
   tenant_id       = var.tenant_id

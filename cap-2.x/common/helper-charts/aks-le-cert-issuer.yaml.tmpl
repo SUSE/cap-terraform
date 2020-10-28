@@ -11,8 +11,8 @@ spec:
     privateKeySecretRef:
       # The secret that holds the generated private key used to communicate with Let's Encrypt
       name: letsencrypt-prod-account-key
-    solvers: 
-    - dns01: 
+    solvers:
+    - dns01:
         azureDNS:
           clientID: ${client_id}
           clientSecretSecretRef:
