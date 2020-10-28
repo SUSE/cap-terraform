@@ -8,7 +8,7 @@ resource "google_container_cluster" "gke-cluster" {
   remove_default_node_pool = true
 
   initial_node_count = 1
-  resource_labels = var.cluster_labels
+  resource_labels    = var.cluster_labels
 
   # Setting an empty username and password explicitly disables basic auth
   master_auth {
