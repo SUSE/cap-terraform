@@ -24,6 +24,9 @@ resource "google_container_cluster" "gke-cluster" {
     horizontal_pod_autoscaling {
       disabled = true
     }
+    network_policy_config {
+      disabled = false
+    }
 
   }
 }
