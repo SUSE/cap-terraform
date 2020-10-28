@@ -27,7 +27,11 @@ resource "google_container_cluster" "gke-cluster" {
     network_policy_config {
       disabled = false
     }
+  }
 
+  network_policy {
+    enabled  = true
+    provider = "CALICO"
   }
 }
 
