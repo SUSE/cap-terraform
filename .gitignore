@@ -7,6 +7,7 @@ scf*/
 **/*cluster-plan/*
 *.tfvars
 **/temp/
-*-le-prod-cert-issuer.yaml
+le-prod-cert-issuer.yaml
+*le-cert-issuer.yaml
 terraform.tfvars.json
 kubeconfig
