@@ -48,7 +48,7 @@ module "cap-charts" {
     helm = helm.helm-cap
   }
 
-  cap_domain = "${module.gke-cluster.cluster_name}.${var.cap_domain}"
+  cap_domain = var.cap_domain
   cluster_url = module.gke-cluster.cluster_url
 
   # One variable is initially applied to all security contexts,
