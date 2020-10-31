@@ -21,15 +21,16 @@ resource "helm_release" "cert-manager" {
 
 resource "local_file" "le-cert-issuer" {
 
-  content = templatefile("${path.module}/le-cert-issuer.yaml.tmpl", {
+  content = templatefile("${path.module}/${var.platform}-le-cert-issuer.yaml.tmpl", {
     email             = var.email,
+    project           = var.project
     client_id         = var.client_id,
     subscription_id   = var.subscription_id,
     tenant_id         = var.tenant_id,
     az_resource_group = var.dns_zone_resource_group,
     dns_zone_name     = var.dns_zone_name
   })
-  filename = "${path.module}/le-cert-issuer.yaml"
+  filename = "${path.module}/${var.platform}-le-cert-issuer.yaml"
 }
 
 /* resource "kubernetes_secret" "cert-manager-secret" {
@@ -54,13 +55,13 @@ resource "null_resource" "cluster_issuer_setup" {
 
   provisioner "local-exec" {
 
-    command     = "./common/helper-charts/setup_cert_issuer.sh"
+    command     = "./common/helper-charts/${var.platform}_setup_cert_issuer.sh"
     working_dir = "."
     interpreter = ["/bin/bash", "-c"]
     environment = {
       AZ_CERT_MGR_SP_PWD = var.client_secret
       KUBECONFIG         = "${path.cwd}/kubeconfig"
-      CERT_FILE          = "${path.module}/le-cert-issuer.yaml"
+      CERT_FILE          = "${path.module}/${var.platform}-le-cert-issuer.yaml"
 
     }
   }

@@ -1,0 +1,32 @@
+{
+    "variable": {
+        "instance_type": {
+            "type": "string",
+            "description": "The type of instance used for the provisioned workers.",
+            "default": "n1-standard-4"
+        },
+        "instance_count": {
+            "type": "number",
+            "description": "The number of worker nodes in your cluster. (Minimum: 3, Maximum 50)",
+            "default": 3
+        },
+        "location": {
+            "type": "string",
+            "description": "The GCP region where the cluster is placed, including the zone.",
+            "default": ""
+        },
+        "disk_size_gb": {
+            "type": "number",
+            "description": "The worker node storage capacity. (Minimum:80, Maximum: 65536)",
+            "default": 80
+        },
+        "cluster_labels": {
+            "type": "map",
+            "description": "Tags to be applied to resources in your cluster. (Optional)"
+        },
+        "dns_credentials_json": {
+            "type": "string",
+            "description": "Contents of a service account key file in JSON format, with rights to edit DNS."
+        }
+    }
+}

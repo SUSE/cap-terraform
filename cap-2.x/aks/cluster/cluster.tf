@@ -51,4 +51,4 @@ output "cluster_url" {
  resource "local_file" "k8scfg" {
   content  = local.k8scfg
   filename = "${path.cwd}/kubeconfig"
-} 
+}
