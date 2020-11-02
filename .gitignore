@@ -8,4 +8,6 @@ scf*/
 *.tfvars
 **/temp/
 le-prod-cert-issuer.yaml
+*le-cert-issuer.yaml
 terraform.tfvars.json
+kubeconfig
