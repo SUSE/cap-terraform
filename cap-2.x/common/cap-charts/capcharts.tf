@@ -102,6 +102,7 @@ resource "null_resource" "wait_for_uaa" {
   depends_on = [helm_release.stratos]
 }
 
+
 resource "helm_release" "metrics" {
   name             = "susecf-metrics"
   repository       = "https://kubernetes-charts.suse.com"

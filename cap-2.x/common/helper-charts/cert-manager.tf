@@ -29,6 +29,9 @@ resource "local_file" "le-cert-issuer" {
     tenant_id         = var.tenant_id,
     az_resource_group = var.dns_zone_resource_group,
     dns_zone_name     = var.dns_zone_name
+    hosted_zone_name  = var.hosted_zone_name
+    hosted_zone_id    = var.hosted_zone_id
+    region            = var.region
   })
   filename = "${path.module}/${var.platform}-le-cert-issuer.yaml"
 }

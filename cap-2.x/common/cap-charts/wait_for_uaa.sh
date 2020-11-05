@@ -19,9 +19,12 @@ do
     else
         count_string="${count}th"
     fi
+    
     echo "${count_string} try - connecting to UAA at ${url}..."
+    
     code=$(curl -o /dev/null -Isw '%{http_code}\n' --connect-timeout 5 --max-time 5 $url)
-    if [[ "$code" == '200' ]]; then
+    
+    if [[ "$code" == '200' ]]; then 
         break;
     fi
 
