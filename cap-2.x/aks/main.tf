@@ -59,8 +59,8 @@ module "helper-charts" {
   depends_on = [module.aks-cluster]
 }
 
-module "cap-charts" {
-  source = "./common/cap-charts"
+module "kubecf-charts" {
+  source = "./common/kubecf-charts"
 
   providers = {
     helm = helm.helm-cap
@@ -68,18 +68,39 @@ module "cap-charts" {
 
   cap_domain = var.cap_domain
   //  cap_version = var.cap_version
-  cluster_url = module.aks-cluster.cluster_url
 
   # One variable is initially applied to all security contexts,
   # override to create distinct passwords for each context
   cf_admin_password       = var.admin_password
   uaa_admin_client_secret = var.admin_password
-  stratos_admin_password  = var.admin_password
-  metrics_admin_password  = var.admin_password
+  eirini_enabled          = var.eirini_enabled == "true" ? "true" : "false"
+  ha_enabled              = var.ha_enabled     == "true" ? "true" : "false"
 
   depends_on = [
     module.aks-cluster,
     module.helper-charts
   ]
 }
+
+module "stratos-charts" {
+  source = "./common/stratos-charts"
+
+  providers = {
+    helm = helm.helm-cap
+  }
+
+  cap_domain = var.cap_domain
+  cluster_url = module.aks-cluster.cluster_url
+
+  # One variable is initially applied to all security contexts,
+  # override to create distinct passwords for each context
+
+  uaa_admin_client_secret = var.admin_password
+  stratos_admin_password  = var.admin_password
+  metrics_admin_password  = var.admin_password
+
+   depends_on = [
+    module.kubecf-charts
+  ] 
+} 
 

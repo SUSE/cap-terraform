@@ -1,0 +1,15 @@
+{
+    "variable": {
+        "tag_key": {
+            "type": "string",
+            "description": "User-provided cluster tag key",
+            "default": ""
+        },
+        "tag_value": {
+            "type": "string",
+            "description": "User-provided cluster tag value",
+            "default": ""
+        }
+
+    }
+}

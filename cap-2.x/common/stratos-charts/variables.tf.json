@@ -8,10 +8,6 @@
       "type": "string",
       "description": "Cluster APIServer URL"
     },
-    "cf_admin_password": {
-      "type": "string",
-      "description": "Password for 'admin' user via 'cf' API"
-    },
     "uaa_admin_client_secret": {
       "type": "string",
       "description": "Secret for 'admin' user via UAA OAuth client"

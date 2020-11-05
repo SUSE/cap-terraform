@@ -80,6 +80,16 @@
         "email": {
             "type": "string",
             "description": "Email address to send TLS certificate notifications to."
-        } 
+        },
+        "eirini_enabled": {
+            "type": "string",
+            "description": "Eirini enabled?",
+            "default": "true"
+        },
+        "ha_enabled": {
+            "type": "string",
+            "description": "HA enabled?",
+            "default": "false"
+        }   
     }
 }

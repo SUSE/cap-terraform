@@ -1,7 +1,7 @@
 #! /bin/sh
 
 echo "checking UAA status before installing metrics"
-url=https://uaa.${METRICS_API_ENDPOINT}/.well-known/openid-configuration
+url=https://uaa.${DOMAIN_ENDPOINT}/.well-known/openid-configuration
 echo "Trying to verify ${url} is up"
 
 max_retries=30

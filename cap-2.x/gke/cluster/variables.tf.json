@@ -27,6 +27,11 @@
         "dns_credentials_json": {
             "type": "string",
             "description": "Contents of a service account key file in JSON format, with rights to edit DNS."
+        },
+        "k8s_version": {
+            "type": "string",
+            "description": "k8s version",
+            "default": "1.17"
         }
     }
 }
