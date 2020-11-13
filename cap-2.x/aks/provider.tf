@@ -3,7 +3,7 @@ terraform {
 }
 
 provider "azurerm" {
-  version = "2.4.0"
+  version = "2.32.0"
   features {}
   subscription_id            = var.subscription_id
   client_id                  = var.client_id
@@ -13,14 +13,13 @@ provider "azurerm" {
 }
 
 provider "local" {
-  version = "1.4.0"
+  version = "2.0.0"
 }
 
 provider "null" {
-  version = "2.1.2"
+  version = "3.0.0"
 }
 
 provider "random" {
-  version = "2.2.1"
+  version = "3.0.0"
 }
-
