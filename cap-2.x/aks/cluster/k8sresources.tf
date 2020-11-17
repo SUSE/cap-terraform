@@ -17,4 +17,3 @@ resource "kubernetes_storage_class" "akssc" {
     kind               = "managed"
   }
 }
-
