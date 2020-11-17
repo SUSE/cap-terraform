@@ -69,7 +69,7 @@
         },
         "eirini_enabled": {
             "type": "string",
-            "description": "Eirini enabled?",
+            "description": "Deploy with eirini instead of Diego",
             "default": "true"
         },
         "ha_enabled": {

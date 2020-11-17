@@ -1,9 +1,5 @@
 locals {
   kubeconfig_file_path = "${path.cwd}/kubeconfig"
-  # Kubernetes major.minor version to apply to EKS. 
-  # See https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html 
-  # for a list of supported options
-  k8s_version = "1.15"
 }
 
 #

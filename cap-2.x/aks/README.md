@@ -2,7 +2,7 @@
 
 * `aks/cluster` contains the AKS cluster setup related terraform templates.
 
-* `common` (linked to the `../common` directory), contains two sub-directories: `helper-charts` containing templates for various helper helm charts (`external-dns` and `cert-manager`) and `cap-charts` for `KubeCF`, `Stratos` and `Metrics` charts.
+* `common` (linked to the `../common` directory), contains three sub-directories: `helper-charts` containing templates for various helper helm charts (`external-dns` and `cert-manager`), `kubecf-charts` for `KubeCF`, and `stratos-charts` for `Stratos` and `Metrics` charts.
 
 ## Prerequisites
 
@@ -36,15 +36,17 @@
     - `client_secret` - Azure Service Principal 'password'
     - `tenant_id` - "Azure Service Principal 'tenant'"
     - `ssh_username` - SSH username for accessing the cluster.
-    - `ssh_public_key` - SSH public key for access to worker nodes.
+    - `ssh_public_key` - SSH public key (the content) for access to worker nodes.
     - `admin_password` - Intial password for Cloud Foundry 'admin' user, UAA 'admin' OAuth client, and metrics 'admin' login. We recommend changing this password after deployment. See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-manage-passwords
     - `k8s_version` - Kubernetes version to apply to AKS; must be supported in the selected region. (Run `az aks get-versions --location $REGION --output table` for a list of supported options)
     - `disk_size_gb` - The worker node storage capacity. (Minimum:80, Maximum: 4095)
     - `cluster_labels` - Tags to be applied to resources in your cluster. (Optional)
     - `dns_zone_name` - Name of the Azure DNS Zone created for the cluster.
-    - `cap_domain` - The FQDN of your cluster.
-    - `dns_prefix` - Prefix for node DNS hostnames. (Must be alphanumeric, may include but not end with dashes)
+    - `cap_domain` - The FQDN for the CAP deployment.
+    - `dns_prefix` - Prefix for node DNS hostnames. (Must be alphanumeric, may include but not end with dashes) (Optional)
     - `email` - Email address to send TLS certificate notifications to.
+    - `eirini_enabled` - Deploy with Eirini (default = "true") or Diego ("false") (Optional)
+    - `ha_enabled`  - Deploy CAP in high availability mode (default = "false") (Optional)
 
     **⚠ NOTE:** _This should be in your `.gitignore` or otherwise outside source control as it contains sensitive information._
 

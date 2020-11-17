@@ -22,8 +22,7 @@
         },
         "k8s_version": {
             "type": "string",
-            "description": "k8s version",
-            "default": "1.17"
+            "description": "k8s version - must be greater than or equal to 1.16.x"
         },
         "cluster_labels": {
             "type": "map",
