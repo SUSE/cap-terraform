@@ -7,3 +7,11 @@ provider "google" {
     zone        = var.location
 }
 
+# Also have a google-beta block to use it for gcp-static-ext-address.tf
+provider "google-beta" {
+	version 	= "~> 3.0"
+	credentials = var.gke_sa_key
+	project     = var.project
+    zone        = var.location
+}
+
