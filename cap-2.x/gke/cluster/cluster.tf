@@ -1,5 +1,5 @@
 resource "random_string" "cluster_name" {
-  length  = 18
+  length  = 12
   special = false
   upper   = false
   number  = false
@@ -12,7 +12,8 @@ locals {
 resource "google_container_cluster" "gke-cluster" {
   name     = "cap-${random_string.cluster_name.result}"
   location = var.location
-  min_master_version = "1.15"
+  min_master_version = var.k8s_version
+  node_version = var.k8s_version
 
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default

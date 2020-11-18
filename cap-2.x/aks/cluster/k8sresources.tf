@@ -1,5 +1,5 @@
 provider "kubernetes" {
-  version          = "1.13.2"
+  version          = "1.13.3"
   load_config_file = false
   host             = azurerm_kubernetes_cluster.k8s.kube_config[0].host
   client_certificate = base64decode(azurerm_kubernetes_cluster.k8s.kube_config[0].client_certificate)

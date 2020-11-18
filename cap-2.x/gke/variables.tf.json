@@ -20,6 +20,10 @@
             "description": "The worker node storage capacity. (Minimum:80, Maximum: 65536)",
             "default": 80
         },
+        "k8s_version": {
+            "type": "string",
+            "description": "k8s version - must be greater than or equal to 1.16.x"
+        },
         "cluster_labels": {
             "type": "map",
             "description": "Tags to be applied to resources in your cluster. (Optional)"
@@ -48,6 +52,16 @@
         "admin_password": {
             "type": "string",
             "description":"Intial password for Cloud Foundry 'admin' user, UAA 'admin' OAuth client, and metrics 'admin' login. We recommend changing this password after deployment. See https://documentation.suse.com/suse-cap/single-html/cap-guides/#cha-cap-manage-passwords"
-        }
+        },
+        "eirini_enabled": {
+            "type": "string",
+            "description": "Eirini enabled?",
+            "default": "true"
+        },
+        "ha_enabled": {
+            "type": "string",
+            "description": "HA enabled?",
+            "default": "false"
+        }   
     }
 }

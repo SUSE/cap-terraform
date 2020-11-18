@@ -45,6 +45,8 @@
     - `cluster_labels` - Tags to be applied to resources in your cluster. (Optional)
     - `cap_domain` - The FQDN of your cluster. Must be a subdomain of your Cloud DNS Zone.
     - `email` - Email address to send TLS certificate notifications to.
+    - `eirini_enabled` - Deploy with Eirini (default = "true") or Diego ("false") (Optional)
+    - `ha_enabled`  - Deploy CAP in high availability mode (default = "false") (Optional)
 
     **⚠ NOTE:** _This should be in your `.gitignore` or otherwise outside source control as it contains sensitive information._
 

@@ -1,7 +1,7 @@
 #! /bin/sh
 
 echo "checking UAA status before installing metrics"
-url=https://uaa.${METRICS_API_ENDPOINT}/.well-known/openid-configuration
+url=https://uaa.${DOMAIN_ENDPOINT}/.well-known/openid-configuration
 echo "Trying to verify ${url} is up"
 
 max_retries=30
@@ -19,9 +19,12 @@ do
     else
         count_string="${count}th"
     fi
+    
     echo "${count_string} try - connecting to UAA at ${url}..."
+    
     code=$(curl -o /dev/null -Isw '%{http_code}\n' --connect-timeout 5 --max-time 5 $url)
-    if [[ "$code" == '200' ]]; then
+    
+    if [[ "$code" == '200' ]]; then 
         break;
     fi
 

@@ -50,5 +50,28 @@ resource "helm_release" "external-dns" {
     value = var.client_secret
   }
 
+  //AWS parameters
+
+  set {
+    name = "aws.credentials.accessKey"
+    value = var.external_dns_aws_access_key
+  }
+  set {
+    name = "aws.credentials.secretKey"
+    value = var.external_dns_aws_secret_key
+  }
+  set {
+    name  = "aws.zoneType"
+    value = "public"
+  }
+  set {
+    name  = "txtOwnerId"
+    value = var.hosted_zone_id
+  }
+  set {
+    name  = "domainFilters[0]"
+    value = var.hosted_zone_name
+  }
+
 }
 
