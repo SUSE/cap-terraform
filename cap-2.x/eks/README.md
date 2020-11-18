@@ -30,7 +30,7 @@
     - `hosted_zone_name` - Name of the Route 53 Hosted zone created for the cluster.
     - `cap_domain` - The FQDN of your cluster - a subdomain of the Hosted zone.
     - `email` - Email address to send TLS certificate notifications to.
-     - `eirini_enabled` - Deploy with Eirini (default = "true") or Diego ("false") (Optional)
+    - `eirini_enabled` - Deploy with Eirini (default = "true") or Diego ("false") (Optional)
     - `ha_enabled`  - Deploy CAP in high availability mode (default = "false") (Optional)
 
     **⚠** _This file should be in your `.gitignore` or otherwise outside source control as it contains sensitive information._
@@ -45,7 +45,7 @@
 
 * A kubeconfig named `kubeconfig` is generated in the same directory TF is run from. Set your `KUBECONFIG` env var to point to this file.
 
-* Make sure `$YOUR_CLUSTER_NAME-worker-iam-role>` has the displayed policy attached for changing `route53` record sets.
+* Make sure `<$YOUR_CLUSTER_NAME-worker-iam-role>` has the displayed policy attached for changing `route53` record sets.
 
     **⚠** _Make sure that the attached custom `route53` policy is removed before destroying the cluster._
 
