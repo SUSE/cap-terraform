@@ -1,7 +1,7 @@
 ## Required Tools
 
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* [terraform](https://www.terraform.io/) v0.12
+* [terraform](https://www.terraform.io/) v0.13
 * [aws-iam-authenticator](https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html)
 
 ## Prerequisites
