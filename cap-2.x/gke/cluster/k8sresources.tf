@@ -1,5 +1,5 @@
 provider "kubernetes" {
-  version          = "~> 1.5"
+  version          = "1.13.2"
   load_config_file = false
   host             = "https://${google_container_cluster.gke-cluster.endpoint}"
   cluster_ca_certificate = base64decode(
