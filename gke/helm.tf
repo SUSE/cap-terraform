@@ -1,5 +1,5 @@
 provider "helm" {
-    version = "~> 1.0.0"
+    version = "~> 2.0.2"
 
   kubernetes {   
     load_config_file = false
