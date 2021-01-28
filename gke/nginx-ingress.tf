@@ -1,13 +1,7 @@
-# Add Kubernetes Stable Helm charts repo
-data "helm_repository" "ingress-nginx" {
-  name = "ingress-nginx"
-  url  = "https://kubernetes.github.io/ingress-nginx"  
-}
-
 # Install Nginx Ingress using Helm Chart
 resource "helm_release" "nginx_ingress" {
   name       = "nginx-ingress"
-  repository = data.helm_repository.ingress-nginx.metadata[0].url
+  repository = "https://kubernetes.github.io/ingress-nginx"
   chart      = "ingress-nginx"
   wait       = "false"
 

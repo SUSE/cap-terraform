@@ -9,15 +9,10 @@ resource "kubernetes_secret" "google_dns_sa_creds" {
   }
 }
 
-data "helm_repository" "external-dns-repo" {
-  name = "external-dns-chart-repo"
-  url  = "https://charts.bitnami.com/bitnami"
-}
-
 
 resource "helm_release" "external-dns" {
     name = "cap-external-dns"
-    repository = data.helm_repository.external-dns-repo.metadata[0].url
+    repository = "https://charts.bitnami.com/bitnami"
     chart = "external-dns"
     wait = "false"
 
